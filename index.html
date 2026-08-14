@@ -157,24 +157,6 @@
   .crop.bl{bottom:-7px;left:-7px}
   .crop.br{bottom:-7px;right:-7px}
 
-  .photo-frame .credential{
-    position:absolute;left:14px;right:14px;bottom:14px;z-index:6;
-    background:rgba(1,13,39,.92);color:var(--paper);
-    padding:11px 14px 12px;border-radius:2px;pointer-events:none;
-    border:1px solid rgba(201,224,242,.18);
-    box-shadow:0 8px 32px rgba(1,13,39,.35);
-  }
-  .photo-frame .credential .hd{
-    display:flex;justify-content:space-between;align-items:baseline;gap:14px;
-    font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--polvo);
-    padding-bottom:6px;margin-bottom:7px;border-bottom:1px solid rgba(201,224,242,.18);
-  }
-  .photo-frame .credential .hd b{color:var(--indigo-soft);font-weight:500;letter-spacing:.18em}
-  .photo-frame .credential .nm{
-    font-family:"Poppins",sans-serif;font-style:italic;font-weight:500;font-size:15px;line-height:1.3;letter-spacing:-0.018em;color:#fff;
-  }
-  .photo-frame .credential .nm b{color:var(--polvo);font-style:normal;font-weight:500;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-top:4px}
-
   .stamp{
     position:absolute;top:14px;left:14px;z-index:7;
     font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
@@ -257,10 +239,12 @@
   .count{font-variant-numeric:tabular-nums}
 
   /* ——— Sección ——— */
-  section{padding:96px 0;border-top:1px solid var(--rule);position:relative}
-  section#servicios{background:#ffffff}
+  /* scroll-margin: el header es sticky y taparía el título al saltar por el menú */
+  section{padding:96px 0;border-top:1px solid var(--rule);position:relative;scroll-margin-top:82px}
+  @media(max-width:680px){section{scroll-margin-top:70px}}
   section#nosotros{padding-top:72px;background:#ffffff}
   section#cobertura{padding-bottom:72px}
+  section#consulta{background:#ffffff}
   section.hero{background:var(--paper)}
   .sec-head{display:grid;grid-template-columns:1fr 2fr;gap:48px;margin-bottom:60px;align-items:end}
   @media(max-width:780px){.sec-head{grid-template-columns:1fr;gap:18px;margin-bottom:40px}}
@@ -279,8 +263,8 @@
   }
   section.is-in .rule-print{width:100%}
 
-  /* ——— Proceso ——— */
-  section#proceso{
+  /* ——— Servicios: primera sección blanca, borde festoneado sobre el hero ——— */
+  section#servicios{
     background:#ffffff;padding:120px 0 130px;border-top:none;z-index:1;
     margin-top:-100px;padding-top:calc(120px + 100px);
     -webkit-mask:
@@ -290,15 +274,23 @@
       radial-gradient(ellipse 50% 100% at 50% 0,transparent 99%,#000 100%) 0 0/20% 100px repeat-x,
       linear-gradient(#000 0%,#000 100%) 0 100px/100% calc(100% - 100px) no-repeat;
   }
-  .process-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative;margin-top:48px}
+
+  /* ——— Proceso ——— */
+  section#proceso{background:#ffffff;padding:104px 0 116px}
+  .proceso-intro{
+    max-width:60ch;margin:-28px 0 8px;font-family:"Poppins",sans-serif;font-weight:500;
+    font-size:clamp(17px,1.9vw,21px);line-height:1.5;letter-spacing:-0.018em;color:var(--ink-soft);
+  }
+  .proceso-intro em{font-style:italic;color:var(--indigo);font-weight:500}
+  .process-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;position:relative;margin-top:48px}
   .flow-track{
-    position:absolute;top:34px;left:12.5%;right:12.5%;height:1px;background:var(--indigo);opacity:.28;
+    position:absolute;top:34px;left:10%;right:10%;height:1px;background:var(--indigo);opacity:.28;
     transform-origin:left;transform:scaleX(0);
     transition:transform 2.4s cubic-bezier(.4,0,.2,1) .4s;z-index:1;
   }
   .process-flow.is-in .flow-track,.reveal.is-in .flow-track{transform:scaleX(1)}
   .flow-pulse{
-    position:absolute;top:34px;left:12.5%;width:10px;height:10px;border-radius:50%;
+    position:absolute;top:34px;left:10%;width:10px;height:10px;border-radius:50%;
     background:var(--indigo);
     box-shadow:0 0 0 5px rgba(19,52,241,.14), 0 0 18px rgba(19,52,241,.5);
     opacity:0;z-index:3;transform:translate(-50%,-50%);
@@ -307,55 +299,108 @@
     animation:flow-travel 5.5s cubic-bezier(.55,.05,.45,.95) infinite 2.6s;
   }
   @keyframes flow-travel{
-    0%{left:12.5%;opacity:0}
-    8%{left:12.5%;opacity:1}
-    92%{left:87.5%;opacity:1}
-    100%{left:87.5%;opacity:0}
+    0%{left:10%;opacity:0}
+    8%{left:10%;opacity:1}
+    92%{left:90%;opacity:1}
+    100%{left:90%;opacity:0}
   }
   .fl-step{
-    position:relative;text-align:center;padding:0 8px;
+    /* align-self:start — si el botón se estira, centra su contenido y desalinea el paso más alto */
+    position:relative;text-align:center;padding:0 8px 4px;display:block;width:100%;align-self:start;
+    background:none;border:none;font-family:inherit;color:inherit;cursor:pointer;
     opacity:0;transform:translateY(20px);
     transition:opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1);
   }
-  .process-flow.is-in .fl-step:nth-child(3),.reveal.is-in .fl-step:nth-child(3){opacity:1;transform:translateY(0);transition-delay:.4s}
-  .process-flow.is-in .fl-step:nth-child(4),.reveal.is-in .fl-step:nth-child(4){opacity:1;transform:translateY(0);transition-delay:.9s}
-  .process-flow.is-in .fl-step:nth-child(5),.reveal.is-in .fl-step:nth-child(5){opacity:1;transform:translateY(0);transition-delay:1.4s}
-  .process-flow.is-in .fl-step:nth-child(6),.reveal.is-in .fl-step:nth-child(6){opacity:1;transform:translateY(0);transition-delay:1.9s}
+  .fl-step:focus-visible{outline:2px solid var(--indigo);outline-offset:6px;border-radius:3px}
+  .process-flow.is-in .fl-step:nth-child(3),.reveal.is-in .fl-step:nth-child(3){opacity:1;transform:translateY(0);transition-delay:.35s}
+  .process-flow.is-in .fl-step:nth-child(4),.reveal.is-in .fl-step:nth-child(4){opacity:1;transform:translateY(0);transition-delay:.75s}
+  .process-flow.is-in .fl-step:nth-child(5),.reveal.is-in .fl-step:nth-child(5){opacity:1;transform:translateY(0);transition-delay:1.15s}
+  .process-flow.is-in .fl-step:nth-child(6),.reveal.is-in .fl-step:nth-child(6){opacity:1;transform:translateY(0);transition-delay:1.55s}
+  .process-flow.is-in .fl-step:nth-child(7),.reveal.is-in .fl-step:nth-child(7){opacity:1;transform:translateY(0);transition-delay:1.95s}
   .fl-marker{
-    width:20px;height:20px;border-radius:50%;
+    display:block;width:20px;height:20px;border-radius:50%;
     background:#fff;border:1.5px solid var(--indigo);
     margin:24px auto 28px;position:relative;z-index:2;
     transition:transform .4s ease, background .4s ease, box-shadow .4s ease;
   }
-  .fl-step:hover .fl-marker{background:var(--indigo);transform:scale(1.25);box-shadow:0 0 0 6px rgba(19,52,241,.12)}
+  .fl-step:hover .fl-marker,.fl-step.active .fl-marker{background:var(--indigo);transform:scale(1.25);box-shadow:0 0 0 6px rgba(19,52,241,.12)}
   .fl-num{
-    font-family:"Poppins",sans-serif;font-size:clamp(46px,4.2vw,64px);
+    display:block;font-family:"Poppins",sans-serif;font-size:clamp(38px,3.6vw,58px);
     line-height:1;color:var(--indigo);font-weight:600;letter-spacing:-0.04em;
-    margin-bottom:22px;transition:transform .5s ease;
+    margin-bottom:20px;transition:transform .5s ease;
   }
-  .fl-step:hover .fl-num{font-style:italic;transform:translateY(-3px)}
-  .fl-title{font-family:"Poppins",sans-serif;font-size:20px;line-height:1.3;font-weight:600;letter-spacing:-0.02em;margin-bottom:12px;color:var(--ink)}
+  .fl-step:hover .fl-num,.fl-step.active .fl-num{font-style:italic;transform:translateY(-3px)}
+  .fl-title{display:block;font-family:"Poppins",sans-serif;font-size:19px;line-height:1.3;font-weight:600;letter-spacing:-0.02em;margin-bottom:12px;color:var(--ink)}
   .fl-title em{font-style:italic;color:var(--indigo);font-weight:600}
-  .fl-desc{font-size:14.5px;line-height:1.55;color:var(--ink-soft);max-width:250px;margin:0 auto}
+  .fl-desc{display:block;font-size:14px;line-height:1.55;color:var(--ink-soft);max-width:240px;margin:0 auto}
+  .fl-more{
+    display:inline-flex;align-items:center;gap:7px;margin-top:16px;
+    font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-soft);border-bottom:1px solid var(--rule-strong);padding-bottom:3px;
+    transition:color .25s ease,border-color .25s ease;
+  }
+  .fl-more::after{content:"+";font-size:13px;line-height:1;transition:transform .3s ease}
+  .fl-step:hover .fl-more{color:var(--indigo);border-color:var(--indigo)}
+  .fl-step.active .fl-more{color:var(--indigo);border-color:var(--indigo)}
+  .fl-step.active .fl-more::after{transform:rotate(45deg)}
+
+  /* Panel de detalle del proceso */
+  .fl-detail{
+    margin-top:44px;background:var(--night);color:var(--paper);border-radius:4px;
+    display:grid;grid-template-columns:auto 1fr auto;gap:36px;align-items:center;
+    padding:34px 34px 36px;position:relative;overflow:hidden;
+    animation:fl-open .45s cubic-bezier(.2,.7,.2,1);
+  }
+  @keyframes fl-open{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+  .fl-detail[hidden]{display:none}
+  .fl-detail-art{
+    width:132px;height:132px;flex:0 0 auto;border-radius:3px;
+    background:rgba(201,224,242,.07);border:1px solid rgba(201,224,242,.18);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .fl-ico{width:66px;height:66px;fill:none;stroke:var(--polvo);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .fl-detail-num{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--indigo-soft);margin-bottom:10px}
+  .fl-detail-txt h3{font-family:"Poppins",sans-serif;font-size:clamp(24px,2.6vw,33px);line-height:1.15;font-weight:700;letter-spacing:-0.03em;color:#fff;margin-bottom:14px}
+  .fl-detail-txt p{font-size:15px;line-height:1.6;color:#9db3ce;max-width:60ch}
+  .fl-detail-txt p + p{margin-top:9px}
+  .fl-detail-close{
+    align-self:start;background:transparent;border:1px solid rgba(201,224,242,.28);color:var(--polvo);
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+    padding:9px 14px;border-radius:999px;cursor:pointer;transition:background .2s ease,color .2s ease;white-space:nowrap;
+  }
+  .fl-detail-close:hover{background:var(--polvo);color:var(--night)}
+
   .proceso-footer{
-    margin-top:64px;text-align:center;
-    font-family:"Poppins",sans-serif;font-size:clamp(16px,1.9vw,21px);
-    font-weight:500;letter-spacing:-0.015em;color:var(--ink-soft);line-height:1.5;
+    margin-top:56px;text-align:center;
+    font-family:"Poppins",sans-serif;font-size:clamp(19px,2.4vw,28px);
+    font-weight:600;letter-spacing:-0.025em;color:var(--ink);line-height:1.4;
     border-top:1px solid var(--rule);padding-top:40px;
   }
-  .proceso-footer em{font-style:italic;color:var(--indigo);font-weight:500}
-  @media(max-width:880px){
-    .process-flow{grid-template-columns:1fr 1fr;gap:48px 24px}
+  .proceso-footer em{font-style:italic;color:var(--indigo);font-weight:700}
+  @media(max-width:1080px){
+    .process-flow{grid-template-columns:repeat(3,1fr);gap:44px 24px}
     .flow-track,.flow-pulse{display:none}
     .fl-marker{margin-top:8px}
   }
-  @media(max-width:480px){.process-flow{grid-template-columns:1fr;gap:32px}}
+  @media(max-width:720px){.process-flow{grid-template-columns:1fr 1fr;gap:36px 20px}}
+  @media(max-width:880px){
+    .fl-detail{grid-template-columns:1fr;gap:22px;text-align:left;padding:28px 24px 30px}
+    .fl-detail-art{width:96px;height:96px}
+    .fl-ico{width:48px;height:48px}
+    .fl-detail-close{justify-self:start}
+  }
+  @media(max-width:420px){.process-flow{grid-template-columns:1fr;gap:30px}}
 
   /* ——— Servicios ——— */
-  .services{display:grid;grid-template-columns:repeat(12,1fr);gap:28px 24px}
-  .svc{position:relative;padding-top:22px;border-top:1px solid var(--ink);display:flex;flex-direction:column;grid-column:span 3}
-  @media(max-width:1080px){.svc{grid-column:span 6}}
+  .services{display:grid;grid-template-columns:repeat(12,1fr);gap:52px 44px}
+  .svc{position:relative;padding-top:22px;border-top:1px solid var(--ink);display:flex;flex-direction:column;grid-column:span 6}
   @media(max-width:720px){.svc{grid-column:1/-1}}
+  /* Listas largas a dos columnas — la tarjeta es ancha (span 6) */
+  .svc ul.cols{columns:2;column-gap:36px}
+  .svc ul.cols li{break-inside:avoid}
+  @media(max-width:560px){.svc ul.cols{columns:1}}
+  /* Tarjeta con imagen en lugar de lista */
+  .svc-photo{margin-top:auto;aspect-ratio:16/10;width:100%}
   .svc .tag{display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:18px}
   .svc h3{font-family:"Poppins",sans-serif;font-size:31px;line-height:1.15;letter-spacing:-0.03em;font-weight:700;margin-bottom:18px}
   .svc h3 em{font-style:italic;color:var(--indigo);font-weight:700}
@@ -370,101 +415,129 @@
   }
   .svc .cap .role{color:var(--indigo);font-family:"Poppins",sans-serif;font-style:italic;font-weight:500;font-size:12px;letter-spacing:-0.01em;text-transform:none}
 
-  /* ——— Cobertura: dos paneles ——— */
-  .modes{display:grid;grid-template-columns:6fr 6fr;gap:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
-  @media(max-width:880px){.modes{grid-template-columns:1fr}}
-  .mode{padding:40px 36px 44px;position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:540px}
-  .mode + .mode{border-left:1px solid var(--ink)}
-  @media(max-width:880px){.mode + .mode{border-left:none;border-top:1px solid var(--ink)}}
-  @media(max-width:560px){.mode{padding:32px 22px 36px}}
+  /* ——— Cobertura: mapa nacional ——— */
+  .cob-grid{display:grid;grid-template-columns:1fr .92fr;gap:60px;align-items:start}
+  @media(max-width:980px){.cob-grid{grid-template-columns:1fr;gap:44px}}
 
-  .mode .kicker{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--indigo);margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-  .mode .kicker .l{display:inline-flex;align-items:center;gap:10px}
-  .mode .kicker .pin{width:8px;height:8px;background:var(--indigo);border-radius:50%;box-shadow:0 0 0 0 var(--indigo);animation:pulse 2.4s infinite}
-  .mode .kicker .meta{color:var(--ink-soft);letter-spacing:.06em}
+  .cob-lead{font-family:"Poppins",sans-serif;font-size:clamp(18px,2vw,23px);line-height:1.45;letter-spacing:-0.02em;font-weight:500;color:var(--ink)}
+  .cob-lead b{color:var(--indigo);font-weight:500}
+  .cob-body{margin-top:18px;font-size:15.5px;line-height:1.6;color:var(--ink-soft);max-width:50ch}
 
-  .mode .big{font-family:"Poppins",sans-serif;font-weight:700;letter-spacing:-0.04em;line-height:1.12;font-size:clamp(28px,3.3vw,42px)}
-  .mode.dark .big{font-style:italic}
-  .mode p.copy{margin-top:22px;font-size:15px;line-height:1.55;color:var(--ink-soft);max-width:44ch}
-
-  .mode.light{background:var(--paper)}
-  .addr-book{margin-top:32px;border-top:1px solid var(--rule-strong);display:grid;grid-template-columns:auto 1fr;gap:0}
-  .addr-book .row{display:contents}
-  .addr-book dt{
-    padding:13px 22px 13px 0;border-bottom:1px solid var(--rule);
-    font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);
-    align-self:center;
+  .cob-kicker{
+    margin-top:40px;padding-bottom:14px;border-bottom:1px solid var(--ink);
+    display:flex;align-items:center;gap:10px;
+    font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--indigo);
   }
-  .addr-book dd{
-    padding:13px 0;border-bottom:1px solid var(--rule);
-    font-family:"Poppins",sans-serif;font-size:15px;line-height:1.45;letter-spacing:-0.015em;color:var(--ink);font-weight:500;
-  }
-  .addr-book dd em{font-style:italic;color:var(--indigo);font-weight:500}
-  .addr-book dd .alt{display:block;font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;margin-top:3px;font-style:normal;font-weight:400}
+  .cob-kicker .pin{width:8px;height:8px;border-radius:50%;background:var(--indigo);box-shadow:0 0 0 0 var(--indigo);animation:pulse 2.4s infinite}
 
-  .addr-cta{margin-top:auto;padding-top:32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-  .addr-cta .ll{
-    font-family:"Poppins",sans-serif;font-style:italic;font-weight:400;font-size:13.5px;color:var(--ink-soft);
-    max-width:28ch;line-height:1.5;
+  .cob-cities{list-style:none}
+  .cob-cities li{border-bottom:1px solid var(--rule)}
+  .cob-cities button{
+    width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:baseline;
+    background:none;border:none;font-family:inherit;text-align:left;cursor:pointer;
+    padding:15px 0;transition:padding-left .3s ease;
+  }
+  .cob-cities button:hover,.cob-cities button.active{padding-left:10px}
+  .cob-cities button:focus-visible{outline:2px solid var(--indigo);outline-offset:3px}
+  .cob-cities .ci{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.08em;color:var(--ink-soft)}
+  .cob-cities .cn{font-family:"Poppins",sans-serif;font-size:17px;font-weight:500;letter-spacing:-0.02em;color:var(--ink);transition:color .2s ease}
+  .cob-cities button:hover .cn,.cob-cities button.active .cn{color:var(--indigo);font-style:italic}
+  .cob-cities .cd{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);text-align:right}
+  @media(max-width:560px){
+    .cob-cities button{grid-template-columns:auto 1fr;gap:14px}
+    .cob-cities .cd{grid-column:2;text-align:left;margin-top:3px}
   }
 
-  .mode.dark{background:var(--night);color:var(--paper)}
-  .mode.dark .kicker{color:var(--polvo)}
-  .mode.dark .kicker .pin{background:var(--indigo-soft);animation:pulse-soft 2.2s infinite}
-  @keyframes pulse-soft{0%{box-shadow:0 0 0 0 rgba(92,116,245,.55)}70%{box-shadow:0 0 0 10px rgba(92,116,245,0)}100%{box-shadow:0 0 0 0 rgba(92,116,245,0)}}
-  .mode.dark .kicker .meta{color:#8fa6c4}
-  .mode.dark p.copy{color:#9db3ce}
-  .mode.dark .big{color:#fff}
-
-  .deptos{margin-top:30px;border-top:1px solid #ffffff22;padding-top:20px;column-count:3;column-gap:24px;column-rule:1px solid #ffffff14}
-  @media(max-width:560px){.deptos{column-count:2}}
-  .deptos .d{
-    display:flex;align-items:baseline;gap:8px;break-inside:avoid;padding:5px 0;
-    font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:#9db3ce;
-    transition:color .25s ease, transform .25s ease;
+  .cob-cta{
+    margin-top:38px;font-family:"Poppins",sans-serif;font-size:clamp(19px,2.2vw,26px);
+    line-height:1.35;font-weight:600;letter-spacing:-0.028em;color:var(--ink);
   }
-  .deptos .d::before{content:"";flex:0 0 6px;height:6px;border-radius:50%;background:var(--indigo-soft);transform:translateY(-1px);transition:box-shadow .3s ease}
-  .deptos .d:hover{color:#fff;transform:translateX(3px)}
-  .deptos .d:hover::before{box-shadow:0 0 0 3px rgba(92,116,245,.25)}
-  .deptos .d b{color:var(--polvo);font-weight:500;letter-spacing:.02em}
+  .cob-cta em{font-style:italic;color:var(--indigo);font-weight:700}
 
-  .wire{margin-top:auto;padding-top:16px;border-top:1px solid #ffffff22;overflow:hidden;position:relative}
-  .wire::before,.wire::after{content:"";position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
-  .wire::before{left:0;background:linear-gradient(to right,var(--night),transparent)}
-  .wire::after{right:0;background:linear-gradient(to left,var(--night),transparent)}
-  .wire-track{display:flex;gap:36px;width:max-content;animation:wire 48s linear infinite;font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#9db3ce}
-  .wire:hover .wire-track{animation-play-state:paused}
-  .wire-track span b{color:var(--polvo)}
-  @keyframes wire{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-  .dark-foot{margin-top:26px;padding-top:24px;border-top:1px solid #ffffff22;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:end}
-  @media(max-width:520px){.dark-foot{grid-template-columns:1fr;gap:18px}}
-  .dark-foot .stat{font-family:"Poppins",sans-serif;font-size:29px;line-height:1.1;font-weight:600;letter-spacing:-0.03em;color:#fff}
-  .dark-foot .stat em{font-style:italic;color:var(--indigo-soft);font-weight:600}
-  .dark-foot .stat .l{display:block;font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#9db3ce;margin-top:8px;font-style:normal;font-weight:400;line-height:1.5}
-
-  /* ——— Nosotros: citas editoriales ——— */
-  .quotes{display:grid;grid-template-columns:1fr;gap:76px}
-  .q-big{display:grid;grid-template-columns:5fr 7fr;gap:48px;align-items:start}
-  @media(max-width:880px){.q-big{grid-template-columns:1fr;gap:28px}}
-  .q-big .face-wrap{position:relative}
-  .q-big .face-wrap > .label{
-    position:absolute;top:-22px;left:0;
-    font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);
+  /* Lámina del mapa */
+  .map-plate{position:relative;background:#fff;border:1px solid var(--rule-strong);padding:26px 24px 20px;border-radius:2px}
+  @media(max-width:560px){.map-plate{padding:20px 16px 14px}}
+  .map-plate .plate-hd{
+    display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
+    padding-bottom:14px;margin-bottom:10px;border-bottom:1px solid var(--rule);
   }
-  .q-big .face{width:100%;aspect-ratio:4/5}
-  .q-big .face-cap{
-    margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);
-    display:flex;justify-content:space-between;
-    font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);
+  .map-plate .plate-hd b{color:var(--indigo);font-weight:500}
+  .co-map{display:block;width:100%;height:auto;max-height:min(74vh,680px);overflow:visible}
+  .map-foot{
+    display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:baseline;
+    margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--ink-soft);
   }
-  .q-big blockquote{font-family:"Poppins",sans-serif;font-weight:500;letter-spacing:-0.02em;font-size:clamp(19px,2.05vw,27px);line-height:1.42}
-  .q-big blockquote em{font-style:italic;color:var(--indigo);font-weight:500}
-  .q-big blockquote::before{content:"";display:block;width:64px;height:1px;background:var(--ink);margin-bottom:30px}
-  .q-big .who{margin-top:32px;padding-top:22px;border-top:1px solid var(--rule-strong);display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
-  @media(max-width:680px){.q-big .who{grid-template-columns:1fr 1fr}}
-  .q-big .who .field{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
-  .q-big .who .field b{display:block;color:var(--ink);font-family:"Poppins",sans-serif;font-size:14px;font-weight:600;line-height:1.35;letter-spacing:-0.015em;text-transform:none;margin-top:4px}
+  .map-foot .mid{color:var(--ink);border-left:1px solid var(--rule-strong);border-right:1px solid var(--rule-strong);padding:0 12px;text-align:center}
+  .map-foot .r{text-align:right}
+  .map-foot b{color:var(--ink);font-weight:500}
+  @media(max-width:560px){
+    .map-foot{grid-template-columns:1fr;gap:4px;font-size:9.5px}
+    .map-foot .mid,.map-foot .r{border:none;padding:0;text-align:left}
+  }
+
+  /* País — relieve y trazo */
+  .co-shadow{fill:var(--indigo);opacity:.13;transform:translate(7px,11px)}
+  .co-land{fill:var(--paper-3);stroke:var(--indigo);stroke-width:1.6;stroke-linejoin:round}
+
+  /* Pines de ciudad */
+  .co-pin{cursor:pointer;outline:none}
+  .co-halo{fill:var(--indigo);opacity:.16;transform-origin:center;transform-box:fill-box;animation:co-halo 3.2s ease-out infinite;animation-delay:var(--d,0s)}
+  @keyframes co-halo{0%{transform:scale(.35);opacity:.34}70%{transform:scale(1.5);opacity:0}100%{transform:scale(1.5);opacity:0}}
+  .co-dot{fill:var(--indigo);stroke:#fff;stroke-width:2.4;transition:r .3s ease}
+  .co-label{
+    font-family:"JetBrains Mono",monospace;font-size:15px;letter-spacing:.08em;text-transform:uppercase;
+    fill:var(--ink);paint-order:stroke;stroke:#fff;stroke-width:4.5px;stroke-linejoin:round;
+    transition:fill .25s ease;pointer-events:none;
+  }
+  .co-pin:hover .co-dot,.co-pin:focus .co-dot,.co-pin.active .co-dot{r:9.5}
+  .co-pin:hover .co-label,.co-pin:focus .co-label,.co-pin.active .co-label{fill:var(--indigo)}
+  .co-pin:hover .co-halo,.co-pin.active .co-halo{opacity:.32}
+
+  /* ——— Nosotros: equipo e identidad ——— */
+  .quotes{display:grid;grid-template-columns:1fr;gap:72px}
+
+  .team-kicker{
+    padding-bottom:16px;margin-bottom:32px;border-bottom:1px solid var(--ink);
+    display:flex;align-items:center;gap:10px;
+    font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--indigo);
+  }
+  .team-kicker .pin{width:8px;height:8px;border-radius:50%;background:var(--indigo);box-shadow:0 0 0 0 var(--indigo);animation:pulse 2.4s infinite}
+  .team{display:grid;grid-template-columns:repeat(5,1fr);gap:26px}
+  @media(max-width:900px){.team{grid-template-columns:repeat(3,1fr);gap:22px}}
+  @media(max-width:560px){.team{grid-template-columns:repeat(2,1fr);gap:18px}}
+  .member{margin:0}
+  .member-photo{
+    position:relative;aspect-ratio:3/4;border-radius:2px;overflow:hidden;background:var(--night);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .member-photo img{position:relative;z-index:2;width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+  .member:hover .member-photo img{transform:scale(1.04)}
+  /* Marcador provisional mientras llegan los JPG del equipo */
+  .member-photo::before{
+    content:"";position:absolute;inset:0;z-index:0;opacity:.10;
+    background:url("./assets/isotipo-blanco.png") center/56% no-repeat;
+  }
+  .member-photo::after{
+    content:attr(data-ini);position:absolute;z-index:1;
+    font-family:"Poppins",sans-serif;font-weight:600;font-size:clamp(34px,4.2vw,54px);
+    letter-spacing:-0.04em;color:var(--indigo-soft);opacity:.9;
+  }
+  .member figcaption{margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  .member .mi{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.10em;color:var(--ink-soft)}
+  .member .mn{font-family:"Poppins",sans-serif;font-size:16px;font-weight:600;letter-spacing:-0.02em;color:var(--ink);transition:color .2s ease}
+  .member:hover .mn{font-style:italic;color:var(--indigo)}
+
+  /* Misión y visión */
+  .ident{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+  @media(max-width:880px){.ident{grid-template-columns:1fr;gap:38px}}
+  .ident-block{border-top:1px solid var(--ink);padding-top:26px}
+  .ident-block .num{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:18px}
+  .ident-block p{font-size:15.5px;line-height:1.62;color:var(--ink-soft)}
+  .ident-block p + p{margin-top:14px}
+  .ident-block p em{font-style:italic;color:var(--indigo);font-weight:500}
+  .ident-block p:first-of-type{font-family:"Poppins",sans-serif;font-size:17.5px;line-height:1.5;letter-spacing:-0.018em;font-weight:500;color:var(--ink)}
 
   .q-typo{border-top:1px solid var(--ink);padding-top:36px;display:grid;grid-template-columns:auto 1fr auto;gap:48px;align-items:start}
   @media(max-width:780px){.q-typo{grid-template-columns:1fr;gap:18px}}
@@ -515,29 +588,6 @@
     .voices .lbl-fixed{font-size:12.5px}
   }
 
-  /* ——— Objetivos ——— */
-  .obj-grid{display:grid;grid-template-columns:5fr 7fr;gap:56px;align-items:start}
-  @media(max-width:980px){.obj-grid{grid-template-columns:1fr;gap:36px}}
-  .obj-photo{aspect-ratio:16/10}
-  .obj-list{border-top:1px solid var(--ink)}
-  .obj-item{
-    display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:baseline;
-    padding:22px 0;border-bottom:1px solid var(--rule);
-    transition:padding-left .3s ease;
-  }
-  .obj-item:hover{padding-left:8px}
-  .obj-item .n{
-    font-family:"Poppins",sans-serif;font-size:27px;line-height:1.1;font-weight:600;letter-spacing:-0.03em;
-    color:var(--indigo);min-width:42px;
-  }
-  .obj-item:hover .n{font-style:italic}
-  .obj-item p{font-size:15.5px;line-height:1.55;color:var(--ink-soft);max-width:56ch}
-  .obj-item p b{color:var(--ink);font-weight:500}
-  @media(max-width:560px){
-    .obj-item{grid-template-columns:1fr;gap:8px;padding:18px 0}
-    .obj-item .n{font-size:28px}
-  }
-
   /* ——— Contacto ——— */
   .contact{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
   @media(max-width:880px){.contact{grid-template-columns:1fr;gap:40px}}
@@ -579,9 +629,40 @@
   form .legal{font-size:11.5px;color:#9db3ce;margin-top:18px;line-height:1.5;max-width:44ch}
   form .legal a{color:var(--polvo);text-decoration:underline}
 
+  /* ——— Lámina de marca · sustituye a los avatares hasta que lleguen ——— */
+  .brand-plate{
+    position:relative;background:var(--night);border-radius:3px;
+    min-height:440px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:48px 32px;isolation:isolate;
+  }
+  .brand-plate.light{min-height:380px}
+  .brand-plate::before{
+    content:"";position:absolute;inset:0;border-radius:3px;pointer-events:none;
+    background:radial-gradient(circle at 50% 36%,rgba(19,52,241,.38),transparent 64%);
+  }
+  .brand-iso{position:relative;z-index:1;width:clamp(92px,15vw,132px);height:auto;opacity:.95}
+  .brand-plate-cap{position:relative;z-index:1;margin-top:34px;text-align:center;max-width:34ch}
+  .brand-plate-cap b{
+    display:block;font-family:"Poppins",sans-serif;font-style:italic;font-weight:500;
+    font-size:17px;letter-spacing:-0.02em;color:#fff;margin-bottom:9px;
+  }
+  .brand-plate-cap span{
+    display:block;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.10em;
+    text-transform:uppercase;color:#9db3ce;line-height:1.75;
+  }
+
+  /* ——— Consulta gratuita ——— */
+  .consulta-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start}
+  @media(max-width:880px){.consulta-grid{grid-template-columns:1fr;gap:38px}}
+  .consulta-facts{margin-top:26px;border-top:1px solid var(--rule-strong)}
+  .consulta-facts > div{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid var(--rule)}
+  .consulta-facts dt{padding:14px 0;font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .consulta-facts dd{padding:14px 0;font-family:"Poppins",sans-serif;font-size:15px;font-weight:500;letter-spacing:-0.015em;color:var(--ink)}
+  .consulta-facts dd em{font-style:italic;color:var(--indigo)}
+
   /* ——— Footer ——— */
   footer{padding:64px 0 0;border-top:1px solid var(--rule-strong);background:var(--paper)}
-  .colofon{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:48px}
+  .colofon{display:grid;grid-template-columns:1.5fr 1fr 1.2fr;gap:44px;padding-bottom:48px}
   @media(max-width:880px){.colofon{grid-template-columns:1fr 1fr;gap:28px}}
   .colofon h5{
     font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);
@@ -617,10 +698,6 @@
   .masthead-logo{text-align:center;padding:52px 0 36px;margin-top:16px}
   .masthead-logo img{width:clamp(200px,30vw,360px);height:auto;opacity:.94;display:inline-block}
   @media(max-width:780px){.masthead-logo img{width:clamp(160px,44vw,240px)}}
-
-  .pill{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border:1px solid var(--rule-strong);border-radius:999px;font-size:12px;color:var(--ink-soft);letter-spacing:.02em;transition:background .2s ease,color .2s ease}
-  .pill:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
-  .pill .dot{width:6px;height:6px;border-radius:50%;background:var(--indigo)}
 
   /* ——— CTA fija móvil ——— */
   .m-cta{
@@ -669,7 +746,7 @@
   /* Movimiento reducido */
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
-    .wire-track,.voices-track{animation:none}
+    .voices-track{animation:none}
     body::after{animation:none}
     h1.head .line{overflow:visible}
     h1.head .line > .lin{transform:none;opacity:1}
@@ -681,7 +758,7 @@
   /* ═══════ MOBILE ═══════ */
   @media(max-width:780px){
     section{padding:64px 0}
-    section#proceso{padding:72px 0 80px;margin-top:-72px;padding-top:calc(72px + 72px);
+    section#servicios{padding:72px 0 80px;margin-top:-72px;padding-top:calc(72px + 72px);
       -webkit-mask:
         radial-gradient(ellipse 50% 100% at 50% 0,transparent 99%,#000 100%) 0 0/20% 72px repeat-x,
         linear-gradient(#000 0%,#000 100%) 0 72px/100% calc(100% - 72px) no-repeat;
@@ -689,6 +766,7 @@
         radial-gradient(ellipse 50% 100% at 50% 0,transparent 99%,#000 100%) 0 0/20% 72px repeat-x,
         linear-gradient(#000 0%,#000 100%) 0 72px/100% calc(100% - 72px) no-repeat;
     }
+    section#proceso{padding:64px 0 72px}
     section#nosotros{padding-top:52px}
     section#cobertura{padding-bottom:56px}
 
@@ -709,6 +787,7 @@
     .svc h3{font-size:27px;margin-bottom:14px}
     .svc p{font-size:14.5px;margin-bottom:18px}
     .svc ul li{font-size:13.5px;padding:8px 0}
+    .services{gap:40px 28px}
 
     .process-flow{margin-top:36px;gap:24px}
     .fl-step{padding:0 4px}
@@ -718,28 +797,25 @@
     .fl-desc{font-size:14px;max-width:100%}
     .proceso-footer{margin-top:40px;padding-top:24px;font-size:15.5px;line-height:1.5}
 
-    .mode{padding:32px 22px 36px;min-height:0}
-    .mode .kicker{margin-bottom:18px;font-size:10px}
-    .mode .big{font-size:clamp(25px,5.9vw,36px)}
-    .mode p.copy{font-size:14.5px;margin-top:18px}
-    .addr-book{margin-top:24px;grid-template-columns:108px 1fr}
-    .addr-book dt{padding:12px 14px 12px 0;font-size:9.5px}
-    .addr-book dd{padding:12px 0;font-size:14.5px;line-height:1.45}
-    .addr-cta{padding-top:24px;gap:16px}
-    .addr-cta .ll{font-size:12.5px;max-width:100%}
-    .deptos{margin-top:24px;padding-top:16px}
-    .deptos .d{font-size:10px;padding:4px 0;gap:6px}
-    .dark-foot{margin-top:24px}
-    .dark-foot .stat{font-size:25px}
-    .wire{margin-top:22px;padding-top:14px}
-    .deptos{margin-bottom:4px}
+    .cob-lead{font-size:17.5px;line-height:1.45}
+    .cob-body{font-size:15px;margin-top:14px}
+    .cob-kicker{margin-top:30px;font-size:10px}
+    .cob-cities button{padding:13px 0}
+    .cob-cities .cn{font-size:16px}
+    .cob-cta{margin-top:28px;font-size:19px}
+
+    .proceso-intro{margin:-14px 0 4px;font-size:16.5px}
+    .fl-detail{margin-top:32px}
+    .fl-more{margin-top:12px}
 
     .quotes{gap:52px}
-    .q-big .face-wrap > .label{top:-16px;font-size:9.5px}
-    .q-big blockquote{font-size:18px;line-height:1.45}
-    .q-big blockquote::before{margin-bottom:22px;width:48px}
-    .q-big .who{margin-top:24px;padding-top:18px;gap:14px}
-    .q-big .who .field b{font-size:13px}
+    .team-kicker{margin-bottom:24px;font-size:10px}
+    .member figcaption{margin-top:11px;padding-top:10px;gap:8px}
+    .member .mn{font-size:15px}
+    .ident{gap:30px}
+    .ident-block{padding-top:20px}
+    .ident-block p{font-size:15px;line-height:1.6}
+    .ident-block p:first-of-type{font-size:16.5px}
     .q-typo{padding-top:24px}
     .q-typo blockquote{font-size:16px;line-height:1.5}
     .valores .v{font-size:13.5px;padding:7px 13px}
@@ -766,7 +842,7 @@
 
   @media(max-width:480px){
     section{padding:52px 0}
-    section#proceso{padding:60px 0 68px;padding-top:calc(60px + 64px);margin-top:-64px;
+    section#servicios{padding:60px 0 68px;padding-top:calc(60px + 64px);margin-top:-64px;
       -webkit-mask:
         radial-gradient(ellipse 50% 100% at 50% 0,transparent 99%,#000 100%) 0 0/20% 64px repeat-x,
         linear-gradient(#000 0%,#000 100%) 0 64px/100% calc(100% - 64px) no-repeat;
@@ -774,6 +850,7 @@
         radial-gradient(ellipse 50% 100% at 50% 0,transparent 99%,#000 100%) 0 0/20% 64px repeat-x,
         linear-gradient(#000 0%,#000 100%) 0 64px/100% calc(100% - 64px) no-repeat;
     }
+    section#proceso{padding:52px 0 60px}
     section#cobertura{padding-bottom:40px}
     .hero{padding:26px 0 18px}
     .hero-sub{margin-top:22px}
@@ -783,13 +860,13 @@
     .process-flow{margin-top:28px;gap:18px}
     .fl-num{font-size:37px}
     .fl-title{font-size:17px}
-    .mode{padding:26px 18px 30px}
-    .mode .kicker{flex-wrap:wrap;gap:6px}
-    .addr-book{grid-template-columns:1fr;margin-top:20px}
-    .addr-book dt{padding:12px 0 2px;border-bottom:none}
-    .addr-book dd{padding:0 0 12px}
-    .dark-foot{grid-template-columns:1fr;gap:18px}
-    .q-big blockquote{font-size:17px}
+    .cob-lead{font-size:16.5px}
+    .cob-cta{font-size:18px}
+    .consulta-facts > div{grid-template-columns:1fr}
+    .consulta-facts dt{padding:12px 0 2px;border-bottom:none}
+    .consulta-facts dd{padding:0 0 12px}
+    .brand-plate{min-height:320px;padding:36px 24px}
+    .brand-plate.light{min-height:300px}
     .q-typo blockquote{font-size:15.5px}
     form{padding:24px 18px}
   }
@@ -798,7 +875,7 @@
     .wrap{padding:0 14px}
     h2.sec-title{font-size:25px}
     .svc h3{font-size:24px}
-    .mode .big{font-size:24px}
+    .cob-lead{font-size:16px}
     .fl-num{font-size:34px}
   }
 </style>
@@ -819,12 +896,13 @@
   <div class="wrap nav-row">
     <a href="#" aria-label="Shaddai Consultants"><img src="./assets/logo-azul.png" alt="Shaddai Consultants" class="logo"></a>
     <nav class="nav-links" aria-label="Principal">
-      <a href="#proceso">Proceso</a>
+      <a href="#shaddai">Qué es Shaddai</a>
       <a href="#servicios">Servicios</a>
+      <a href="#proceso">Proceso</a>
       <a href="#cobertura">Cobertura</a>
       <a href="#nosotros">Nosotros</a>
-      <a href="#contacto">Contacto</a>
-      <a href="#contacto" class="cta-pill"><span class="dot"></span>Consulta gratuita</a>
+      <a href="#contacto">Contáctanos</a>
+      <a href="#consulta" class="cta-pill"><span class="dot"></span>Consulta gratuita</a>
     </nav>
     <a href="tel:+573167415056" class="nav-phone" aria-label="Llamar a Shaddai Consultants">
       <span class="pulse"></span>316 741 5056
@@ -834,8 +912,8 @@
 
 <main>
 
-  <!-- ═══ HERO ═══ -->
-  <section class="hero" style="border-top:none">
+  <!-- ═══ HERO · QUÉ ES SHADDAI ═══ -->
+  <section class="hero" id="shaddai" style="border-top:none">
     <div class="wrap">
       <div class="hero-grid">
         <div>
@@ -844,10 +922,10 @@
             <span class="t">Consultoría empresarial · Bogotá, Colombia · <b id="live-date-text">—</b></span>
           </div>
           <h1 class="head display" id="hero-head">
-            <span class="line"><span class="lin" style="--i:0">Impulsamos el</span></span>
-            <span class="line"><span class="lin" style="--i:1"><em>crecimiento</em> de</span></span>
-            <span class="line"><span class="lin" style="--i:2">su empresa —</span></span>
-            <span class="line head-underline"><span class="lin" style="--i:3">con método.</span></span>
+            <span class="line"><span class="lin" style="--i:0">Somos una</span></span>
+            <span class="line"><span class="lin" style="--i:1">empresa de</span></span>
+            <span class="line"><span class="lin" style="--i:2"><em>consultoría</em></span></span>
+            <span class="line head-underline"><span class="lin" style="--i:3">y asesoría.</span></span>
           </h1>
         </div>
 
@@ -926,11 +1004,14 @@
 
       <div class="hero-sub">
         <p class="lead">Somos aliados comprometidos con <em>tu progreso.</em></p>
-        <p>Un equipo de profesionales altamente calificados que genera valor a través de <b>auditoría, gestión, asesoría y capacitación</b> empresarial. Trabajamos desde la perspectiva de mejora continua, innovación y calidad en la gestión — con lenguaje claro y sin tecnicismos innecesarios.</p>
+        <div>
+          <p>Especializada en acompañar a las organizaciones en la <b>implementación, mantenimiento y mejora de sus Sistemas de Gestión,</b> promoviendo el cumplimiento normativo y la optimización de sus procesos.</p>
+          <p style="margin-top:16px">Nuestro <b>objetivo</b> es acompañar a cada organización en el fortalecimiento de sus procesos, aportando conocimiento y experiencia para generar valor y promover la mejora continua.</p>
+        </div>
       </div>
 
       <div class="hero-actions">
-        <a href="#contacto" class="btn btn-primary">
+        <a href="#consulta" class="btn btn-primary">
           Solicitar consulta gratuita
           <svg class="arrow" viewBox="0 0 20 20" fill="none"><path d="M3 10h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.6"/></svg>
         </a>
@@ -940,7 +1021,11 @@
       <div class="figures reveal">
         <div class="fig">
           <div class="n"><span class="count" data-count-to="8">8</span></div>
-          <span class="l">Áreas de<br>cobertura</span>
+          <span class="l">Líneas de<br>servicio</span>
+        </div>
+        <div class="fig">
+          <div class="n">+<span class="count" data-count-to="100">100</span></div>
+          <span class="l">Soluciones<br>estratégicas</span>
         </div>
         <div class="fig">
           <div class="n"><span class="count" data-count-to="14">14</span></div>
@@ -950,55 +1035,8 @@
           <div class="n"><span class="count" data-count-to="6">6</span></div>
           <span class="l">Tipos de<br>auditoría</span>
         </div>
-        <div class="fig">
-          <div class="n"><span class="count" data-count-to="100" data-suffix="&nbsp;%">100&nbsp;%</span></div>
-          <span class="l">Compromiso con<br>el cliente</span>
-        </div>
       </div>
 
-    </div>
-  </section>
-
-  <!-- ═══ PROCESO ═══ -->
-  <section id="proceso">
-    <span class="rule-print"></span>
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <div class="sec-num">01 — Proceso</div>
-        <h2 class="sec-title display">Cómo <em>trabajamos</em></h2>
-      </div>
-
-      <div class="process-flow reveal">
-        <div class="flow-track"></div>
-        <div class="flow-pulse"></div>
-
-        <div class="fl-step">
-          <div class="fl-marker"></div>
-          <div class="fl-num">01</div>
-          <h3 class="fl-title">Diagnóstico <em>integral</em></h3>
-          <p class="fl-desc">Estudiamos a fondo su actividad real: procesos, personas y riesgos.</p>
-        </div>
-        <div class="fl-step">
-          <div class="fl-marker"></div>
-          <div class="fl-num">02</div>
-          <h3 class="fl-title">Auditoría y <em>evidencia</em></h3>
-          <p class="fl-desc">Obtenemos y evaluamos las evidencias de sus operaciones. Sin supuestos.</p>
-        </div>
-        <div class="fl-step">
-          <div class="fl-marker"></div>
-          <div class="fl-num">03</div>
-          <h3 class="fl-title">Diseño e <em>implementación</em></h3>
-          <p class="fl-desc">Sistemas de gestión a la medida, no plantillas genéricas.</p>
-        </div>
-        <div class="fl-step">
-          <div class="fl-marker"></div>
-          <div class="fl-num">04</div>
-          <h3 class="fl-title">Capacitación y <em>seguimiento</em></h3>
-          <p class="fl-desc">Su equipo queda en capacidad de sostenerlo sin depender de nosotros.</p>
-        </div>
-      </div>
-
-      <p class="proceso-footer reveal">Mejora continua, innovación y calidad en la gestión — <em>en cada entrega</em></p>
     </div>
   </section>
 
@@ -1007,68 +1045,196 @@
     <span class="rule-print"></span>
     <div class="wrap">
       <div class="sec-head reveal">
-        <div class="sec-num">02 — Cuatro frentes, un solo equipo</div>
+        <div class="sec-num">01 — Servicios</div>
         <h2 class="sec-title display">Soluciones integrales<br>para <em>su empresa.</em></h2>
       </div>
 
       <div class="services">
         <article class="svc reveal">
-          <div class="tag"><span>01 · Evidencia</span><span>·</span></div>
-          <h3 class="display">Auditorí<em>as</em></h3>
-          <p>Obtenemos y evaluamos las evidencias relacionadas con sus actividades económicas y demás eventos, para verificar cumplimiento y eficiencia.</p>
-          <ul>
-            <li>Auditoría de calidad</li>
-            <li>Auditoría RUC</li>
-            <li>Auditoría de riesgos</li>
-            <li>Gestión operativa y financiera</li>
-            <li>Auditoría tributaria</li>
+          <div class="tag"><span>01 · Cobertura</span><span>·</span></div>
+          <h3 class="display">Líneas de <em>servicio</em></h3>
+          <p>Ocho frentes que cubren la operación completa de su organización. Usted no coordina varios proveedores: habla con un solo equipo.</p>
+          <ul class="cols">
+            <li>SG-SST</li>
+            <li>Psicosocial</li>
+            <li>Biomecánico</li>
+            <li>Seguridad Vial</li>
+            <li>Ambiental</li>
+            <li>Promoción y Prevención</li>
+            <li>Auditorías y Certificaciones</li>
+            <li>Emergencias</li>
           </ul>
-          <div class="cap"><span class="role">Seis tipos</span><span>Informe con hallazgos</span></div>
+          <div class="cap"><span class="role">Ocho líneas</span><span>Un solo interlocutor</span></div>
         </article>
 
         <article class="svc reveal">
           <div class="tag"><span>02 · Productividad</span><span>·</span></div>
-          <h3 class="display">Gesti<em>ón</em></h3>
+          <h3 class="display">Soluciones <em>estratégicas</em></h3>
           <p>Con diversas metodologías buscamos mejorar la productividad de su empresa y de su personal, midiendo lo que de verdad importa.</p>
-          <ul>
-            <li>Gestión estratégica</li>
+          <div class="svc-photo photo-frame">
+            <span class="crop tl"></span><span class="crop tr"></span><span class="crop bl"></span><span class="crop br"></span>
+            <span class="stamp">Operación · <b>Bogotá</b></span>
+            <img src="./assets/foto-equipo.jpg" alt="Equipo empresarial trabajando con Shaddai Consultants en Bogotá" loading="lazy">
+          </div>
+          <div class="cap"><span class="role">Más de cien</span><span>A la medida de su operación</span></div>
+        </article>
+
+        <article class="svc reveal">
+          <div class="tag"><span>03 · Personas</span><span>·</span></div>
+          <h3 class="display">Programas de <em>capacitación</em></h3>
+          <p>Respondemos a sus necesidades de actualización con programas concretos. Nada de talleres motivacionales genéricos: contenido aplicable el lunes siguiente.</p>
+          <ul class="cols">
+            <li>Actualización contable</li>
+            <li>Modelos de liderazgo</li>
+            <li>Estilos de vida y trabajo</li>
+            <li>Vida saludable</li>
+            <li>Legislación</li>
+            <li>Lesiones osteomusculares</li>
+            <li>Primeros auxilios</li>
+            <li>Emergencias</li>
+            <li>Ergonomía</li>
+            <li>Higiene postural</li>
+            <li>Planeación estratégica</li>
+            <li>Evaluación de riesgos</li>
+            <li>Riesgos laborales</li>
+            <li>Riesgos biomecánicos</li>
+          </ul>
+          <div class="cap"><span class="role">Catorce programas</span><span>Por área y nivel del equipo</span></div>
+        </article>
+
+        <article class="svc reveal">
+          <div class="tag"><span>04 · Evidencia</span><span>·</span></div>
+          <h3 class="display">Tipos de <em>auditoría</em></h3>
+          <p>Obtenemos y evaluamos las evidencias relacionadas con sus actividades económicas y demás eventos, para verificar cumplimiento y eficiencia.</p>
+          <ul class="cols">
+            <li>Auditoría de calidad</li>
+            <li>Auditoría RUC</li>
+            <li>Auditoría de riesgos</li>
             <li>Gestión operativa</li>
             <li>Gestión financiera</li>
-            <li>Gestión de personas</li>
-            <li>Gestión de riesgos</li>
+            <li>Auditoría tributaria</li>
           </ul>
-          <div class="cap"><span class="role">Cinco frentes</span><span>Indicadores propios</span></div>
-        </article>
-
-        <article class="svc reveal">
-          <div class="tag"><span>03 · Criterio</span><span>·</span></div>
-          <h3 class="display">Asesorí<em>a</em></h3>
-          <p>Luego de un profundo estudio de su actividad brindamos las sugerencias para la mejora de sus procesos, con acompañamiento hasta la ejecución.</p>
-          <ul>
-            <li>Asesoría tributaria</li>
-            <li>Diseño e implementación S.G.S.S.T.</li>
-            <li>Planeación estratégica</li>
-            <li>Coaching profesional</li>
-            <li>Acompañamiento a la dirección</li>
-          </ul>
-          <div class="cap"><span class="role">A la medida</span><span>Ejecución incluida</span></div>
-        </article>
-
-        <article class="svc reveal">
-          <div class="tag"><span>04 · Personas</span><span>·</span></div>
-          <h3 class="display">Capacitacion<em>es</em></h3>
-          <p>Respondemos a sus necesidades de actualización enfatizando en el factor humano como eje central de todo sistema de gestión.</p>
-          <ul>
-            <li>14 programas disponibles</li>
-            <li>Liderazgo y trabajo en equipo</li>
-            <li>Legislación y actualización contable</li>
-            <li>Seguridad y salud en el trabajo</li>
-            <li>Ergonomía e higiene postural</li>
-          </ul>
-          <div class="cap"><span class="role">Presencial</span><span>Grupos por área</span></div>
+          <div class="cap"><span class="role">Seis tipos</span><span>Informe con hallazgos</span></div>
         </article>
       </div>
     </div>
+  </section>
+
+  <!-- ═══ PROCESO ═══ -->
+  <section id="proceso">
+    <span class="rule-print"></span>
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-num">02 — Proceso</div>
+        <h2 class="sec-title display">Cómo <em>trabajamos</em></h2>
+      </div>
+
+      <p class="proceso-intro reveal">Nuestro objetivo es construir una relación de acompañamiento que vaya <em>más allá de una actividad puntual.</em></p>
+
+      <div class="process-flow reveal">
+        <div class="flow-track"></div>
+        <div class="flow-pulse"></div>
+
+        <button class="fl-step" type="button" aria-controls="fl-detail" aria-expanded="false"
+                data-icon="ic-escuchamos" data-title="Escuchamos"
+                data-p1="Conocemos las necesidades y requerimientos de cada organización."
+                data-p2="El punto de partida es comprender qué necesita el cliente y cuál es su situación.">
+          <span class="fl-marker"></span>
+          <span class="fl-num">01</span>
+          <span class="fl-title">Escuchamos</span>
+          <span class="fl-desc">Conocemos las necesidades y requerimientos de cada organización.</span>
+          <span class="fl-more">Ver detalle</span>
+        </button>
+
+        <button class="fl-step" type="button" aria-controls="fl-detail" aria-expanded="false"
+                data-icon="ic-coordinamos" data-title="Coordinamos"
+                data-p1="Articulamos cada necesidad con nuestro equipo y los profesionales correspondientes."
+                data-p2="La solicitud se gestiona internamente para dar respuesta de acuerdo con el requerimiento.">
+          <span class="fl-marker"></span>
+          <span class="fl-num">02</span>
+          <span class="fl-title">Coordinamos</span>
+          <span class="fl-desc">Articulamos cada necesidad con nuestro equipo y los profesionales correspondientes.</span>
+          <span class="fl-more">Ver detalle</span>
+        </button>
+
+        <button class="fl-step" type="button" aria-controls="fl-detail" aria-expanded="false"
+                data-icon="ic-acompanamos" data-title="Acompañamos"
+                data-p1="Brindamos orientación y desarrollamos las acciones necesarias según cada necesidad."
+                data-p2="Los profesionales de Shaddai trabajan junto al cliente durante el desarrollo de las actividades.">
+          <span class="fl-marker"></span>
+          <span class="fl-num">03</span>
+          <span class="fl-title">Acompañamos</span>
+          <span class="fl-desc">Brindamos orientación y desarrollamos las acciones necesarias según cada necesidad.</span>
+          <span class="fl-more">Ver detalle</span>
+        </button>
+
+        <button class="fl-step" type="button" aria-controls="fl-detail" aria-expanded="false"
+                data-icon="ic-seguimiento" data-title="Hacemos seguimiento"
+                data-p1="Mantenemos comunicación sobre actividades, solicitudes, compromisos y pendientes."
+                data-p2="El contacto permite conocer avances y dar seguimiento a las necesidades que surgen durante el proceso.">
+          <span class="fl-marker"></span>
+          <span class="fl-num">04</span>
+          <span class="fl-title">Hacemos <em>seguimiento</em></span>
+          <span class="fl-desc">Mantenemos comunicación sobre actividades, solicitudes, compromisos y pendientes.</span>
+          <span class="fl-more">Ver detalle</span>
+        </button>
+
+        <button class="fl-step" type="button" aria-controls="fl-detail" aria-expanded="false"
+                data-icon="ic-continuidad" data-title="Damos continuidad"
+                data-p1="Seguimos presentes para acompañar las necesidades y procesos de cada organización."
+                data-p2="El acompañamiento no termina con la entrega: sostenemos la relación en el tiempo.">
+          <span class="fl-marker"></span>
+          <span class="fl-num">05</span>
+          <span class="fl-title">Damos <em>continuidad</em></span>
+          <span class="fl-desc">Seguimos presentes para acompañar las necesidades y procesos de cada organización.</span>
+          <span class="fl-more">Ver detalle</span>
+        </button>
+      </div>
+
+      <div class="fl-detail" id="fl-detail" hidden>
+        <div class="fl-detail-art">
+          <svg class="fl-ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-escuchamos"></use></svg>
+        </div>
+        <div class="fl-detail-txt">
+          <div class="fl-detail-num">Paso 01 — Proceso Shaddai</div>
+          <h3 class="display"></h3>
+          <p class="p1"></p>
+          <p class="p2"></p>
+        </div>
+        <button type="button" class="fl-detail-close" aria-label="Cerrar detalle">Cerrar ✕</button>
+      </div>
+
+      <p class="proceso-footer reveal"><em>100 %</em> Comprometidos con el cliente</p>
+    </div>
+
+    <!-- Ilustraciones del proceso (sprite SVG) -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+      <symbol id="ic-escuchamos" viewBox="0 0 64 64">
+        <path d="M13 35v-4a19 19 0 0 1 38 0v4"/>
+        <rect x="6" y="34" width="13" height="17" rx="6.5"/>
+        <rect x="45" y="34" width="13" height="17" rx="6.5"/>
+        <path d="M51 51v1.5a6.5 6.5 0 0 1-6.5 6.5H36"/>
+      </symbol>
+      <symbol id="ic-coordinamos" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="8"/>
+        <circle cx="32" cy="9" r="5.5"/><circle cx="11" cy="48" r="5.5"/><circle cx="53" cy="48" r="5.5"/>
+        <path d="M32 14.5v9.5M26 37 15.5 43M38 37l10.5 6"/>
+      </symbol>
+      <symbol id="ic-acompanamos" viewBox="0 0 64 64">
+        <circle cx="21" cy="19" r="7.5"/><path d="M8 52v-5a13 13 0 0 1 26 0v5"/>
+        <circle cx="45" cy="24" r="6.5"/><path d="M35 52v-4a11 11 0 0 1 22 0v4"/>
+      </symbol>
+      <symbol id="ic-seguimiento" viewBox="0 0 64 64">
+        <rect x="11" y="8" width="42" height="48" rx="4"/>
+        <path d="M19 23.5l3.5 3.5 7-7"/><path d="M35 25h11"/>
+        <path d="M19 40.5l3.5 3.5 7-7"/><path d="M35 42h11"/>
+      </symbol>
+      <symbol id="ic-continuidad" viewBox="0 0 64 64">
+        <path d="M52 32a20 20 0 1 1-6-14.2"/>
+        <path d="M48 6v13H35"/>
+        <circle cx="32" cy="32" r="4.5"/>
+      </symbol>
+    </defs></svg>
   </section>
 
   <!-- ═══ COBERTURA ═══ -->
@@ -1077,77 +1243,70 @@
     <div class="wrap">
       <div class="sec-head reveal">
         <div class="sec-num">03 — Cobertura</div>
-        <h2 class="sec-title display">Ocho áreas de la empresa.<br>Catorce programas<br><em>para su gente.</em></h2>
+        <h2 class="sec-title display">Dónde encuentra<br>a <em>Shaddai.</em></h2>
       </div>
 
-      <div class="modes reveal">
-        <div class="mode light">
-          <div class="kicker">
-            <span class="l"><span class="pin"></span>Áreas de cobertura</span>
-            <span class="meta"><span class="count" data-count-to="8">8</span> de 8 activas</span>
-          </div>
-          <div class="big display">Ocho áreas.<br>Una sola<br>conversación.</div>
-          <p class="copy">Nuestro equipo multidisciplinario cubre cada aspecto de su organización. Usted no coordina cinco proveedores distintos: habla con un solo equipo que ya conoce su operación completa.</p>
+      <div class="cob-grid">
+        <div class="cob-copy reveal">
+          <p class="cob-lead">Contamos con un equipo de profesionales altamente calificados que genera valor a través de <b>auditoría, gestión, asesoría y capacitación</b> empresarial.</p>
+          <p class="cob-body">Trabajamos desde la perspectiva de mejora continua, innovación y calidad en la gestión — con lenguaje claro y sin tecnicismos innecesarios.</p>
 
-          <dl class="addr-book">
-            <div class="row"><dt>01 · 02</dt><dd><b>Gestión estratégica</b> y <em>operativa</em><span class="alt">Del plan a la ejecución diaria</span></dd></div>
-            <div class="row"><dt>03 · 04</dt><dd><b>Gestión financiera</b> y <em>de personas</em><span class="alt">Números y equipo, en el mismo tablero</span></dd></div>
-            <div class="row"><dt>05 · 06</dt><dd><b>Gestión de riesgos</b> y <em>asesoría tributaria</em><span class="alt">Prevenir antes de corregir</span></dd></div>
-            <div class="row"><dt>07</dt><dd>Diseño e implementación <em>S.G.S.S.T.</em><span class="alt">Seguridad y salud en el trabajo</span></dd></div>
-            <div class="row"><dt>08</dt><dd><em>Coaching</em> profesional<span class="alt">Para líderes y mandos medios</span></dd></div>
-          </dl>
+          <div class="cob-kicker"><span class="pin"></span>Nuestros asesores — seis frentes en Colombia</div>
+          <ol class="cob-cities" aria-label="Ciudades con presencia de asesores">
+            <li><button type="button" data-city="bogota"><span class="ci">01</span><span class="cn">Bogotá D.C.</span><span class="cd">Sede principal</span></button></li>
+            <li><button type="button" data-city="cali"><span class="ci">02</span><span class="cn">Cali</span><span class="cd">Valle del Cauca</span></button></li>
+            <li><button type="button" data-city="medellin"><span class="ci">03</span><span class="cn">Medellín</span><span class="cd">Antioquia</span></button></li>
+            <li><button type="button" data-city="barranquilla"><span class="ci">04</span><span class="cn">Barranquilla</span><span class="cd">Atlántico</span></button></li>
+            <li><button type="button" data-city="tunja"><span class="ci">05</span><span class="cn">Tunja</span><span class="cd">Boyacá</span></button></li>
+            <li><button type="button" data-city="casanare"><span class="ci">06</span><span class="cn">Casanare</span><span class="cd">Yopal y área de influencia</span></button></li>
+          </ol>
 
-          <div class="addr-cta">
-            <span class="ll">«Cubrimos cada aspecto de su organización para garantizar resultados integrales.»</span>
-            <a href="#contacto" class="pill"><span class="dot"></span>Agendar diagnóstico</a>
-          </div>
+          <p class="cob-cta">En Shaddai hacemos equipo para una <em>gestión segura.</em></p>
         </div>
 
-        <div class="mode dark">
-          <div class="kicker">
-            <span class="l"><span class="pin"></span>Capacitaciones · Programas</span>
-            <span class="meta"><span class="count" data-count-to="14">14</span> programas activos</span>
-          </div>
-          <div class="big display">El factor humano,<br>como eje central.</div>
-          <p class="copy">Respondemos a sus necesidades de actualización con programas concretos. Nada de talleres motivacionales genéricos: contenido aplicable el lunes siguiente.</p>
-
-          <div class="deptos" aria-label="Programas de capacitación disponibles">
-            <div class="d"><b>Actualización contable</b></div>
-            <div class="d"><b>Modelos de liderazgo</b></div>
-            <div class="d"><b>Estilos de vida y trabajo</b></div>
-            <div class="d"><b>Vida saludable</b></div>
-            <div class="d"><b>Legislación</b></div>
-            <div class="d"><b>Lesiones osteomusculares</b></div>
-            <div class="d"><b>Primeros auxilios</b></div>
-            <div class="d"><b>Emergencias</b></div>
-            <div class="d"><b>Ergonomía</b></div>
-            <div class="d"><b>Higiene postural</b></div>
-            <div class="d"><b>Planeación estratégica</b></div>
-            <div class="d"><b>Evaluación de riesgos</b></div>
-            <div class="d"><b>Riesgos laborales</b></div>
-            <div class="d"><b>Riesgos biomecánicos</b></div>
-          </div>
-
-          <div class="wire" aria-hidden="true">
-            <div class="wire-track">
-              <span>Frentes de auditoría ·</span><span><b>01</b> Calidad</span><span>·</span>
-              <span><b>02</b> RUC</span><span>·</span>
-              <span><b>03</b> Riesgos</span><span>·</span>
-              <span><b>04</b> Gestión operativa</span><span>·</span>
-              <span><b>05</b> Gestión financiera</span><span>·</span>
-              <span><b>06</b> Tributaria</span><span>·</span>
-              <span>Frentes de auditoría ·</span><span><b>01</b> Calidad</span><span>·</span>
-              <span><b>02</b> RUC</span><span>·</span>
-              <span><b>03</b> Riesgos</span><span>·</span>
-              <span><b>04</b> Gestión operativa</span><span>·</span>
-              <span><b>05</b> Gestión financiera</span><span>·</span>
-              <span><b>06</b> Tributaria</span><span>·</span>
+        <div class="cob-map reveal">
+          <div class="map-plate" id="mapPlate">
+            <div class="plate-hd">
+              <span>Fig. 02 — Cobertura nacional</span>
+              <span><b>Shaddai</b> · 2026</span>
             </div>
-          </div>
+            <svg class="co-map" viewBox="26 22 520 710" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Mapa de Colombia con las ciudades donde Shaddai Consultants tiene asesores: Bogotá, Cali, Medellín, Barranquilla, Tunja y Casanare">
+              <path class="co-shadow" d="M104.8 192.8L123.2 218L130 186L170 162L178 123.2L206 95.2L231.2 88.8L266 88L284 78L312 52L348 42L355.2 58L346 68L306 96L282 138L292.8 174L303.2 206L300.8 244L318 258L356 260.8L396 262.4L423.2 294L486 288.4L502 340L486 378L496 426L512 446L525.2 494.8L406 497.6L416 560L424 588L402 708.8L344 632L284 576L240 548L190 544.8L144 524L104 524L72 502L46 482L84 436L106 380L108.8 340L102 296L98 260L84 251.2Z"/>
+              <path class="co-land" d="M104.8 192.8L123.2 218L130 186L170 162L178 123.2L206 95.2L231.2 88.8L266 88L284 78L312 52L348 42L355.2 58L346 68L306 96L282 138L292.8 174L303.2 206L300.8 244L318 258L356 260.8L396 262.4L423.2 294L486 288.4L502 340L486 378L496 426L512 446L525.2 494.8L406 497.6L416 560L424 588L402 708.8L344 632L284 576L240 548L190 544.8L144 524L104 524L72 502L46 482L84 436L106 380L108.8 340L102 296L98 260L84 251.2Z"/>
 
-          <div class="dark-foot">
-            <div class="stat"><span class="count" data-count-to="14">14</span>&nbsp;<em>programas</em><span class="l">Diseñados por área<br>y nivel del equipo</span></div>
-            <div class="stat"><span class="count" data-count-to="6">6</span>&nbsp;<em>auditorías</em><span class="l">De calidad a tributaria<br>Un solo interlocutor</span></div>
+              <g class="co-pins">
+                <g class="co-pin" id="pin-barranquilla" transform="translate(206,103)" tabindex="0" role="img" aria-label="Barranquilla, Atlántico" style="--d:0s">
+                  <circle class="co-halo" r="17"/><circle class="co-dot" r="6.5"/>
+                  <text class="co-label" x="13" y="-6" text-anchor="start">Barranquilla</text>
+                </g>
+                <g class="co-pin" id="pin-medellin" transform="translate(177.6,290)" tabindex="0" role="img" aria-label="Medellín, Antioquia" style="--d:.5s">
+                  <circle class="co-halo" r="17"/><circle class="co-dot" r="6.5"/>
+                  <text class="co-label" x="-13" y="4" text-anchor="end">Medellín</text>
+                </g>
+                <g class="co-pin" id="pin-tunja" transform="translate(265.6,318.4)" tabindex="0" role="img" aria-label="Tunja, Boyacá" style="--d:1s">
+                  <circle class="co-halo" r="17"/><circle class="co-dot" r="6.5"/>
+                  <text class="co-label" x="12" y="-9" text-anchor="start">Tunja</text>
+                </g>
+                <g class="co-pin" id="pin-casanare" transform="translate(304,326.4)" tabindex="0" role="img" aria-label="Casanare, Yopal" style="--d:1.5s">
+                  <circle class="co-halo" r="17"/><circle class="co-dot" r="6.5"/>
+                  <text class="co-label" x="13" y="6" text-anchor="start">Casanare</text>
+                </g>
+                <g class="co-pin" id="pin-bogota" transform="translate(237.2,351.6)" tabindex="0" role="img" aria-label="Bogotá D.C., sede principal" style="--d:2s">
+                  <circle class="co-halo" r="17"/><circle class="co-dot" r="6.5"/>
+                  <text class="co-label" x="-13" y="5" text-anchor="end">Bogotá</text>
+                </g>
+                <g class="co-pin" id="pin-cali" transform="translate(139.2,402.4)" tabindex="0" role="img" aria-label="Cali, Valle del Cauca" style="--d:2.5s">
+                  <circle class="co-halo" r="17"/><circle class="co-dot" r="6.5"/>
+                  <text class="co-label" x="-13" y="5" text-anchor="end">Cali</text>
+                </g>
+              </g>
+            </svg>
+            <div class="map-foot">
+              <span class="l"><b>Fig. 02</b></span>
+              <span class="mid">Pase el cursor sobre cada ciudad</span>
+              <span class="r"><b>Colombia</b> · 2026</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1160,51 +1319,62 @@
     <div class="wrap">
       <div class="sec-head reveal">
         <div class="sec-num">04 — Quiénes somos</div>
-        <h2 class="sec-title display">Construyendo el futuro<br>de <em>su organización.</em></h2>
+        <h2 class="sec-title display">Quiénes están detrás<br>de <em>Shaddai.</em></h2>
       </div>
 
       <div class="quotes">
-        <div class="q-big reveal">
-          <div class="face-wrap">
-            <span class="label">Misión — Doc. 01</span>
-            <div class="photo-frame face">
-              <span class="crop tl"></span><span class="crop tr"></span><span class="crop bl"></span><span class="crop br"></span>
-              <span class="stamp">Shaddai · <b>Bogotá</b></span>
-              <img src="./assets/foto-metas.jpg" alt="Equipo de Shaddai Consultants analizando indicadores de gestión" loading="lazy">
-              <div class="credential" aria-hidden="true">
-                <div class="hd"><span>Sistemas de gestión</span><b>Doc. 01 · 2026</b></div>
-                <div class="nm">Mejora continua<b>Innovación · Calidad en la gestión</b></div>
+        <!-- ═══ Equipo ═══
+             PENDIENTE: Isa envía los avatares en JPG por separado.
+             Al recibirlos: guardarlos en ./assets/equipo/ (mateo.jpg, astrid.jpg,
+             paula.jpg, carol.jpg, valentina.jpg) y descomentar el <img> de cada ficha.
+             El marcador con la inicial queda debajo como respaldo.                      -->
+        <div class="team-block reveal">
+          <div class="team-kicker"><span class="pin"></span>El equipo — quienes están detrás del trabajo</div>
+          <div class="team">
+            <figure class="member">
+              <div class="member-photo" data-ini="M">
+                <!-- <img src="./assets/equipo/mateo.jpg" alt="Mateo — equipo Shaddai Consultants" loading="lazy"> -->
               </div>
-            </div>
-            <div class="face-cap">
-              <span>Bogotá · Carrera 152 № 52-68</span>
-              <span>MMXXVI</span>
-            </div>
-          </div>
-          <div>
-            <blockquote class="display">
-              «Somos un equipo de profesionales altamente calificados cuyo objetivo es <em>generar valor</em> a nuestros clientes a través de la aplicación de nuestros conocimientos, brindando servicios de asesoría y consultoría empresarial de alta calidad en diferentes áreas organizacionales — desde la perspectiva de mejora continua, innovación y calidad en la gestión.»
-            </blockquote>
-            <div class="who">
-              <div class="field">Documento<b>Misión</b></div>
-              <div class="field">Alcance<b>Ocho áreas organizacionales</b></div>
-              <div class="field">Enfoque<b>Mejora continua e innovación</b></div>
-            </div>
+              <figcaption><span class="mi">01</span><span class="mn">Mateo</span></figcaption>
+            </figure>
+            <figure class="member">
+              <div class="member-photo" data-ini="A">
+                <!-- <img src="./assets/equipo/astrid.jpg" alt="Astrid — equipo Shaddai Consultants" loading="lazy"> -->
+              </div>
+              <figcaption><span class="mi">02</span><span class="mn">Astrid</span></figcaption>
+            </figure>
+            <figure class="member">
+              <div class="member-photo" data-ini="P">
+                <!-- <img src="./assets/equipo/paula.jpg" alt="Paula — equipo Shaddai Consultants" loading="lazy"> -->
+              </div>
+              <figcaption><span class="mi">03</span><span class="mn">Paula</span></figcaption>
+            </figure>
+            <figure class="member">
+              <div class="member-photo" data-ini="C">
+                <!-- <img src="./assets/equipo/carol.jpg" alt="Carol — equipo Shaddai Consultants" loading="lazy"> -->
+              </div>
+              <figcaption><span class="mi">04</span><span class="mn">Carol</span></figcaption>
+            </figure>
+            <figure class="member">
+              <div class="member-photo" data-ini="V">
+                <!-- <img src="./assets/equipo/valentina.jpg" alt="Valentina — equipo Shaddai Consultants" loading="lazy"> -->
+              </div>
+              <figcaption><span class="mi">05</span><span class="mn">Valentina</span></figcaption>
+            </figure>
           </div>
         </div>
 
-        <div class="q-typo reveal">
-          <div class="num">Visión — Doc. 02</div>
-          <blockquote class="display">
-            «Ser una organización de reconocimiento nacional e internacional, logrando convertirnos en la <em>primera opción referente</em> del sector; fomentando e implementando soluciones en sistemas de gestión, basado en las personas, la tecnología y el profesionalismo de nuestro equipo.»
-          </blockquote>
-          <div class="badge">
-            <span class="name">Shaddai Consultants</span>
-            <b>Visión 2026</b><br>
-            Personas · Tecnología<br>
-            Profesionalismo<br>
-            Bogotá, Colombia
-          </div>
+        <div class="ident reveal">
+          <article class="ident-block">
+            <div class="num">Misión — Doc. 01</div>
+            <p>Somos una empresa de consultoría y asesoría, conformada por un equipo de profesionales altamente calificados, orientados a <em>generar valor</em> para nuestros clientes mediante servicios especializados en sistemas de gestión.</p>
+            <p>Aplicamos nuestros conocimientos técnicos y normativos desde un enfoque de prevención de riesgos, cumplimiento legal, mejora continua e innovación, ofreciendo soluciones integrales que fortalecen los sistemas de gestión y contribuyen al bienestar de las personas, así como a la mejora, eficiencia y optimización de los procesos organizacionales de nuestros clientes.</p>
+          </article>
+          <article class="ident-block">
+            <div class="num">Visión — Doc. 02</div>
+            <p>Queremos consolidarnos como una empresa consultora <em>sólida y reconocida</em> por su experiencia y confiabilidad a nivel nacional en la implementación y fortalecimiento de sistemas de gestión.</p>
+            <p>Caracterizarnos por ofrecer soluciones técnicas, prácticas y adaptadas a la realidad de cada organización, apoyadas en herramientas tecnológicas y en el profesionalismo de nuestro equipo, que fortalezcan los procesos organizacionales y el desempeño de nuestros clientes, en un marco de mejora continua.</p>
+          </article>
         </div>
 
         <div class="q-typo reveal">
@@ -1260,74 +1430,73 @@
     </div>
   </section>
 
-  <!-- ═══ OBJETIVOS ═══ -->
-  <section id="objetivos">
+  <!-- ═══ CONTÁCTANOS ═══ -->
+  <section id="contacto">
     <span class="rule-print"></span>
     <div class="wrap">
-      <div class="sec-head reveal">
-        <div class="sec-num">05 — Nuestros objetivos</div>
-        <h2 class="sec-title display">Metas que <em>nos impulsan.</em></h2>
-      </div>
-
-      <div class="obj-grid">
-        <div class="reveal">
-          <div class="photo-frame obj-photo">
-            <span class="crop tl"></span><span class="crop tr"></span><span class="crop bl"></span><span class="crop br"></span>
-            <span class="stamp">Objetivos · <b>Vol. 01</b></span>
-            <img src="./assets/foto-equipo.jpg" alt="Equipo empresarial en Bogotá — Shaddai Consultants" loading="lazy">
-          </div>
-          <div class="hero-caption" style="margin-top:14px">
-            <span class="l"><b>Fig. 02</b> — Operación</span>
-            <span class="mid">Bogotá</span>
-            <span class="r"><b>2026</b></span>
-          </div>
+      <div class="contact">
+        <div class="contact-info reveal">
+          <div class="sec-num" style="margin-bottom:24px">05 — Contáctanos</div>
+          <h3 class="display">Hagamos crecer su empresa <em>juntos.</em></h3>
+          <dl>
+            <dt>Dirección</dt>
+            <dd>Cra 47A № 96-41, piso 4<br>Oficina 407 · Bogotá D.C., Colombia</dd>
+            <dt>Teléfonos</dt>
+            <dd>
+              <a href="tel:+573167415056"><em>316</em> 741 5056</a><br>
+              <a href="tel:+573108601486"><em>310</em> 860 1486</a>
+            </dd>
+            <dt>Correos</dt>
+            <dd>
+              <a href="mailto:gerencia@shaddaiconsultants.com" style="font-size:16px">gerencia@shaddaiconsultants.com</a><br>
+              <a href="mailto:administrativo@shaddaiconsultants.com" style="font-size:16px">administrativo@shaddaiconsultants.com</a>
+            </dd>
+            <dt>Sitio</dt>
+            <dd><a href="https://www.shaddaiconsultants.com" style="font-size:16px">www.shaddaiconsultants.com</a></dd>
+          </dl>
         </div>
 
-        <div class="obj-list reveal">
-          <div class="obj-item">
-            <span class="n">1</span>
-            <p><b>Disponibilidad de profesionales</b> mediante actualización permanente, para garantizar servicios de vanguardia.</p>
-          </div>
-          <div class="obj-item">
-            <span class="n">2</span>
-            <p><b>Impulsar el emprendimiento empresarial</b> como motor de desarrollo económico y social.</p>
-          </div>
-          <div class="obj-item">
-            <span class="n">3</span>
-            <p><b>Proveer confianza</b> con resultados confiables que respalden cada decisión de nuestros clientes.</p>
-          </div>
-          <div class="obj-item">
-            <span class="n">4</span>
-            <p><b>Generar relaciones estrechas</b> basadas en honestidad y transparencia con cada cliente.</p>
-          </div>
-          <div class="obj-item">
-            <span class="n">5</span>
-            <p><b>Fortalecer un ambiente laboral sano,</b> respetando valores y promoviendo el bienestar de todos.</p>
+        <!-- Al recibir los avatares de marca: reemplazar .brand-plate por
+             <img src="./assets/avatares/shaddai-hombre.png" alt="Avatar de Shaddai Consultants"> -->
+        <div class="brand-plate reveal">
+          <span class="crop tl"></span><span class="crop tr"></span><span class="crop bl"></span><span class="crop br"></span>
+          <span class="stamp">Contacto · <b>Bogotá</b></span>
+          <img class="brand-iso" src="./assets/isotipo-blanco.png" alt="" aria-hidden="true">
+          <div class="brand-plate-cap">
+            <b>Respuesta el mismo día</b>
+            <span>Escríbanos y coordinamos una primera conversación sin compromiso.</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ CONTACTO ═══ -->
-  <section id="contacto">
+  <!-- ═══ CONSULTA GRATUITA ═══ -->
+  <section id="consulta">
     <span class="rule-print"></span>
     <div class="wrap">
-      <div class="contact">
-        <div class="contact-info reveal">
-          <div class="sec-num" style="margin-bottom:24px">06 — Hablemos</div>
-          <h3 class="display">Hagamos crecer su empresa <em>juntos.</em></h3>
-          <dl>
-            <dt>Dirección</dt>
-            <dd>Carrera 152 № 52-68<br>Bogotá D.C., Colombia</dd>
-            <dt>Teléfono</dt>
-            <dd><a href="tel:+573167415056"><em>316</em> 741 5056</a></dd>
-            <dt>Correo</dt>
-            <dd><a href="mailto:gerencia@shaddaiconsultants.com" style="font-size:17px">gerencia@shaddaiconsultants.com</a></dd>
-            <dt>Sitio</dt>
-            <dd><a href="https://www.shaddaiconsultants.com" style="font-size:17px">www.shaddaiconsultants.com</a></dd>
-            <dt>Primera consulta</dt>
-            <dd><em>Gratuita</em> y sin compromiso<br><span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)">Diagnóstico inicial de su operación</span></dd>
+      <div class="sec-head reveal">
+        <div class="sec-num">06 — Consulta gratuita</div>
+        <h2 class="sec-title display">Su primera consulta,<br><em>sin compromiso.</em></h2>
+      </div>
+
+      <div class="consulta-grid">
+        <div class="consulta-aside reveal">
+          <!-- Al recibir los avatares de marca: reemplazar .brand-plate por
+               <img src="./assets/avatares/shaddai-mujer.png" alt="Avatar de Shaddai Consultants"> -->
+          <div class="brand-plate light">
+            <span class="crop tl"></span><span class="crop tr"></span><span class="crop bl"></span><span class="crop br"></span>
+            <span class="stamp">Consulta · <b>Gratuita</b></span>
+            <img class="brand-iso" src="./assets/isotipo-blanco.png" alt="" aria-hidden="true">
+            <div class="brand-plate-cap">
+              <b>Diagnóstico inicial de su operación</b>
+              <span>Una conversación para entender dónde está su empresa y qué necesita.</span>
+            </div>
+          </div>
+          <dl class="consulta-facts">
+            <div><dt>Duración</dt><dd>45 minutos</dd></div>
+            <div><dt>Modalidad</dt><dd>Presencial o virtual</dd></div>
+            <div><dt>Costo</dt><dd><em>Gratuita</em> y sin compromiso</dd></div>
           </dl>
         </div>
 
@@ -1397,30 +1566,22 @@
       <div>
         <h5>Servicios</h5>
         <ul>
-          <li><a href="#servicios">Auditorías</a></li>
-          <li><a href="#servicios">Gestión</a></li>
-          <li><a href="#servicios">Asesoría</a></li>
-          <li><a href="#cobertura">Capacitaciones</a></li>
-          <li><a href="#cobertura">S.G.S.S.T.</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5>Empresa</h5>
-        <ul>
-          <li><a href="#nosotros">Misión y visión</a></li>
-          <li><a href="#cobertura">Áreas de cobertura</a></li>
-          <li><a href="#objetivos">Objetivos</a></li>
-          <li><a href="#proceso">Cómo trabajamos</a></li>
-          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="#servicios">Líneas de servicio</a></li>
+          <li><a href="#servicios">Soluciones estratégicas</a></li>
+          <li><a href="#servicios">Programas de capacitación</a></li>
+          <li><a href="#servicios">Tipos de auditoría</a></li>
+          <li><a href="#consulta">Consulta gratuita</a></li>
         </ul>
       </div>
       <div>
         <h5>Sede &amp; contacto</h5>
         <ul>
-          <li>Carrera 152 № 52-68</li>
-          <li>Bogotá D.C., Colombia</li>
+          <li>Cra 47A № 96-41, piso 4</li>
+          <li>Oficina 407 · Bogotá D.C.</li>
           <li><a href="tel:+573167415056">+57 316 741 5056</a></li>
+          <li><a href="tel:+573108601486">+57 310 860 1486</a></li>
           <li><a href="mailto:gerencia@shaddaiconsultants.com">gerencia@shaddaiconsultants.com</a></li>
+          <li><a href="mailto:administrativo@shaddaiconsultants.com">administrativo@shaddaiconsultants.com</a></li>
           <li><a href="https://www.shaddaiconsultants.com">shaddaiconsultants.com</a></li>
         </ul>
       </div>
@@ -1439,7 +1600,6 @@
 
     <div class="foot-bottom">
       <span>© <span id="anio">2026</span> · Shaddai Consultants · Todos los derechos reservados</span>
-      <span>Títulos: <i style="color:var(--indigo)">Poppins</i> · Texto: <i>Inter</i> · Datos: <i>JetBrains Mono</i></span>
       <span class="colombia"><span class="flag"></span>Hecho en Bogotá · Colombia</span>
     </div>
 
@@ -1456,7 +1616,7 @@
     <a href="tel:+573167415056" class="tel" aria-label="Llamar +57 316 741 5056">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
     </a>
-    <a href="#contacto" class="go">Agendar
+    <a href="#consulta" class="go">Agendar
       <svg class="arrow" viewBox="0 0 20 20" fill="none"><path d="M3 10h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.6"/></svg>
     </a>
   </div>
@@ -1577,6 +1737,75 @@
       g.setAttribute('tabindex','0');
     });
   }
+
+  /* ——— Proceso: clic en un paso abre su ilustración y el texto completo ——— */
+  (function(){
+    var steps  = Array.prototype.slice.call(document.querySelectorAll('.fl-step'));
+    var detail = document.getElementById('fl-detail');
+    if(!steps.length || !detail) return;
+
+    var ico   = detail.querySelector('use');
+    var num   = detail.querySelector('.fl-detail-num');
+    var title = detail.querySelector('h3');
+    var p1    = detail.querySelector('.p1');
+    var p2    = detail.querySelector('.p2');
+    var close = detail.querySelector('.fl-detail-close');
+    var open  = null;
+
+    function reset(){
+      steps.forEach(function(s){ s.classList.remove('active'); s.setAttribute('aria-expanded','false'); });
+    }
+    function hide(){ reset(); detail.hidden = true; open = null; }
+    function show(step, i){
+      reset();
+      step.classList.add('active');
+      step.setAttribute('aria-expanded','true');
+      ico.setAttribute('href', '#' + step.dataset.icon);
+      ico.setAttributeNS('http://www.w3.org/1999/xlink','xlink:href', '#' + step.dataset.icon);
+      num.textContent   = 'Paso 0' + (i+1) + ' — Proceso Shaddai';
+      title.textContent = step.dataset.title;
+      p1.textContent    = step.dataset.p1;
+      p2.textContent    = step.dataset.p2;
+      detail.hidden = false;
+      open = step;
+    }
+    steps.forEach(function(step, i){
+      step.addEventListener('click', function(){ open === step ? hide() : show(step, i); });
+    });
+    if(close) close.addEventListener('click', hide);
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && open) hide(); });
+  })();
+
+  /* ——— Cobertura: el listado de ciudades y los pines del mapa se resaltan juntos ——— */
+  (function(){
+    var btns = Array.prototype.slice.call(document.querySelectorAll('.cob-cities button'));
+    var pins = Array.prototype.slice.call(document.querySelectorAll('.co-pin'));
+    if(!btns.length || !pins.length) return;
+
+    var pinned = null;
+
+    function mark(id, on){
+      var pin = document.getElementById('pin-' + id);
+      var btn = document.querySelector('.cob-cities button[data-city="' + id + '"]');
+      if(pin) pin.classList.toggle('active', on);
+      if(btn) btn.classList.toggle('active', on);
+    }
+    function hover(id, on){ if(pinned !== id) mark(id, on); }
+    function pin(id){
+      if(pinned && pinned !== id) mark(pinned, false);
+      pinned = (pinned === id) ? null : id;
+      mark(id, pinned === id);
+    }
+    function wire(el, id, clickable){
+      el.addEventListener('mouseenter', function(){ hover(id, true); });
+      el.addEventListener('mouseleave', function(){ hover(id, false); });
+      el.addEventListener('focus',      function(){ hover(id, true); });
+      el.addEventListener('blur',       function(){ hover(id, false); });
+      if(clickable) el.addEventListener('click', function(){ pin(id); });
+    }
+    btns.forEach(function(b){ wire(b, b.dataset.city, true); });
+    pins.forEach(function(p){ wire(p, p.id.replace('pin-',''), true); });
+  })();
 
   /* Formulario — abre el correo con los datos ya redactados */
   var form = document.getElementById('contactForm');
