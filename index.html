@@ -201,16 +201,6 @@
   .hero-sub .lead{font-family:"Poppins",sans-serif;font-size:19px;line-height:1.45;color:var(--ink);font-weight:500;letter-spacing:-0.015em}
   .hero-sub .lead em{font-style:italic;color:var(--indigo);font-weight:500}
 
-  .hero-actions{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;align-items:center}
-  .btn{
-    display:inline-flex;align-items:center;gap:12px;
-    padding:15px 24px;border-radius:999px;font-size:14.5px;letter-spacing:-0.01em;
-    transition:transform .15s ease, background .2s ease, color .2s ease;
-  }
-  .btn-primary{background:var(--ink);color:#fff}
-  .btn-primary:hover{background:var(--indigo)}
-  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--rule-strong)}
-  .btn-ghost:hover{background:var(--ink);color:#fff}
   .arrow{width:14px;height:14px}
 
   /* ——— Banda de cifras ——— */
@@ -277,11 +267,6 @@
 
   /* ——— Proceso ——— */
   section#proceso{background:#ffffff;padding:104px 0 116px}
-  .proceso-intro{
-    max-width:60ch;margin:-28px 0 8px;font-family:"Poppins",sans-serif;font-weight:500;
-    font-size:clamp(17px,1.9vw,21px);line-height:1.5;letter-spacing:-0.018em;color:var(--ink-soft);
-  }
-  .proceso-intro em{font-style:italic;color:var(--indigo);font-weight:500}
   .process-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;position:relative;margin-top:48px}
   .flow-track{
     position:absolute;top:34px;left:10%;right:10%;height:1px;background:var(--indigo);opacity:.28;
@@ -392,20 +377,25 @@
   @media(max-width:420px){.process-flow{grid-template-columns:1fr;gap:30px}}
 
   /* ——— Servicios ——— */
-  .services{display:grid;grid-template-columns:repeat(12,1fr);gap:52px 44px}
-  .svc{position:relative;padding-top:22px;border-top:1px solid var(--ink);display:flex;flex-direction:column;grid-column:span 6}
-  @media(max-width:720px){.svc{grid-column:1/-1}}
-  /* Listas largas a dos columnas — la tarjeta es ancha (span 6) */
-  .svc ul.cols{columns:2;column-gap:36px}
+  .services{display:grid;grid-template-columns:1fr;gap:56px}
+  .svc{position:relative;padding-top:22px;border-top:1px solid var(--ink);display:flex;flex-direction:column}
+  .svc p{max-width:66ch}
+  /* Listas a tres columnas: la tarjeta ocupa el ancho completo */
+  .svc ul.cols{columns:3;column-gap:44px}
   .svc ul.cols li{break-inside:avoid}
+  @media(max-width:880px){.svc ul.cols{columns:2}}
   @media(max-width:560px){.svc ul.cols{columns:1}}
-  /* Tarjeta con imagen en lugar de lista */
-  .svc-photo{margin-top:auto;aspect-ratio:16/10;width:100%}
+  /* Tarjeta con avatar al costado del texto */
+  /* max-width: si no, el avatar se va al borde derecho y deja un vacío en medio */
+  .svc-split{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:48px;align-items:start;max-width:880px}
+  @media(max-width:720px){.svc-split{grid-template-columns:1fr;gap:26px}}
+  .svc-avatar{width:250px}
+  @media(max-width:720px){.svc-avatar{width:100%;max-width:280px}}
   .svc .tag{display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:18px}
   .svc h3{font-family:"Poppins",sans-serif;font-size:31px;line-height:1.15;letter-spacing:-0.03em;font-weight:700;margin-bottom:18px}
   .svc h3 em{font-style:italic;color:var(--indigo);font-weight:700}
   .svc p{font-size:14.5px;line-height:1.55;color:var(--ink-soft);margin-bottom:22px;max-width:40ch}
-  .svc ul{list-style:none;margin-top:auto}
+  .svc ul{list-style:none;margin-top:0}
   .svc ul li{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--rule);font-size:13.5px;color:var(--ink)}
   .svc ul li::before{content:"";flex:0 0 6px;height:6px;border-radius:50%;background:var(--indigo);transform:translateY(-2px)}
   .svc .cap{
@@ -508,22 +498,12 @@
   @media(max-width:900px){.team{grid-template-columns:repeat(3,1fr);gap:22px}}
   @media(max-width:560px){.team{grid-template-columns:repeat(2,1fr);gap:18px}}
   .member{margin:0}
+  /* Fondo azul polvo: es el color sobre el que se recortaron las fotos */
   .member-photo{
-    position:relative;aspect-ratio:3/4;border-radius:2px;overflow:hidden;background:var(--night);
-    display:flex;align-items:center;justify-content:center;
+    position:relative;aspect-ratio:3/4;border-radius:2px;overflow:hidden;background:var(--paper-3);
   }
-  .member-photo img{position:relative;z-index:2;width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+  .member-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
   .member:hover .member-photo img{transform:scale(1.04)}
-  /* Marcador provisional mientras llegan los JPG del equipo */
-  .member-photo::before{
-    content:"";position:absolute;inset:0;z-index:0;opacity:.10;
-    background:url("./assets/isotipo-blanco.png") center/56% no-repeat;
-  }
-  .member-photo::after{
-    content:attr(data-ini);position:absolute;z-index:1;
-    font-family:"Poppins",sans-serif;font-weight:600;font-size:clamp(34px,4.2vw,54px);
-    letter-spacing:-0.04em;color:var(--indigo-soft);opacity:.9;
-  }
   .member figcaption{margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
   .member .mi{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.10em;color:var(--ink-soft)}
   .member .mn{font-family:"Poppins",sans-serif;font-size:16px;font-weight:600;letter-spacing:-0.02em;color:var(--ink);transition:color .2s ease}
@@ -641,6 +621,19 @@
     background:radial-gradient(circle at 50% 36%,rgba(19,52,241,.38),transparent 64%);
   }
   .brand-iso{position:relative;z-index:1;width:clamp(92px,15vw,132px);height:auto;opacity:.95}
+
+  /* Lámina con avatar real: la imagen ya viene compuesta sobre el navy de la lámina */
+  .brand-plate.has-avatar{
+    display:block;padding:0;min-height:0;overflow:hidden;
+    aspect-ratio:3/4;width:100%;max-width:400px;
+  }
+  .brand-plate.has-avatar::before{display:none}
+  .brand-avatar{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+  .brand-plate.has-avatar .brand-plate-cap{
+    position:absolute;left:0;right:0;bottom:0;z-index:2;margin:0;max-width:none;text-align:left;
+    padding:60px 22px 20px;
+    background:linear-gradient(to top,rgba(1,13,39,.95) 32%,rgba(1,13,39,0));
+  }
   .brand-plate-cap{position:relative;z-index:1;margin-top:34px;text-align:center;max-width:34ch}
   .brand-plate-cap b{
     display:block;font-family:"Poppins",sans-serif;font-style:italic;font-weight:500;
@@ -654,11 +647,6 @@
   /* ——— Consulta gratuita ——— */
   .consulta-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start}
   @media(max-width:880px){.consulta-grid{grid-template-columns:1fr;gap:38px}}
-  .consulta-facts{margin-top:26px;border-top:1px solid var(--rule-strong)}
-  .consulta-facts > div{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid var(--rule)}
-  .consulta-facts dt{padding:14px 0;font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
-  .consulta-facts dd{padding:14px 0;font-family:"Poppins",sans-serif;font-size:15px;font-weight:500;letter-spacing:-0.015em;color:var(--ink)}
-  .consulta-facts dd em{font-style:italic;color:var(--indigo)}
 
   /* ——— Footer ——— */
   footer{padding:64px 0 0;border-top:1px solid var(--rule-strong);background:var(--paper)}
@@ -787,7 +775,7 @@
     .svc h3{font-size:27px;margin-bottom:14px}
     .svc p{font-size:14.5px;margin-bottom:18px}
     .svc ul li{font-size:13.5px;padding:8px 0}
-    .services{gap:40px 28px}
+    .services{gap:40px}
 
     .process-flow{margin-top:36px;gap:24px}
     .fl-step{padding:0 4px}
@@ -804,7 +792,6 @@
     .cob-cities .cn{font-size:16px}
     .cob-cta{margin-top:28px;font-size:19px}
 
-    .proceso-intro{margin:-14px 0 4px;font-size:16.5px}
     .fl-detail{margin-top:32px}
     .fl-more{margin-top:12px}
 
@@ -862,9 +849,6 @@
     .fl-title{font-size:17px}
     .cob-lead{font-size:16.5px}
     .cob-cta{font-size:18px}
-    .consulta-facts > div{grid-template-columns:1fr}
-    .consulta-facts dt{padding:12px 0 2px;border-bottom:none}
-    .consulta-facts dd{padding:0 0 12px}
     .brand-plate{min-height:320px;padding:36px 24px}
     .brand-plate.light{min-height:300px}
     .q-typo blockquote{font-size:15.5px}
@@ -1010,14 +994,6 @@
         </div>
       </div>
 
-      <div class="hero-actions">
-        <a href="#consulta" class="btn btn-primary">
-          Solicitar consulta gratuita
-          <svg class="arrow" viewBox="0 0 20 20" fill="none"><path d="M3 10h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.6"/></svg>
-        </a>
-        <a href="#servicios" class="btn btn-ghost">Ver servicios</a>
-      </div>
-
       <div class="figures reveal">
         <div class="fig">
           <div class="n"><span class="count" data-count-to="8">8</span></div>
@@ -1070,11 +1046,14 @@
         <article class="svc reveal">
           <div class="tag"><span>02 · Productividad</span><span>·</span></div>
           <h3 class="display">Soluciones <em>estratégicas</em></h3>
-          <p>Con diversas metodologías buscamos mejorar la productividad de su empresa y de su personal, midiendo lo que de verdad importa.</p>
-          <div class="svc-photo photo-frame">
-            <span class="crop tl"></span><span class="crop tr"></span><span class="crop bl"></span><span class="crop br"></span>
-            <span class="stamp">Operación · <b>Bogotá</b></span>
-            <img src="./assets/foto-equipo.jpg" alt="Equipo empresarial trabajando con Shaddai Consultants en Bogotá" loading="lazy">
+          <div class="svc-split">
+            <p>Con diversas metodologías buscamos mejorar la productividad de su empresa y de su personal, midiendo lo que de verdad importa.</p>
+            <div class="svc-avatar">
+              <div class="brand-plate has-avatar">
+                <span class="stamp">Shaddai · <b>2026</b></span>
+                <img class="brand-avatar" src="./assets/avatares/mujer.jpg" alt="Avatar de Shaddai Consultants" loading="lazy">
+              </div>
+            </div>
           </div>
           <div class="cap"><span class="role">Más de cien</span><span>A la medida de su operación</span></div>
         </article>
@@ -1129,8 +1108,6 @@
         <h2 class="sec-title display">Cómo <em>trabajamos</em></h2>
       </div>
 
-      <p class="proceso-intro reveal">Nuestro objetivo es construir una relación de acompañamiento que vaya <em>más allá de una actividad puntual.</em></p>
-
       <div class="process-flow reveal">
         <div class="flow-track"></div>
         <div class="flow-pulse"></div>
@@ -1182,7 +1159,7 @@
         <button class="fl-step" type="button" aria-controls="fl-detail" aria-expanded="false"
                 data-icon="ic-continuidad" data-title="Damos continuidad"
                 data-p1="Seguimos presentes para acompañar las necesidades y procesos de cada organización."
-                data-p2="El acompañamiento no termina con la entrega: sostenemos la relación en el tiempo.">
+                data-p2="Nuestro objetivo es construir una relación de acompañamiento que vaya más allá de una actividad puntual.">
           <span class="fl-marker"></span>
           <span class="fl-num">05</span>
           <span class="fl-title">Damos <em>continuidad</em></span>
@@ -1243,7 +1220,7 @@
     <div class="wrap">
       <div class="sec-head reveal">
         <div class="sec-num">03 — Cobertura</div>
-        <h2 class="sec-title display">Dónde encuentra<br>a <em>Shaddai.</em></h2>
+        <h2 class="sec-title display">Dónde estamos<br><em>ubicados.</em></h2>
       </div>
 
       <div class="cob-grid">
@@ -1323,41 +1300,37 @@
       </div>
 
       <div class="quotes">
-        <!-- ═══ Equipo ═══
-             PENDIENTE: Isa envía los avatares en JPG por separado.
-             Al recibirlos: guardarlos en ./assets/equipo/ (mateo.jpg, astrid.jpg,
-             paula.jpg, carol.jpg, valentina.jpg) y descomentar el <img> de cada ficha.
-             El marcador con la inicial queda debajo como respaldo.                      -->
+        <!-- Equipo · fotos en ./assets/equipo/ — recortadas sobre el azul polvo de marca -->
         <div class="team-block reveal">
           <div class="team-kicker"><span class="pin"></span>El equipo — quienes están detrás del trabajo</div>
           <div class="team">
             <figure class="member">
-              <div class="member-photo" data-ini="M">
-                <!-- <img src="./assets/equipo/mateo.jpg" alt="Mateo — equipo Shaddai Consultants" loading="lazy"> -->
+              <div class="member-photo">
+                <img src="./assets/equipo/mateo.jpg" alt="Mateo — equipo Shaddai Consultants" loading="lazy">
               </div>
               <figcaption><span class="mi">01</span><span class="mn">Mateo</span></figcaption>
             </figure>
             <figure class="member">
-              <div class="member-photo" data-ini="A">
-                <!-- <img src="./assets/equipo/astrid.jpg" alt="Astrid — equipo Shaddai Consultants" loading="lazy"> -->
+              <div class="member-photo">
+                <img src="./assets/equipo/astrid.jpg" alt="Astrid — equipo Shaddai Consultants" loading="lazy">
               </div>
               <figcaption><span class="mi">02</span><span class="mn">Astrid</span></figcaption>
             </figure>
             <figure class="member">
-              <div class="member-photo" data-ini="P">
-                <!-- <img src="./assets/equipo/paula.jpg" alt="Paula — equipo Shaddai Consultants" loading="lazy"> -->
+              <div class="member-photo">
+                <img src="./assets/equipo/paula.jpg" alt="Paula — equipo Shaddai Consultants" loading="lazy">
               </div>
               <figcaption><span class="mi">03</span><span class="mn">Paula</span></figcaption>
             </figure>
             <figure class="member">
-              <div class="member-photo" data-ini="C">
-                <!-- <img src="./assets/equipo/carol.jpg" alt="Carol — equipo Shaddai Consultants" loading="lazy"> -->
+              <div class="member-photo">
+                <img src="./assets/equipo/carol.jpg" alt="Carol — equipo Shaddai Consultants" loading="lazy">
               </div>
               <figcaption><span class="mi">04</span><span class="mn">Carol</span></figcaption>
             </figure>
             <figure class="member">
-              <div class="member-photo" data-ini="V">
-                <!-- <img src="./assets/equipo/valentina.jpg" alt="Valentina — equipo Shaddai Consultants" loading="lazy"> -->
+              <div class="member-photo">
+                <img src="./assets/equipo/valentina.jpg" alt="Valentina — equipo Shaddai Consultants" loading="lazy">
               </div>
               <figcaption><span class="mi">05</span><span class="mn">Valentina</span></figcaption>
             </figure>
@@ -1456,12 +1429,9 @@
           </dl>
         </div>
 
-        <!-- Al recibir los avatares de marca: reemplazar .brand-plate por
-             <img src="./assets/avatares/shaddai-hombre.png" alt="Avatar de Shaddai Consultants"> -->
-        <div class="brand-plate reveal">
-          <span class="crop tl"></span><span class="crop tr"></span><span class="crop bl"></span><span class="crop br"></span>
+        <div class="brand-plate has-avatar reveal">
           <span class="stamp">Contacto · <b>Bogotá</b></span>
-          <img class="brand-iso" src="./assets/isotipo-blanco.png" alt="" aria-hidden="true">
+          <img class="brand-avatar" src="./assets/avatares/hombre.jpg" alt="Avatar de Shaddai Consultants" loading="lazy">
           <div class="brand-plate-cap">
             <b>Respuesta el mismo día</b>
             <span>Escríbanos y coordinamos una primera conversación sin compromiso.</span>
@@ -1482,22 +1452,14 @@
 
       <div class="consulta-grid">
         <div class="consulta-aside reveal">
-          <!-- Al recibir los avatares de marca: reemplazar .brand-plate por
-               <img src="./assets/avatares/shaddai-mujer.png" alt="Avatar de Shaddai Consultants"> -->
-          <div class="brand-plate light">
-            <span class="crop tl"></span><span class="crop tr"></span><span class="crop bl"></span><span class="crop br"></span>
+          <div class="brand-plate has-avatar">
             <span class="stamp">Consulta · <b>Gratuita</b></span>
-            <img class="brand-iso" src="./assets/isotipo-blanco.png" alt="" aria-hidden="true">
+            <img class="brand-avatar" src="./assets/avatares/mujer.jpg" alt="Avatar de Shaddai Consultants" loading="lazy">
             <div class="brand-plate-cap">
               <b>Diagnóstico inicial de su operación</b>
               <span>Una conversación para entender dónde está su empresa y qué necesita.</span>
             </div>
           </div>
-          <dl class="consulta-facts">
-            <div><dt>Duración</dt><dd>45 minutos</dd></div>
-            <div><dt>Modalidad</dt><dd>Presencial o virtual</dd></div>
-            <div><dt>Costo</dt><dd><em>Gratuita</em> y sin compromiso</dd></div>
-          </dl>
         </div>
 
         <form class="reveal" id="contactForm">
