@@ -98,13 +98,14 @@
   /* ——— HERO ——— */
   .hero{padding:60px 0 40px;position:relative}
   /* Hero centrado: título, CTA y párrafo en un solo bloque */
-  .hero-intro{max-width:900px;margin:0 auto;text-align:center}
-  /* display:block — en flex el punto se iba solo a su propia línea al envolver */
-  .hero-intro .eyebrow{display:block}
-  .hero-intro .eyebrow .pulse{display:inline-block;margin:0 8px 2px 0;vertical-align:middle}
-  .hero-intro .eyebrow span.t{display:inline}
+  .hero-top{display:grid;grid-template-columns:1.18fr .82fr;gap:52px;align-items:center}
+  @media(max-width:980px){.hero-top{grid-template-columns:1fr;gap:32px}}
+  .hero-media{border-radius:20px;overflow:hidden;aspect-ratio:4/3;background:var(--paper-3)}
+  .hero-media img{width:100%;height:100%;object-fit:cover;display:block}
+  /* El bloque de abajo sí va centrado y a todo el ancho */
+  .hero-intro{max-width:900px;margin:52px auto 0;text-align:center}
   .hero-lead{
-    margin-top:32px;font-family:"Poppins",sans-serif;font-size:clamp(19px,2.2vw,26px);
+    margin-top:0;font-family:"Poppins",sans-serif;font-size:clamp(19px,2.2vw,26px);
     line-height:1.4;font-weight:500;letter-spacing:-0.02em;color:var(--ink);
   }
   .hero-lead em{font-style:italic;color:var(--indigo);font-weight:500}
@@ -112,7 +113,6 @@
   .hero-copy p{font-size:16.5px;line-height:1.6;color:var(--ink-soft);max-width:64ch;margin:0 auto}
   .hero-copy p + p{margin-top:14px}
   .hero-copy b{color:var(--ink);font-weight:500}
-  .hero-visual{max-width:940px;margin:56px auto 0}
   .eyebrow{display:flex;align-items:flex-start;gap:12px;margin-bottom:26px;flex-wrap:nowrap}
   .eyebrow .pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--indigo);box-shadow:0 0 0 0 var(--indigo);animation:pulse 1.8s infinite;flex:0 0 7px;margin-top:5px}
   .eyebrow span.t{flex:1 1 auto;min-width:0;font-family:"JetBrains Mono",monospace;font-size:11px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
@@ -120,7 +120,8 @@
 
   h1.head{
     font-family:"Poppins",sans-serif;
-    font-size:clamp(38px,5.4vw,82px);line-height:1.04;font-weight:700;letter-spacing:-0.035em;
+    /* Escala bajada: el titular comparte fila con la imagen, ya no ocupa todo el ancho */
+    font-size:clamp(32px,3.8vw,56px);line-height:1.08;font-weight:700;letter-spacing:-0.035em;
   }
   h1.head em{font-style:italic;color:var(--indigo);font-weight:700}
 
@@ -770,10 +771,11 @@
 
     .hero{padding:36px 0 26px}
     .eyebrow{margin-bottom:18px}
-    .hero-lead{margin-top:22px;font-size:18px}
+    .hero-intro{margin-top:34px}
+    .hero-lead{margin-top:0;font-size:18px}
     .hero-copy{margin-top:18px}
     .hero-copy p{font-size:15.5px}
-    .hero-visual{margin-top:34px}
+    .hero-media{aspect-ratio:16/10}
     .hero-caption{grid-template-columns:1fr;gap:4px;font-size:9.5px}
     .hero-caption .mid,.hero-caption .r{border:none;padding:0;text-align:left}
     .figures{margin-top:40px}
@@ -908,7 +910,8 @@
   <!-- ═══ INICIO ═══ -->
   <section class="hero" id="inicio" style="border-top:none">
     <div class="wrap">
-      <div class="hero-intro">
+      <div class="hero-top">
+        <div class="hero-head-col">
           <div class="eyebrow">
             <span class="pulse"></span>
             <span class="t">Consultoría empresarial · Bogotá, Colombia · <b id="live-date-text">—</b></span>
@@ -917,85 +920,21 @@
             <span class="line"><span class="lin" style="--i:0">Soluciones <em>integrales</em></span></span>
             <span class="line head-underline"><span class="lin" style="--i:1">para su empresa.</span></span>
           </h1>
+        </div>
 
+        <!-- PROVISIONAL: imagen de archivo hasta escoger la definitiva con Isa -->
+        <div class="hero-media">
+          <img src="./assets/foto-equipo.jpg" alt="Consultoría empresarial — Shaddai Consultants, Bogotá">
+        </div>
+      </div>
+
+      <div class="hero-intro">
           <p class="hero-lead">Somos aliados comprometidos con <em>tu progreso.</em></p>
 
           <div class="hero-copy">
             <p>Especializada en acompañar a las organizaciones en la <b>implementación, mantenimiento y mejora de sus Sistemas de Gestión,</b> promoviendo el cumplimiento normativo y la optimización de sus procesos.</p>
             <p>Nuestro <b>objetivo</b> es acompañar a cada organización en el fortalecimiento de sus procesos, aportando conocimiento y experiencia para generar valor y promover la mejora continua.</p>
           </div>
-      </div>
-
-      <div class="hero-visual">
-        <div class="plate" id="chartPlate">
-            <div class="plate-hd">
-              <span>Fig. 01 — Ciclo de vida empresarial</span>
-              <span><b>Shaddai</b> · 2026</span>
-            </div>
-            <svg viewBox="0 0 580 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfica del ciclo de vida empresarial: inicio, desarrollo, crecimiento, madurez y declive, frente a la trayectoria sostenida con Shaddai Consultants">
-              <!-- retícula -->
-              <line x1="40" y1="352" x2="556" y2="352" stroke="#010d27" stroke-opacity=".18" stroke-width="1"/>
-              <line x1="40" y1="282" x2="556" y2="282" stroke="#010d27" stroke-opacity=".08" stroke-width="1" stroke-dasharray="3 5"/>
-              <line x1="40" y1="212" x2="556" y2="212" stroke="#010d27" stroke-opacity=".08" stroke-width="1" stroke-dasharray="3 5"/>
-              <line x1="40" y1="142" x2="556" y2="142" stroke="#010d27" stroke-opacity=".08" stroke-width="1" stroke-dasharray="3 5"/>
-              <line x1="40" y1="72"  x2="556" y2="72"  stroke="#010d27" stroke-opacity=".08" stroke-width="1" stroke-dasharray="3 5"/>
-
-              <!-- área ciclo natural -->
-              <path class="chart-area" d="M60,320 L150,230 L230,200 L310,170 L390,130 L445,185 L480,295 L480,352 L60,352 Z" fill="#010d27"/>
-              <!-- área divergencia Shaddai -->
-              <path class="chart-area-shaddai" d="M390,130 L470,75 L538,40 L538,352 L480,352 L480,295 L445,185 L390,130 Z" fill="#1334f1"/>
-
-              <!-- línea ciclo natural -->
-              <polyline class="chart-line" points="60,320 150,230 230,200 310,170 390,130 445,185 480,295"/>
-              <!-- línea Shaddai -->
-              <polyline class="chart-line-shaddai" points="390,130 470,75 538,40"/>
-
-              <g class="chart-group" data-delay="300" data-tooltip="Fase inicial: la idea toma forma y la operación arranca">
-                <circle cx="60" cy="320" r="7.5" class="chart-dot"/>
-                <rect x="22" y="330" width="76" height="26" rx="13" fill="#010d27"/>
-                <text x="60" y="347" text-anchor="middle" class="chart-label">Inicio</text>
-              </g>
-
-              <g class="chart-group" data-delay="520" data-tooltip="Desarrollo: se estructuran procesos y se formaliza la gestión">
-                <circle cx="150" cy="230" r="7.5" class="chart-dot"/>
-                <rect x="94" y="194" width="112" height="26" rx="13" fill="#010d27"/>
-                <text x="150" y="211" text-anchor="middle" class="chart-label">Desarrollo</text>
-              </g>
-
-              <g class="chart-group" data-delay="740" data-tooltip="Crecimiento: aumentan ingresos, equipo y complejidad operativa">
-                <circle cx="310" cy="170" r="7.5" class="chart-dot"/>
-                <rect x="248" y="134" width="124" height="26" rx="13" fill="#010d27"/>
-                <text x="310" y="151" text-anchor="middle" class="chart-label">Crecimiento</text>
-              </g>
-
-              <g class="chart-group" data-delay="960" data-tooltip="Madurez: el punto donde se decide el rumbo de los próximos años">
-                <circle cx="390" cy="130" r="7.5" class="chart-dot"/>
-                <rect x="342" y="94" width="96" height="26" rx="13" fill="#010d27"/>
-                <text x="390" y="111" text-anchor="middle" class="chart-label">Madurez</text>
-              </g>
-
-              <g class="chart-group" data-delay="1180" data-tooltip="Sin intervención: pérdida de competitividad y desgaste de la operación">
-                <circle cx="480" cy="295" r="7.5" class="chart-dot-fade"/>
-                <rect x="442" y="305" width="80" height="26" rx="13" fill="#8fa0bb"/>
-                <text x="482" y="322" text-anchor="middle" class="chart-label">Declive</text>
-              </g>
-
-              <g class="chart-group" data-delay="1520" data-tooltip="Con Shaddai Consultants: sistemas de gestión que sostienen el crecimiento más allá de la madurez">
-                <circle cx="538" cy="40" r="15" fill="#1334f1" opacity=".18" class="chart-pulse"/>
-                <circle cx="538" cy="40" r="10" class="chart-dot-shaddai"/>
-                <rect x="330" y="8" width="196" height="30" rx="15" fill="#1334f1"/>
-                <text x="428" y="27" text-anchor="middle" class="chart-label">Shaddai Consultants</text>
-              </g>
-
-              <text x="40" y="378" class="chart-axis">Tiempo →</text>
-              <text x="556" y="378" text-anchor="end" class="chart-axis">↑ Valor de la empresa</text>
-            </svg>
-        </div>
-        <div class="hero-caption">
-          <span class="l"><b>Fig. 01</b></span>
-          <span class="mid">Pase el cursor sobre cada fase</span>
-          <span class="r"><b>Bogotá</b> · 2026</span>
-        </div>
       </div>
 
       <div class="figures reveal">
