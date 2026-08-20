@@ -97,8 +97,22 @@
 
   /* ——— HERO ——— */
   .hero{padding:60px 0 40px;position:relative}
-  .hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:56px;align-items:end}
-  @media(max-width:1040px){.hero-grid{grid-template-columns:1fr;gap:36px}}
+  /* Hero centrado: título, CTA y párrafo en un solo bloque */
+  .hero-intro{max-width:900px;margin:0 auto;text-align:center}
+  /* display:block — en flex el punto se iba solo a su propia línea al envolver */
+  .hero-intro .eyebrow{display:block}
+  .hero-intro .eyebrow .pulse{display:inline-block;margin:0 8px 2px 0;vertical-align:middle}
+  .hero-intro .eyebrow span.t{display:inline}
+  .hero-lead{
+    margin-top:32px;font-family:"Poppins",sans-serif;font-size:clamp(19px,2.2vw,26px);
+    line-height:1.4;font-weight:500;letter-spacing:-0.02em;color:var(--ink);
+  }
+  .hero-lead em{font-style:italic;color:var(--indigo);font-weight:500}
+  .hero-copy{margin-top:24px}
+  .hero-copy p{font-size:16.5px;line-height:1.6;color:var(--ink-soft);max-width:64ch;margin:0 auto}
+  .hero-copy p + p{margin-top:14px}
+  .hero-copy b{color:var(--ink);font-weight:500}
+  .hero-visual{max-width:940px;margin:56px auto 0}
   .eyebrow{display:flex;align-items:flex-start;gap:12px;margin-bottom:26px;flex-wrap:nowrap}
   .eyebrow .pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--indigo);box-shadow:0 0 0 0 var(--indigo);animation:pulse 1.8s infinite;flex:0 0 7px;margin-top:5px}
   .eyebrow span.t{flex:1 1 auto;min-width:0;font-family:"JetBrains Mono",monospace;font-size:11px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
@@ -191,15 +205,6 @@
   .hero-caption .r{text-align:right}
   .hero-caption b{color:var(--ink);font-weight:500}
 
-  .hero-sub{
-    margin-top:44px;display:grid;grid-template-columns:1fr 1.4fr;gap:48px;
-    padding-top:28px;border-top:1px solid var(--rule-strong)
-  }
-  @media(max-width:980px){.hero-sub{grid-template-columns:1fr;gap:20px}}
-  .hero-sub p{font-size:16.5px;line-height:1.55;color:var(--ink-soft);max-width:52ch}
-  .hero-sub p b{color:var(--ink);font-weight:500}
-  .hero-sub .lead{font-family:"Poppins",sans-serif;font-size:19px;line-height:1.45;color:var(--ink);font-weight:500;letter-spacing:-0.015em}
-  .hero-sub .lead em{font-style:italic;color:var(--indigo);font-weight:500}
 
   .arrow{width:14px;height:14px}
 
@@ -233,7 +238,7 @@
   section{padding:96px 0;border-top:1px solid var(--rule);position:relative;scroll-margin-top:82px}
   @media(max-width:680px){section{scroll-margin-top:70px}}
   section#nosotros{padding-top:72px;background:#ffffff}
-  section#cobertura{padding-bottom:72px}
+  section#red{padding-bottom:72px}
   section#consulta{background:#ffffff}
   section.hero{background:var(--paper)}
   .sec-head{display:grid;grid-template-columns:1fr 2fr;gap:48px;margin-bottom:60px;align-items:end}
@@ -568,6 +573,10 @@
     .voices .lbl-fixed{font-size:12.5px}
   }
 
+  /* Contáctanos, ya dentro de Sobre nosotros */
+  .about-contact{border-top:1px solid var(--ink);padding-top:40px}
+  .about-contact .contact-info h3{font-size:clamp(24px,2.6vw,32px)}
+
   /* ——— Contacto ——— */
   .contact{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
   @media(max-width:880px){.contact{grid-template-columns:1fr;gap:40px}}
@@ -657,8 +666,9 @@
     padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid var(--rule);
   }
   .colofon ul{list-style:none;display:flex;flex-direction:column;gap:8px}
-  .colofon ul a{font-size:14px;color:var(--ink)}
-  .colofon ul li{font-size:14px;color:var(--ink)}
+  /* overflow-wrap: administrativo@shaddaiconsultants.com no cabe en la columna en móvil */
+  .colofon ul a{font-size:14px;color:var(--ink);overflow-wrap:anywhere}
+  .colofon ul li{font-size:14px;color:var(--ink);overflow-wrap:anywhere}
   .colofon ul a:hover{color:var(--indigo)}
   .colofon .pitch{font-family:"Poppins",sans-serif;font-size:17px;line-height:1.55;letter-spacing:-0.015em;font-weight:500;max-width:36ch}
   .colofon .pitch em{font-style:italic;color:var(--indigo);font-weight:500}
@@ -756,13 +766,14 @@
     }
     section#proceso{padding:64px 0 72px}
     section#nosotros{padding-top:52px}
-    section#cobertura{padding-bottom:56px}
+    section#red{padding-bottom:56px}
 
     .hero{padding:36px 0 26px}
     .eyebrow{margin-bottom:18px}
-    .hero-sub{margin-top:28px;padding-top:18px}
-    .hero-sub p{font-size:15.5px}
-    .hero-sub .lead{font-size:17px;line-height:1.45}
+    .hero-lead{margin-top:22px;font-size:18px}
+    .hero-copy{margin-top:18px}
+    .hero-copy p{font-size:15.5px}
+    .hero-visual{margin-top:34px}
     .hero-caption{grid-template-columns:1fr;gap:4px;font-size:9.5px}
     .hero-caption .mid,.hero-caption .r{border:none;padding:0;text-align:left}
     .figures{margin-top:40px}
@@ -838,10 +849,9 @@
         linear-gradient(#000 0%,#000 100%) 0 64px/100% calc(100% - 64px) no-repeat;
     }
     section#proceso{padding:52px 0 60px}
-    section#cobertura{padding-bottom:40px}
+    section#red{padding-bottom:40px}
     .hero{padding:26px 0 18px}
-    .hero-sub{margin-top:22px}
-    .hero-sub .lead{font-size:18px}
+    .hero-lead{font-size:17.5px}
     .sec-head{margin-bottom:22px}
     .svc h3{font-size:25px}
     .process-flow{margin-top:28px;gap:18px}
@@ -880,12 +890,11 @@
   <div class="wrap nav-row">
     <a href="#" aria-label="Shaddai Consultants"><img src="./assets/logo-azul.png" alt="Shaddai Consultants" class="logo"></a>
     <nav class="nav-links" aria-label="Principal">
-      <a href="#shaddai">Qué es Shaddai</a>
+      <a href="#inicio">Inicio</a>
       <a href="#servicios">Servicios</a>
       <a href="#proceso">Proceso</a>
-      <a href="#cobertura">Cobertura</a>
-      <a href="#nosotros">Nosotros</a>
-      <a href="#contacto">Contáctanos</a>
+      <a href="#red">Nuestra red</a>
+      <a href="#nosotros">Sobre nosotros</a>
       <a href="#consulta" class="cta-pill"><span class="dot"></span>Consulta gratuita</a>
     </nav>
     <a href="tel:+573167415056" class="nav-phone" aria-label="Llamar a Shaddai Consultants">
@@ -896,25 +905,29 @@
 
 <main>
 
-  <!-- ═══ HERO · QUÉ ES SHADDAI ═══ -->
-  <section class="hero" id="shaddai" style="border-top:none">
+  <!-- ═══ INICIO ═══ -->
+  <section class="hero" id="inicio" style="border-top:none">
     <div class="wrap">
-      <div class="hero-grid">
-        <div>
+      <div class="hero-intro">
           <div class="eyebrow">
             <span class="pulse"></span>
             <span class="t">Consultoría empresarial · Bogotá, Colombia · <b id="live-date-text">—</b></span>
           </div>
           <h1 class="head display" id="hero-head">
-            <span class="line"><span class="lin" style="--i:0">Somos una</span></span>
-            <span class="line"><span class="lin" style="--i:1">empresa de</span></span>
-            <span class="line"><span class="lin" style="--i:2"><em>consultoría</em></span></span>
-            <span class="line head-underline"><span class="lin" style="--i:3">y asesoría.</span></span>
+            <span class="line"><span class="lin" style="--i:0">Soluciones <em>integrales</em></span></span>
+            <span class="line head-underline"><span class="lin" style="--i:1">para su empresa.</span></span>
           </h1>
-        </div>
 
-        <div class="hero-right">
-          <div class="plate" id="chartPlate">
+          <p class="hero-lead">Somos aliados comprometidos con <em>tu progreso.</em></p>
+
+          <div class="hero-copy">
+            <p>Especializada en acompañar a las organizaciones en la <b>implementación, mantenimiento y mejora de sus Sistemas de Gestión,</b> promoviendo el cumplimiento normativo y la optimización de sus procesos.</p>
+            <p>Nuestro <b>objetivo</b> es acompañar a cada organización en el fortalecimiento de sus procesos, aportando conocimiento y experiencia para generar valor y promover la mejora continua.</p>
+          </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="plate" id="chartPlate">
             <div class="plate-hd">
               <span>Fig. 01 — Ciclo de vida empresarial</span>
               <span><b>Shaddai</b> · 2026</span>
@@ -977,20 +990,11 @@
               <text x="40" y="378" class="chart-axis">Tiempo →</text>
               <text x="556" y="378" text-anchor="end" class="chart-axis">↑ Valor de la empresa</text>
             </svg>
-          </div>
-          <div class="hero-caption">
-            <span class="l"><b>Fig. 01</b></span>
-            <span class="mid">Pase el cursor sobre cada fase</span>
-            <span class="r"><b>Bogotá</b> · 2026</span>
-          </div>
         </div>
-      </div>
-
-      <div class="hero-sub">
-        <p class="lead">Somos aliados comprometidos con <em>tu progreso.</em></p>
-        <div>
-          <p>Especializada en acompañar a las organizaciones en la <b>implementación, mantenimiento y mejora de sus Sistemas de Gestión,</b> promoviendo el cumplimiento normativo y la optimización de sus procesos.</p>
-          <p style="margin-top:16px">Nuestro <b>objetivo</b> es acompañar a cada organización en el fortalecimiento de sus procesos, aportando conocimiento y experiencia para generar valor y promover la mejora continua.</p>
+        <div class="hero-caption">
+          <span class="l"><b>Fig. 01</b></span>
+          <span class="mid">Pase el cursor sobre cada fase</span>
+          <span class="r"><b>Bogotá</b> · 2026</span>
         </div>
       </div>
 
@@ -1022,7 +1026,7 @@
     <div class="wrap">
       <div class="sec-head reveal">
         <div class="sec-num">01 — Servicios</div>
-        <h2 class="sec-title display">Soluciones integrales<br>para <em>su empresa.</em></h2>
+        <h2 class="sec-title display">Cuatro frentes,<br>un solo <em>equipo.</em></h2>
       </div>
 
       <div class="services">
@@ -1215,11 +1219,11 @@
   </section>
 
   <!-- ═══ COBERTURA ═══ -->
-  <section id="cobertura">
+  <section id="red">
     <span class="rule-print"></span>
     <div class="wrap">
       <div class="sec-head reveal">
-        <div class="sec-num">03 — Cobertura</div>
+        <div class="sec-num">03 — Nuestra red</div>
         <h2 class="sec-title display">Dónde estamos<br><em>ubicados.</em></h2>
       </div>
 
@@ -1295,11 +1299,38 @@
     <span class="rule-print"></span>
     <div class="wrap">
       <div class="sec-head reveal">
-        <div class="sec-num">04 — Quiénes somos</div>
-        <h2 class="sec-title display">Quiénes están detrás<br>de <em>Shaddai.</em></h2>
+        <div class="sec-num">04 — Sobre nosotros</div>
+        <h2 class="sec-title display">Sobre <em>nosotros.</em></h2>
       </div>
 
       <div class="quotes">
+        <div class="ident reveal">
+          <article class="ident-block">
+            <div class="num">Misión — Doc. 01</div>
+            <p>Somos una empresa de consultoría y asesoría, conformada por un equipo de profesionales altamente calificados, orientados a <em>generar valor</em> para nuestros clientes mediante servicios especializados en sistemas de gestión.</p>
+            <p>Aplicamos nuestros conocimientos técnicos y normativos desde un enfoque de prevención de riesgos, cumplimiento legal, mejora continua e innovación, ofreciendo soluciones integrales que fortalecen los sistemas de gestión y contribuyen al bienestar de las personas, así como a la mejora, eficiencia y optimización de los procesos organizacionales de nuestros clientes.</p>
+          </article>
+          <article class="ident-block">
+            <div class="num">Visión — Doc. 02</div>
+            <p>Queremos consolidarnos como una empresa consultora <em>sólida y reconocida</em> por su experiencia y confiabilidad a nivel nacional en la implementación y fortalecimiento de sistemas de gestión.</p>
+            <p>Caracterizarnos por ofrecer soluciones técnicas, prácticas y adaptadas a la realidad de cada organización, apoyadas en herramientas tecnológicas y en el profesionalismo de nuestro equipo, que fortalezcan los procesos organizacionales y el desempeño de nuestros clientes, en un marco de mejora continua.</p>
+          </article>
+        </div>
+
+        <div class="q-typo reveal">
+          <div class="num">Historia — Doc. 03</div>
+          <blockquote class="display">
+            «En Shaddai potenciamos el crecimiento de las empresas mediante soluciones confiables, humanas y efectivas en sistemas de gestión. <em>Somos aliados comprometidos con tu progreso.</em>»
+          </blockquote>
+          <div class="badge">
+            <span class="name">Identidad verbal</span>
+            <b>Manual de marca</b><br>
+            Profesional y cercano<br>
+            Claro y directo<br>
+            Motivador y propositivo
+          </div>
+        </div>
+
         <!-- Equipo · fotos en ./assets/equipo/ — recortadas sobre el azul polvo de marca -->
         <div class="team-block reveal">
           <div class="team-kicker"><span class="pin"></span>El equipo — quienes están detrás del trabajo</div>
@@ -1334,33 +1365,6 @@
               </div>
               <figcaption><span class="mi">05</span><span class="mn">Valentina</span></figcaption>
             </figure>
-          </div>
-        </div>
-
-        <div class="ident reveal">
-          <article class="ident-block">
-            <div class="num">Misión — Doc. 01</div>
-            <p>Somos una empresa de consultoría y asesoría, conformada por un equipo de profesionales altamente calificados, orientados a <em>generar valor</em> para nuestros clientes mediante servicios especializados en sistemas de gestión.</p>
-            <p>Aplicamos nuestros conocimientos técnicos y normativos desde un enfoque de prevención de riesgos, cumplimiento legal, mejora continua e innovación, ofreciendo soluciones integrales que fortalecen los sistemas de gestión y contribuyen al bienestar de las personas, así como a la mejora, eficiencia y optimización de los procesos organizacionales de nuestros clientes.</p>
-          </article>
-          <article class="ident-block">
-            <div class="num">Visión — Doc. 02</div>
-            <p>Queremos consolidarnos como una empresa consultora <em>sólida y reconocida</em> por su experiencia y confiabilidad a nivel nacional en la implementación y fortalecimiento de sistemas de gestión.</p>
-            <p>Caracterizarnos por ofrecer soluciones técnicas, prácticas y adaptadas a la realidad de cada organización, apoyadas en herramientas tecnológicas y en el profesionalismo de nuestro equipo, que fortalezcan los procesos organizacionales y el desempeño de nuestros clientes, en un marco de mejora continua.</p>
-          </article>
-        </div>
-
-        <div class="q-typo reveal">
-          <div class="num">Historia — Doc. 03</div>
-          <blockquote class="display">
-            «En Shaddai potenciamos el crecimiento de las empresas mediante soluciones confiables, humanas y efectivas en sistemas de gestión. <em>Somos aliados comprometidos con tu progreso.</em>»
-          </blockquote>
-          <div class="badge">
-            <span class="name">Identidad verbal</span>
-            <b>Manual de marca</b><br>
-            Profesional y cercano<br>
-            Claro y directo<br>
-            Motivador y propositivo
           </div>
         </div>
 
@@ -1399,17 +1403,11 @@
             <span><b>Casper's Hardware</b></span><span class="sep">◆</span>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ═══ CONTÁCTANOS ═══ -->
-  <section id="contacto">
-    <span class="rule-print"></span>
-    <div class="wrap">
-      <div class="contact">
+        <div class="about-contact reveal">
+          <div class="contact">
         <div class="contact-info reveal">
-          <div class="sec-num" style="margin-bottom:24px">05 — Contáctanos</div>
+          <div class="sec-num" style="margin-bottom:24px">Contáctanos</div>
           <h3 class="display">Hagamos crecer su empresa <em>juntos.</em></h3>
           <dl>
             <dt>Dirección</dt>
@@ -1435,6 +1433,8 @@
           <div class="brand-plate-cap">
             <b>Respuesta el mismo día</b>
             <span>Escríbanos y coordinamos una primera conversación sin compromiso.</span>
+          </div>
+          </div>
           </div>
         </div>
       </div>
