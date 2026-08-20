@@ -98,19 +98,42 @@
   /* ——— HERO ——— */
   .hero{padding:60px 0 40px;position:relative}
   /* Hero centrado: título, CTA y párrafo en un solo bloque */
-  .hero-top{display:grid;grid-template-columns:1.18fr .82fr;gap:52px;align-items:center}
-  @media(max-width:980px){.hero-top{grid-template-columns:1fr;gap:32px}}
+  /* Home: titular y buscador arriba, texto e imagen abajo */
+  .hero-grid2{display:grid;grid-template-columns:1fr 1fr;gap:56px 52px;align-items:start}
+  @media(max-width:900px){.hero-grid2{grid-template-columns:1fr;gap:36px}}
   .hero-media{border-radius:20px;overflow:hidden;aspect-ratio:4/3;background:var(--paper-3)}
   .hero-media img{width:100%;height:100%;object-fit:cover;display:block}
-  /* El bloque de abajo sí va centrado y a todo el ancho */
-  .hero-intro{max-width:900px;margin:52px auto 0;text-align:center}
+  .hero-intro{max-width:none;margin:0}
+
+  /* Buscador de la página */
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .ask-form{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--rule-strong);border-radius:999px;padding:6px 6px 6px 22px;transition:border-color .2s ease,box-shadow .2s ease}
+  .ask-form:focus-within{border-color:var(--indigo);box-shadow:0 0 0 4px rgba(19,52,241,.10)}
+  .ask-form input{flex:1 1 auto;min-width:0;border:none;outline:none;background:none;font-family:inherit;font-size:16px;color:var(--ink);padding:12px 0}
+  .ask-form input::placeholder{color:var(--ink-soft)}
+  .ask-form input::-webkit-search-cancel-button{-webkit-appearance:none}
+  .ask-form button{flex:0 0 auto;width:44px;height:44px;border:none;border-radius:50%;background:var(--ink);color:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:background .2s ease}
+  .ask-form button:hover{background:var(--indigo)}
+  .ask-tips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .ask-tip{
+    border:1px solid var(--rule-strong);background:transparent;border-radius:999px;cursor:pointer;
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-soft);padding:8px 14px;transition:background .2s ease,color .2s ease,border-color .2s ease;
+  }
+  .ask-tip:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .ask-answer{margin-top:18px;border-top:1px solid var(--rule-strong);padding-top:16px;animation:fl-open .35s cubic-bezier(.2,.7,.2,1)}
+  .ask-answer[hidden]{display:none}
+  .ask-answer .lbl{display:block;margin-bottom:8px;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+  .ask-answer .ttl{display:block;margin-bottom:6px;font-family:"Poppins",sans-serif;font-size:17px;font-weight:600;letter-spacing:-0.02em;color:var(--ink)}
+  .ask-answer p{font-size:14.5px;line-height:1.55;color:var(--ink-soft);margin-bottom:12px}
+  .ask-answer mark{background:rgba(19,52,241,.14);color:var(--ink);padding:0 2px;border-radius:2px}
+  .ask-answer .go{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--indigo);border-bottom:1px solid currentColor;padding-bottom:2px}
   .hero-lead{
-    margin-top:0;font-family:"Poppins",sans-serif;font-size:clamp(19px,2.2vw,26px);
+    margin:0 0 20px;font-family:"Poppins",sans-serif;font-size:clamp(19px,2.2vw,26px);
     line-height:1.4;font-weight:500;letter-spacing:-0.02em;color:var(--ink);
   }
   .hero-lead em{font-style:italic;color:var(--indigo);font-weight:500}
-  .hero-copy{margin-top:24px}
-  .hero-copy p{font-size:16.5px;line-height:1.6;color:var(--ink-soft);max-width:64ch;margin:0 auto}
+  .hero-copy p{font-size:16.5px;line-height:1.6;color:var(--ink-soft);max-width:58ch}
   .hero-copy p + p{margin-top:14px}
   .hero-copy b{color:var(--ink);font-weight:500}
   .eyebrow{display:flex;align-items:flex-start;gap:12px;margin-bottom:26px;flex-wrap:nowrap}
@@ -121,7 +144,7 @@
   h1.head{
     font-family:"Poppins",sans-serif;
     /* Escala bajada: el titular comparte fila con la imagen, ya no ocupa todo el ancho */
-    font-size:clamp(32px,3.8vw,56px);line-height:1.08;font-weight:700;letter-spacing:-0.035em;
+    font-size:clamp(34px,4.2vw,62px);line-height:1.06;font-weight:700;letter-spacing:-0.035em;
   }
   h1.head em{font-style:italic;color:var(--indigo);font-weight:700}
 
@@ -207,7 +230,8 @@
   .hero-caption b{color:var(--ink);font-weight:500}
 
 
-  .arrow{width:14px;height:14px}
+  /* flex:0 0 auto — sin ancho intrínseco, como hijo flex único colapsaba a 0 */
+  .arrow{width:14px;height:14px;flex:0 0 auto}
 
   /* ——— Banda de cifras ——— */
   .figures{
@@ -771,11 +795,11 @@
 
     .hero{padding:36px 0 26px}
     .eyebrow{margin-bottom:18px}
-    .hero-intro{margin-top:34px}
-    .hero-lead{margin-top:0;font-size:18px}
-    .hero-copy{margin-top:18px}
+    .hero-lead{font-size:18px;margin-bottom:16px}
     .hero-copy p{font-size:15.5px}
     .hero-media{aspect-ratio:16/10}
+    .ask-form input{font-size:15px}
+    .ask-form{padding-left:18px}
     .hero-caption{grid-template-columns:1fr;gap:4px;font-size:9.5px}
     .hero-caption .mid,.hero-caption .r{border:none;padding:0;text-align:left}
     .figures{margin-top:40px}
@@ -908,33 +932,52 @@
 <main>
 
   <!-- ═══ INICIO ═══ -->
-  <section class="hero" id="inicio" style="border-top:none">
+  <section class="hero" id="inicio" style="border-top:none"
+           data-buscar="que es shaddai consultoria asesoria especializada sistemas de gestion cumplimiento normativo quienes son objetivo">
     <div class="wrap">
-      <div class="hero-top">
+      <div class="hero-grid2">
+
         <div class="hero-head-col">
           <div class="eyebrow">
             <span class="pulse"></span>
             <span class="t">Consultoría empresarial · Bogotá, Colombia · <b id="live-date-text">—</b></span>
           </div>
           <h1 class="head display" id="hero-head">
-            <span class="line"><span class="lin" style="--i:0">Soluciones <em>integrales</em></span></span>
-            <span class="line head-underline"><span class="lin" style="--i:1">para su empresa.</span></span>
+            <span class="line"><span class="lin" style="--i:0">Soluciones</span></span>
+            <span class="line"><span class="lin" style="--i:1"><em>integrales</em></span></span>
+            <span class="line head-underline"><span class="lin" style="--i:2">para su empresa.</span></span>
           </h1>
+        </div>
+
+        <div class="ask">
+          <form class="ask-form" id="askForm" role="search">
+            <label class="sr-only" for="askInput">Escriba su pregunta sobre Shaddai Consultants</label>
+            <input id="askInput" type="search" placeholder="Escribe tu pregunta" autocomplete="off" enterkeyhint="search">
+            <button type="submit" aria-label="Buscar en la página">
+              <svg class="arrow" viewBox="0 0 20 20" fill="none"><path d="M3 10h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.7"/></svg>
+            </button>
+          </form>
+          <div class="ask-tips">
+            <button type="button" class="ask-tip">¿Qué servicios ofrecen?</button>
+            <button type="button" class="ask-tip">¿En qué ciudades tienen asesores?</button>
+            <button type="button" class="ask-tip">¿Cómo trabajan?</button>
+          </div>
+          <div class="ask-answer" id="askAnswer" role="status" aria-live="polite" hidden></div>
+        </div>
+
+        <div class="hero-intro">
+          <p class="hero-lead">Somos aliados comprometidos con <em>tu progreso.</em></p>
+          <div class="hero-copy">
+            <p>Especializada en acompañar a las organizaciones en la <b>implementación, mantenimiento y mejora de sus Sistemas de Gestión,</b> promoviendo el cumplimiento normativo y la optimización de sus procesos.</p>
+            <p>Nuestro <b>objetivo</b> es acompañar a cada organización en el fortalecimiento de sus procesos, aportando conocimiento y experiencia para generar valor y promover la mejora continua.</p>
+          </div>
         </div>
 
         <!-- PROVISIONAL: imagen de archivo hasta escoger la definitiva con Isa -->
         <div class="hero-media">
           <img src="./assets/foto-equipo.jpg" alt="Consultoría empresarial — Shaddai Consultants, Bogotá">
         </div>
-      </div>
 
-      <div class="hero-intro">
-          <p class="hero-lead">Somos aliados comprometidos con <em>tu progreso.</em></p>
-
-          <div class="hero-copy">
-            <p>Especializada en acompañar a las organizaciones en la <b>implementación, mantenimiento y mejora de sus Sistemas de Gestión,</b> promoviendo el cumplimiento normativo y la optimización de sus procesos.</p>
-            <p>Nuestro <b>objetivo</b> es acompañar a cada organización en el fortalecimiento de sus procesos, aportando conocimiento y experiencia para generar valor y promover la mejora continua.</p>
-          </div>
       </div>
 
       <div class="figures reveal">
@@ -960,7 +1003,8 @@
   </section>
 
   <!-- ═══ SERVICIOS ═══ -->
-  <section id="servicios">
+  <section id="servicios"
+           data-buscar="servicios lineas de servicio sg-sst sgsst psicosocial biomecanico seguridad vial ambiental promocion prevencion emergencias capacitacion capacitaciones programas cursos auditoria auditorias tributaria calidad ruc riesgos soluciones estrategicas">
     <span class="rule-print"></span>
     <div class="wrap">
       <div class="sec-head reveal">
@@ -1043,7 +1087,8 @@
   </section>
 
   <!-- ═══ PROCESO ═══ -->
-  <section id="proceso">
+  <section id="proceso"
+           data-buscar="proceso como trabajan trabajamos metodologia pasos etapas escuchamos coordinamos acompanamos seguimiento continuidad acompanamiento">
     <span class="rule-print"></span>
     <div class="wrap">
       <div class="sec-head reveal">
@@ -1158,7 +1203,8 @@
   </section>
 
   <!-- ═══ COBERTURA ═══ -->
-  <section id="red">
+  <section id="red"
+           data-buscar="cobertura red nacional ciudades ciudad donde estan ubicados ubicacion sedes asesores bogota cali medellin barranquilla tunja casanare colombia">
     <span class="rule-print"></span>
     <div class="wrap">
       <div class="sec-head reveal">
@@ -1234,7 +1280,8 @@
   </section>
 
   <!-- ═══ NOSOTROS ═══ -->
-  <section id="nosotros">
+  <section id="nosotros"
+           data-buscar="nosotros equipo quienes somos mision vision historia valores contacto contactanos direccion telefono telefonos correo correos email escribir llamar oficina mateo astrid paula carol valentina">
     <span class="rule-print"></span>
     <div class="wrap">
       <div class="sec-head reveal">
@@ -1381,7 +1428,8 @@
   </section>
 
   <!-- ═══ CONSULTA GRATUITA ═══ -->
-  <section id="consulta">
+  <section id="consulta"
+           data-buscar="consulta gratuita cita agendar formulario diagnostico asesoria inicial cotizacion precio contactar">
     <span class="rule-print"></span>
     <div class="wrap">
       <div class="sec-head reveal">
@@ -1706,6 +1754,119 @@
     }
     btns.forEach(function(b){ wire(b, b.dataset.city, true); });
     pins.forEach(function(p){ wire(p, p.id.replace('pin-',''), true); });
+  })();
+
+  /* ——— Buscador del home: responde con el contenido de la propia página ——— */
+  (function(){
+    var form = document.getElementById('askForm');
+    if(!form) return;
+    var input = document.getElementById('askInput');
+    var salida = document.getElementById('askAnswer');
+
+    function normalizar(t){
+      return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+    }
+
+    /* El <br> del título pega las palabras si se lee con textContent */
+    function textoDe(nodo){
+      if(!nodo) return '';
+      return nodo.innerHTML.replace(/<br\s*\/?>/gi,' ').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
+    }
+
+    /* Índice: una entrada por sección */
+    var indice = [].slice.call(document.querySelectorAll('main section')).map(function(sec){
+      var titulo = textoDe(sec.querySelector('h1, h2')) || sec.id;
+      /* Para mostrar: frases con cuerpo suficiente */
+      var trozos = [].slice.call(sec.querySelectorAll('p, li, blockquote, dd, .fl-desc'))
+        .map(function(n){ return n.textContent.replace(/\s+/g,' ').trim(); })
+        .filter(function(t){ return t.length > 25; });
+      /* Para buscar: todo el texto de la sección más los sinónimos declarados */
+      var completo = sec.textContent.replace(/\s+/g,' ') + ' ' + titulo + ' ' + (sec.dataset.buscar || '');
+      return { id: sec.id, titulo: titulo, trozos: trozos, texto: normalizar(completo) };
+    }).filter(function(e){ return e.trozos.length; });
+
+    /* Raíz de la palabra: "trabajan" y "trabajamos" deben coincidir */
+    function raiz(t){ return t.length > 6 ? t.slice(0, t.length - 2) : t; }
+
+    /* Palabras que aparecen en casi cualquier pregunta y no discriminan */
+    var vacias = {que:1,como:1,donde:1,cual:1,cuales:1,cuando:1,quien:1,quienes:1,por:1,para:1,con:1,los:1,las:1,del:1,una:1,uno:1,unos:1,unas:1,sus:1,son:1,esta:1,estan:1,tiene:1,tienen:1,hacen:1,hace:1,ofrecen:1,ofrece:1,puedo:1,quiero:1,ustedes:1,shaddai:1};
+
+    function terminos(q){
+      return normalizar(q).split(/[^a-z0-9ñ]+/).filter(function(t){
+        return t.length > 2 && !vacias[t];
+      });
+    }
+
+    function buscar(q){
+      var ts = terminos(q);
+      if(!ts.length) return null;
+      var mejor = null;
+      indice.forEach(function(e){
+        var puntos = 0;
+        ts.forEach(function(t){
+          var r = raiz(t);
+          var apariciones = e.texto.split(r).length - 1;
+          if(apariciones) puntos += Math.min(apariciones, 4);
+          if(normalizar(e.titulo).indexOf(r) !== -1) puntos += 3;
+        });
+        if(!mejor || puntos > mejor.puntos) mejor = { e: e, puntos: puntos, ts: ts };
+      });
+      return (mejor && mejor.puntos > 0) ? mejor : null;
+    }
+
+    /* El trozo de texto de la sección que más términos contiene */
+    function mejorTrozo(e, ts){
+      var top = e.trozos[0], mejor = -1;
+      e.trozos.forEach(function(t){
+        var n = normalizar(t), p = 0;
+        ts.forEach(function(x){ if(n.indexOf(raiz(x)) !== -1) p++; });
+        if(p > mejor){ mejor = p; top = t; }
+      });
+      return top;
+    }
+
+    function escapar(t){
+      return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+    function resaltar(t, ts){
+      var out = escapar(t);
+      ts.forEach(function(x){
+        var r = raiz(x).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+        out = out.replace(new RegExp('(' + r + '[a-zA-ZáéíóúñÁÉÍÓÚÑ]*)', 'gi'), '<mark>$1</mark>');
+      });
+      return out;
+    }
+
+    function responder(q){
+      var r = buscar(q);
+      if(!r){
+        salida.innerHTML = '<span class="lbl">Sin resultados</span>' +
+          '<p>No encontramos eso en la página. Escríbanos y le respondemos directamente.</p>' +
+          '<a class="go" href="#nosotros">Ir a Contáctanos →</a>';
+      } else {
+        var texto = mejorTrozo(r.e, r.ts);
+        salida.innerHTML = '<span class="lbl">Encontrado en la página</span>' +
+          '<span class="ttl">' + escapar(r.e.titulo) + '</span>' +
+          '<p>' + resaltar(texto, r.ts) + '</p>' +
+          '<a class="go" href="#' + r.e.id + '">Ver la sección →</a>';
+      }
+      salida.hidden = false;
+    }
+
+    form.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var q = input.value.trim();
+      if(q) responder(q);
+    });
+    [].slice.call(document.querySelectorAll('.ask-tip')).forEach(function(b){
+      b.addEventListener('click', function(){
+        input.value = b.textContent.trim();
+        responder(input.value);
+      });
+    });
+    input.addEventListener('input', function(){
+      if(!input.value.trim()) salida.hidden = true;
+    });
   })();
 
   /* Formulario — abre el correo con los datos ya redactados */
