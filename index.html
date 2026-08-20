@@ -99,8 +99,20 @@
   .hero{padding:60px 0 40px;position:relative}
   /* Hero centrado: título, CTA y párrafo en un solo bloque */
   /* Home: titular y buscador arriba, texto e imagen abajo */
-  .hero-grid2{display:grid;grid-template-columns:1fr 1fr;gap:56px 52px;align-items:start}
-  @media(max-width:900px){.hero-grid2{grid-template-columns:1fr;gap:36px}}
+  .hero-grid2{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+  /* Columnas apiladas: así la imagen queda pegada a las sugerencias y la
+     respuesta del buscador la empuja hacia abajo al aparecer */
+  .hero-col-left{display:flex;flex-direction:column;gap:44px}
+  .hero-col-right{display:flex;flex-direction:column;gap:26px}
+  @media(max-width:900px){
+    .hero-grid2{grid-template-columns:1fr;gap:32px}
+    /* display:contents — en móvil conviene el orden titular, buscador, texto, imagen */
+    .hero-col-left,.hero-col-right{display:contents}
+    .hero-head-col{order:1}
+    .ask{order:2}
+    .hero-intro{order:3}
+    .hero-media{order:4}
+  }
   .hero-media{border-radius:20px;overflow:hidden;aspect-ratio:4/3;background:var(--paper-3)}
   .hero-media img{width:100%;height:100%;object-fit:cover;display:block}
   .hero-intro{max-width:none;margin:0}
@@ -939,45 +951,47 @@
     <div class="wrap">
       <div class="hero-grid2">
 
-        <div class="hero-head-col">
-          <div class="eyebrow">
-            <span class="pulse"></span>
-            <span class="t">Consultoría empresarial · Bogotá, Colombia · <b id="live-date-text">—</b></span>
+        <div class="hero-col-left">
+          <div class="hero-head-col">
+            <div class="eyebrow">
+              <span class="pulse"></span>
+              <span class="t">Consultoría empresarial · Bogotá, Colombia · <b id="live-date-text">—</b></span>
+            </div>
+            <h1 class="head display" id="hero-head">
+              <span class="line"><span class="lin" style="--i:0">Soluciones</span></span>
+              <span class="line"><span class="lin" style="--i:1"><em>integrales</em></span></span>
+              <span class="line head-underline"><span class="lin" style="--i:2">para su empresa.</span></span>
+            </h1>
           </div>
-          <h1 class="head display" id="hero-head">
-            <span class="line"><span class="lin" style="--i:0">Soluciones</span></span>
-            <span class="line"><span class="lin" style="--i:1"><em>integrales</em></span></span>
-            <span class="line head-underline"><span class="lin" style="--i:2">para su empresa.</span></span>
-          </h1>
-        </div>
-
-        <div class="ask">
-          <form class="ask-form" id="askForm" role="search">
-            <label class="sr-only" for="askInput">Escriba su pregunta sobre Shaddai Consultants</label>
-            <input id="askInput" type="search" placeholder="Escribe tu pregunta" autocomplete="off" enterkeyhint="search">
-            <button type="submit" aria-label="Buscar en la página">
-              <svg class="arrow" viewBox="0 0 20 20" fill="none"><path d="M3 10h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.7"/></svg>
-            </button>
-          </form>
-          <div class="ask-tips">
-            <button type="button" class="ask-tip">¿Qué servicios ofrecen?</button>
-            <button type="button" class="ask-tip">¿En qué ciudades tienen asesores?</button>
-            <button type="button" class="ask-tip">¿Cómo trabajan?</button>
-          </div>
-          <div class="ask-answer" id="askAnswer" role="status" aria-live="polite" hidden></div>
-        </div>
-
-        <div class="hero-intro">
-          <p class="hero-lead">Somos aliados comprometidos con <em>tu progreso.</em></p>
-          <div class="hero-copy">
-            <p>Especializada en acompañar a las organizaciones en la <b>implementación, mantenimiento y mejora de sus Sistemas de Gestión,</b> promoviendo el cumplimiento normativo y la optimización de sus procesos.</p>
-            <p>Nuestro <b>objetivo</b> es acompañar a cada organización en el fortalecimiento de sus procesos, aportando conocimiento y experiencia para generar valor y promover la mejora continua.</p>
+          <div class="hero-intro">
+            <p class="hero-lead">Somos aliados comprometidos con <em>tu progreso.</em></p>
+            <div class="hero-copy">
+              <p>Especializada en acompañar a las organizaciones en la <b>implementación, mantenimiento y mejora de sus Sistemas de Gestión,</b> promoviendo el cumplimiento normativo y la optimización de sus procesos.</p>
+              <p>Nuestro <b>objetivo</b> es acompañar a cada organización en el fortalecimiento de sus procesos, aportando conocimiento y experiencia para generar valor y promover la mejora continua.</p>
+            </div>
           </div>
         </div>
 
-        <!-- PROVISIONAL: imagen de archivo hasta escoger la definitiva con Isa -->
-        <div class="hero-media">
-          <img src="./assets/foto-equipo.jpg" alt="Consultoría empresarial — Shaddai Consultants, Bogotá">
+        <div class="hero-col-right">
+          <div class="ask">
+            <form class="ask-form" id="askForm" role="search">
+              <label class="sr-only" for="askInput">Escriba su pregunta sobre Shaddai Consultants</label>
+              <input id="askInput" type="search" placeholder="Escribe tu pregunta" autocomplete="off" enterkeyhint="search">
+              <button type="submit" aria-label="Buscar en la página">
+                <svg class="arrow" viewBox="0 0 20 20" fill="none"><path d="M3 10h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.7"/></svg>
+              </button>
+            </form>
+            <div class="ask-tips">
+              <button type="button" class="ask-tip">¿Qué servicios ofrecen?</button>
+              <button type="button" class="ask-tip">¿En qué ciudades tienen asesores?</button>
+              <button type="button" class="ask-tip">¿Cómo trabajan?</button>
+            </div>
+            <div class="ask-answer" id="askAnswer" role="status" aria-live="polite" hidden></div>
+          </div>
+          <!-- PROVISIONAL: imagen de archivo hasta escoger la definitiva con Isa -->
+          <div class="hero-media">
+            <img src="./assets/foto-equipo.jpg" alt="Consultoría empresarial — Shaddai Consultants, Bogotá">
+          </div>
         </div>
 
       </div>
