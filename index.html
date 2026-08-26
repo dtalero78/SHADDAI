@@ -670,18 +670,22 @@
   }
   .brand-iso{position:relative;z-index:1;width:clamp(92px,15vw,132px);height:auto;opacity:.95}
 
-  /* Lámina con avatar real: la imagen ya viene compuesta sobre el navy de la lámina */
+  /* Lámina con avatar real: los avatares vienen sobre fondo claro, no sobre el navy */
   .brand-plate.has-avatar{
     display:block;padding:0;min-height:0;overflow:hidden;
     aspect-ratio:3/4;width:100%;max-width:400px;
+    background:#fff;border:1px solid var(--rule-strong);
   }
   .brand-plate.has-avatar::before{display:none}
   .brand-avatar{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+  /* El velo va en blanco: sobre el fondo claro del avatar un degradado navy ensucia */
   .brand-plate.has-avatar .brand-plate-cap{
     position:absolute;left:0;right:0;bottom:0;z-index:2;margin:0;max-width:none;text-align:left;
-    padding:60px 22px 20px;
-    background:linear-gradient(to top,rgba(1,13,39,.95) 32%,rgba(1,13,39,0));
+    padding:86px 22px 20px;
+    background:linear-gradient(to top,#fff 30%,rgba(255,255,255,.94) 48%,rgba(255,255,255,0));
   }
+  .brand-plate.has-avatar .brand-plate-cap b{color:var(--ink)}
+  .brand-plate.has-avatar .brand-plate-cap span{color:var(--ink-soft)}
   .brand-plate-cap{position:relative;z-index:1;margin-top:34px;text-align:center;max-width:34ch}
   .brand-plate-cap b{
     display:block;font-family:"Poppins",sans-serif;font-style:italic;font-weight:500;
@@ -912,6 +916,171 @@
     .cob-lead{font-size:16px}
     .fl-num{font-size:34px}
   }
+
+  /* ——— Menú desplegable de Servicios ——— */
+  .nav-item{position:relative;display:inline-flex;align-items:center}
+  .nav-item > a{display:inline-flex;align-items:center;gap:7px}
+  .nav-item > a .caret{width:9px;height:9px;flex:0 0 9px;transition:transform .2s ease}
+  .nav-item:hover > a,.nav-item:focus-within > a{color:var(--indigo)}
+  .nav-item:hover > a .caret,.nav-item:focus-within > a .caret{transform:rotate(180deg)}
+  /* padding-top: hace de puente para que el hover no se corte entre el enlace y el panel */
+  .nav-drop{
+    position:absolute;top:100%;left:-16px;z-index:60;padding-top:14px;min-width:296px;
+    opacity:0;visibility:hidden;transform:translateY(-7px);
+    transition:opacity .18s ease,transform .18s ease,visibility .18s ease;
+  }
+  .nav-item:hover .nav-drop,.nav-item:focus-within .nav-drop{opacity:1;visibility:visible;transform:none}
+  .nav-drop-card{
+    background:#fff;border:1px solid var(--rule-strong);border-radius:16px;padding:7px;
+    box-shadow:0 22px 46px -26px rgba(1,13,39,.55);
+  }
+  .nav-drop .lbl{
+    display:block;padding:9px 13px 7px;
+    font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .nav-drop button{
+    width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;
+    background:none;border:none;cursor:pointer;text-align:left;font-family:inherit;color:var(--ink);
+    padding:11px 13px;border-radius:11px;font-size:13.5px;line-height:1.3;
+    transition:background .18s ease,color .18s ease;
+  }
+  .nav-drop button:hover,.nav-drop button:focus-visible{background:var(--indigo);color:#fff;outline:none}
+  .nav-drop button .sub{
+    display:block;margin-top:4px;
+    font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .nav-drop button:hover .sub,.nav-drop button:focus-visible .sub{color:rgba(255,255,255,.74)}
+  .nav-drop button .arrow{width:15px;height:15px;flex:0 0 15px;opacity:.45;transition:opacity .18s ease,transform .18s ease}
+  .nav-drop button:hover .arrow{opacity:1;transform:translateX(3px)}
+
+  /* Entrada alterna dentro de Servicios — el menú se oculta en móvil */
+  .svc-quote{
+    align-self:flex-start;margin-top:20px;
+    display:inline-flex;align-items:center;gap:10px;cursor:pointer;
+    background:transparent;border:1px solid var(--ink);border-radius:999px;
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink);padding:11px 18px;transition:background .2s ease,color .2s ease,border-color .2s ease;
+  }
+  .svc-quote:hover{background:var(--indigo);border-color:var(--indigo);color:#fff}
+  .svc-quote .arrow{width:15px;height:15px}
+
+  /* ——— Modal: batería de riesgo psicosocial ——— */
+  .mdl{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
+  body.mdl-abierto .m-cta{display:none}
+  .mdl[hidden]{display:none}
+  .mdl-back{position:absolute;inset:0;background:rgba(1,13,39,.6);animation:mdl-fade .25s ease}
+  .mdl-card{
+    position:relative;z-index:1;width:min(700px,100%);max-height:88vh;overflow:auto;
+    background:var(--paper);border:1px solid var(--rule-strong);border-radius:22px;
+    padding:34px 36px 30px;box-shadow:0 44px 96px -44px rgba(1,13,39,.75);
+    animation:mdl-in .32s cubic-bezier(.2,.7,.2,1);
+  }
+  @keyframes mdl-fade{from{opacity:0}to{opacity:1}}
+  @keyframes mdl-in{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.mdl-back,.mdl-card{animation:none}}
+
+  .mdl-close{
+    position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;
+    border:1px solid var(--rule-strong);background:#fff;color:var(--ink);cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;transition:background .2s ease,color .2s ease,border-color .2s ease;
+  }
+  .mdl-close:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .mdl-close svg{width:15px;height:15px}
+
+  .mdl-kicker{
+    display:flex;align-items:center;gap:9px;margin-bottom:14px;
+    font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--indigo);
+  }
+  .mdl-kicker .pin{width:8px;height:8px;border-radius:50%;background:var(--indigo);box-shadow:0 0 0 0 var(--indigo);animation:pulse 2.4s infinite}
+  .mdl h3{
+    font-family:"Poppins",sans-serif;font-size:clamp(24px,3.4vw,31px);line-height:1.14;
+    letter-spacing:-0.03em;font-weight:700;color:var(--ink);margin-bottom:16px;padding-right:44px;
+  }
+  .mdl h3 em{font-style:italic;color:var(--indigo);font-weight:700}
+  .mdl-def{font-size:14.5px;line-height:1.6;color:var(--ink-soft);max-width:62ch}
+  .mdl-def b{color:var(--ink);font-weight:500}
+
+  .mdl-sep{margin:26px 0 22px;border:0;border-top:1px solid var(--rule-strong)}
+
+  .qz-head{
+    display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px;
+    font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .qz-head .t{color:var(--ink)}
+
+  .qz-input{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--rule-strong);border-radius:999px;padding:6px;transition:border-color .2s ease,box-shadow .2s ease}
+  .qz-input:focus-within{border-color:var(--indigo);box-shadow:0 0 0 4px rgba(19,52,241,.10)}
+  .qz-input .step{
+    flex:0 0 auto;width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--paper-3);color:var(--ink);font-size:20px;line-height:1;
+    display:inline-flex;align-items:center;justify-content:center;transition:background .2s ease,color .2s ease;
+  }
+  .qz-input .step:hover{background:var(--ink);color:#fff}
+  .qz-input input{
+    flex:1 1 auto;min-width:0;border:none;outline:none;background:none;text-align:center;
+    font-family:"Poppins",sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;color:var(--ink);padding:8px 0;
+    -moz-appearance:textfield;
+  }
+  .qz-input input::-webkit-outer-spin-button,.qz-input input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+
+  .qz-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .qz-chip{
+    flex:1 1 auto;text-align:center;cursor:pointer;
+    border:1px solid var(--rule-strong);background:transparent;border-radius:999px;
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-soft);padding:8px 14px;transition:background .2s ease,color .2s ease,border-color .2s ease;
+  }
+  .qz-chip:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .qz-chip[aria-pressed="true"]{background:var(--indigo);border-color:var(--indigo);color:#fff}
+
+  .qz-out{
+    margin-top:22px;background:var(--night);color:#fff;border-radius:18px;padding:24px 26px;
+    display:grid;grid-template-columns:1fr auto;gap:18px 26px;align-items:end;
+  }
+  @media(max-width:520px){.qz-out{grid-template-columns:1fr;align-items:start}}
+  .qz-out .k{
+    display:block;margin-bottom:7px;
+    font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);
+  }
+  .qz-out .v{font-family:"Poppins",sans-serif;font-size:32px;line-height:1;letter-spacing:-0.03em;font-weight:700;color:#fff}
+  .qz-out .v small{display:block;margin-top:8px;font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--polvo)}
+  .qz-out .tot{text-align:right}
+  @media(max-width:520px){.qz-out .tot{text-align:left}}
+  .qz-out .tot .v{font-size:26px;color:var(--polvo)}
+
+  .qz-tab{list-style:none;margin-top:22px}
+  .qz-tab li{
+    display:grid;grid-template-columns:1fr auto;gap:16px;align-items:baseline;
+    padding:11px 12px;border-radius:10px;border-bottom:1px solid var(--rule);
+    font-size:13.5px;color:var(--ink-soft);transition:background .2s ease,color .2s ease;
+  }
+  .qz-tab li .p{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink)}
+  .qz-tab li.on{background:rgba(19,52,241,.09);color:var(--ink);border-bottom-color:transparent}
+  .qz-tab li.on .p{color:var(--indigo)}
+
+  .qz-note{margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink-soft)}
+
+  .qz-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+  .qz-actions .go{
+    display:inline-flex;align-items:center;gap:10px;cursor:pointer;border:none;
+    background:var(--indigo);color:#fff;border-radius:999px;padding:14px 24px;
+    font-family:inherit;font-size:14px;letter-spacing:-0.01em;transition:background .2s ease;
+  }
+  .qz-actions .go:hover{background:var(--indigo-deep)}
+  .qz-actions .go .arrow{width:17px;height:17px}
+  .qz-actions .alt{
+    display:inline-flex;align-items:center;gap:10px;
+    border:1px solid var(--rule-strong);border-radius:999px;padding:14px 22px;
+    font-size:14px;color:var(--ink);transition:background .2s ease,color .2s ease,border-color .2s ease;
+  }
+  .qz-actions .alt:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  @media(max-width:680px){
+    .mdl{padding:14px}
+    .mdl-card{padding:28px 20px 24px;border-radius:18px;max-height:92vh}
+    .qz-out{padding:20px}
+    .qz-actions .go,.qz-actions .alt{width:100%;justify-content:center}
+  }
 </style>
 <noscript><style>
   .reveal{opacity:1 !important;transform:none !important;filter:none !important}
@@ -931,7 +1100,22 @@
     <a href="#" aria-label="Shaddai Consultants"><img src="./assets/logo-azul.png" alt="Shaddai Consultants" class="logo"></a>
     <nav class="nav-links" aria-label="Principal">
       <a href="#inicio">Inicio</a>
-      <a href="#servicios">Servicios</a>
+      <div class="nav-item">
+        <a href="#servicios">Servicios
+          <svg class="caret" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="nav-drop">
+          <div class="nav-drop-card">
+            <span class="lbl">Cotizar en línea</span>
+            <button type="button" data-abrir-bateria>
+              <span>Batería de riesgo psicosocial
+                <span class="sub">Valor por batería · Colombia</span>
+              </span>
+              <svg class="arrow" viewBox="0 0 20 20" fill="none"><path d="M3 10h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
       <a href="#proceso">Proceso</a>
       <a href="#red">Nuestra red</a>
       <a href="#nosotros">Sobre nosotros</a>
@@ -1043,6 +1227,10 @@
             <li>Auditorías y Certificaciones</li>
             <li>Emergencias</li>
           </ul>
+          <button type="button" class="svc-quote" data-abrir-bateria>
+            Cotizar batería de riesgo psicosocial
+            <svg class="arrow" viewBox="0 0 20 20" fill="none"><path d="M3 10h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.6"/></svg>
+          </button>
           <div class="cap"><span class="role">Ocho líneas</span><span>Un solo interlocutor</span></div>
         </article>
 
@@ -1587,6 +1775,71 @@
   </div>
 </div>
 
+
+<!-- ═══ MODAL · BATERÍA DE RIESGO PSICOSOCIAL ═══ -->
+<div class="mdl" id="mdlBateria" hidden role="dialog" aria-modal="true" aria-labelledby="mdlBateriaTitulo">
+  <div class="mdl-back" data-cerrar-bateria></div>
+  <div class="mdl-card" role="document">
+    <button type="button" class="mdl-close" data-cerrar-bateria aria-label="Cerrar">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+
+    <div class="mdl-kicker"><span class="pin"></span><span>Línea psicosocial</span></div>
+    <h3 class="display" id="mdlBateriaTitulo">Batería de <em>riesgo psicosocial</em></h3>
+    <p class="mdl-def">La batería de riesgo psicosocial es el conjunto de instrumentos con los que se evalúan las <b>condiciones intralaborales, extralaborales y los efectos del estrés</b> sobre las personas de una organización. Su aplicación es obligatoria en Colombia y debe realizarla un <b>psicólogo especialista en seguridad y salud en el trabajo con licencia vigente</b>, que entrega el informe con los resultados y el plan de intervención.</p>
+
+    <hr class="mdl-sep">
+
+    <div class="qz-head">
+      <span class="t">Cotizador · ¿cuántas baterías va a aplicar?</span>
+      <span>Valores en pesos colombianos</span>
+    </div>
+
+    <div class="qz-input">
+      <button type="button" class="step" id="qzMenos" aria-label="Restar una batería">−</button>
+      <label class="sr-only" for="qzCantidad">Cantidad de baterías</label>
+      <input id="qzCantidad" type="number" inputmode="numeric" min="1" max="99999" step="1" value="10">
+      <button type="button" class="step" id="qzMas" aria-label="Sumar una batería">+</button>
+    </div>
+
+    <div class="qz-chips" role="group" aria-label="Cantidades frecuentes">
+      <button type="button" class="qz-chip" data-cant="5" aria-pressed="false">5</button>
+      <button type="button" class="qz-chip" data-cant="10" aria-pressed="false">10</button>
+      <button type="button" class="qz-chip" data-cant="20" aria-pressed="false">20</button>
+      <button type="button" class="qz-chip" data-cant="30" aria-pressed="false">30</button>
+      <button type="button" class="qz-chip" data-cant="50" aria-pressed="false">50</button>
+      <button type="button" class="qz-chip" data-cant="100" aria-pressed="false">100</button>
+    </div>
+
+    <div class="qz-out" role="status" aria-live="polite">
+      <div>
+        <span class="k">Valor por batería</span>
+        <span class="v" id="qzUnitario">$50.000<small id="qzRango">1 – 19 baterías</small></span>
+      </div>
+      <div class="tot">
+        <span class="k">Total estimado</span>
+        <span class="v" id="qzTotal">$500.000</span>
+      </div>
+    </div>
+
+    <ul class="qz-tab" id="qzTarifas" aria-label="Tarifas por volumen">
+      <li data-tramo="0"><span>1 – 19 baterías</span><span class="p">$50.000 c/u</span></li>
+      <li data-tramo="1"><span>20 – 30 baterías</span><span class="p">$40.000 c/u</span></li>
+      <li data-tramo="2"><span>Más de 30 baterías</span><span class="p">$32.000 c/u</span></li>
+    </ul>
+
+    <p class="qz-note">Valores de referencia por batería aplicada. La cotización final se confirma según ciudad, número de sedes y modalidad de aplicación.</p>
+
+    <div class="qz-actions">
+      <button type="button" class="go" id="qzEnviar">
+        Solicitar esta cotización
+        <svg class="arrow" viewBox="0 0 20 20" fill="none"><path d="M3 10h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.6"/></svg>
+      </button>
+      <a class="alt" href="#consulta" data-cerrar-bateria>Hablar con un asesor</a>
+    </div>
+  </div>
+</div>
+
 <script>
 (function(){
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1883,6 +2136,131 @@
     input.addEventListener('input', function(){
       if(!input.value.trim()) salida.hidden = true;
     });
+  })();
+
+  /* Batería de riesgo psicosocial — modal + cotizador */
+  (function(){
+    var mdl = document.getElementById('mdlBateria');
+    if(!mdl) return;
+
+    /* Único sitio donde viven los precios: cambiar aquí ajusta todo el cotizador */
+    var TARIFAS = [
+      {hasta:19,       precio:50000, rango:'1 – 19 baterías'},
+      {hasta:30,       precio:40000, rango:'20 – 30 baterías'},
+      {hasta:Infinity, precio:32000, rango:'Más de 30 baterías'}
+    ];
+
+    var campo    = document.getElementById('qzCantidad');
+    var elUnit   = document.getElementById('qzUnitario');
+    var elRango  = document.getElementById('qzRango');
+    var elTotal  = document.getElementById('qzTotal');
+    var filas    = [].slice.call(document.querySelectorAll('#qzTarifas li'));
+    var chips    = [].slice.call(document.querySelectorAll('.qz-chip'));
+    var ultimoFoco = null;
+
+    function pesos(n){ return '$' + Math.round(n).toLocaleString('es-CO'); }
+
+    function cantidad(){
+      var n = parseInt(campo.value, 10);
+      if(isNaN(n) || n < 1) n = 1;
+      if(n > 99999) n = 99999;
+      return n;
+    }
+
+    function tramo(n){
+      for(var i = 0; i < TARIFAS.length; i++){
+        if(n <= TARIFAS[i].hasta) return i;
+      }
+      return TARIFAS.length - 1;
+    }
+
+    function calcular(){
+      var n = cantidad();
+      var i = tramo(n);
+      var t = TARIFAS[i];
+      elUnit.firstChild.nodeValue = pesos(t.precio);
+      elRango.textContent = t.rango;
+      elTotal.textContent = pesos(t.precio * n);
+      filas.forEach(function(li, k){ li.classList.toggle('on', k === i); });
+      chips.forEach(function(c){ c.setAttribute('aria-pressed', String(parseInt(c.dataset.cant, 10) === n)); });
+    }
+
+    function fijar(n){
+      campo.value = n;
+      calcular();
+    }
+
+    campo.addEventListener('input', calcular);
+    campo.addEventListener('blur', function(){ fijar(cantidad()); });
+    document.getElementById('qzMenos').addEventListener('click', function(){ fijar(Math.max(1, cantidad() - 1)); });
+    document.getElementById('qzMas').addEventListener('click', function(){ fijar(cantidad() + 1); });
+    chips.forEach(function(c){
+      c.addEventListener('click', function(){ fijar(parseInt(c.dataset.cant, 10)); });
+    });
+
+    /* Manda la cotización por correo, igual que el formulario de contacto */
+    document.getElementById('qzEnviar').addEventListener('click', function(){
+      var n = cantidad(), t = TARIFAS[tramo(n)];
+      var cuerpo = [
+        'Solicitud de cotización — Batería de riesgo psicosocial',
+        '',
+        'Cantidad de baterías: ' + n,
+        'Tramo: ' + t.rango,
+        'Valor por batería: ' + pesos(t.precio),
+        'Total estimado: ' + pesos(t.precio * n),
+        '',
+        'Empresa: ',
+        'Ciudad y número de sedes: ',
+        'Teléfono de contacto: '
+      ].join('\n');
+      window.location.href = 'mailto:gerencia@shaddaiconsultants.com'
+        + '?subject=' + encodeURIComponent('Cotización batería de riesgo psicosocial — ' + n + ' baterías')
+        + '&body=' + encodeURIComponent(cuerpo);
+    });
+
+    function enfocables(){
+      return [].slice.call(mdl.querySelectorAll('button, a[href], input')).filter(function(el){
+        return !el.disabled && el.offsetParent !== null;
+      });
+    }
+
+    function abrir(){
+      ultimoFoco = document.activeElement;
+      mdl.hidden = false;
+      document.body.style.overflow = 'hidden';
+      document.body.classList.add('mdl-abierto');
+      calcular();
+      campo.focus();
+      campo.select();
+      document.addEventListener('keydown', teclado);
+    }
+
+    function cerrar(){
+      mdl.hidden = true;
+      document.body.style.overflow = '';
+      document.body.classList.remove('mdl-abierto');
+      document.removeEventListener('keydown', teclado);
+      if(ultimoFoco && ultimoFoco.focus) ultimoFoco.focus();
+    }
+
+    function teclado(ev){
+      if(ev.key === 'Escape'){ ev.preventDefault(); cerrar(); return; }
+      if(ev.key !== 'Tab') return;
+      var f = enfocables();
+      if(!f.length) return;
+      var primero = f[0], ultimo = f[f.length - 1];
+      if(ev.shiftKey && document.activeElement === primero){ ev.preventDefault(); ultimo.focus(); }
+      else if(!ev.shiftKey && document.activeElement === ultimo){ ev.preventDefault(); primero.focus(); }
+    }
+
+    [].slice.call(document.querySelectorAll('[data-abrir-bateria]')).forEach(function(b){
+      b.addEventListener('click', function(ev){ ev.preventDefault(); abrir(); });
+    });
+    [].slice.call(mdl.querySelectorAll('[data-cerrar-bateria]')).forEach(function(b){
+      b.addEventListener('click', function(){ cerrar(); });
+    });
+
+    calcular();
   })();
 
   /* Formulario — abre el correo con los datos ya redactados */
