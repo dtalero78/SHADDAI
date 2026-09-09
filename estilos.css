@@ -1033,6 +1033,20 @@
 
   .mdl-sep{margin:26px 0 22px;border:0;border-top:1px solid var(--rule-strong)}
 
+  /* ——— Aviso de privacidad · casilla de autorización ——— */
+  .aviso-ok{margin-top:22px;padding-top:18px;border-top:1px solid var(--rule-strong)}
+  .aviso-ok[hidden]{display:none}
+  .aviso-check{display:flex;align-items:flex-start;gap:12px;cursor:pointer}
+  .aviso-check input{
+    flex:0 0 20px;width:20px;height:20px;margin:1px 0 0;cursor:pointer;
+    accent-color:var(--indigo);
+  }
+  .aviso-check span{font-size:14px;line-height:1.55;color:var(--ink)}
+  .aviso-check:hover span{color:var(--indigo)}
+  /* El botón queda inerte hasta que se marca la casilla */
+  #avisoSeguir[disabled]{opacity:.4;cursor:not-allowed}
+  #avisoSeguir[disabled]:hover{background:var(--ink)}
+
   /* ——— PQRS · acordeón de preguntas frecuentes ——— */
   .faq{border-top:1px solid var(--rule)}
   .faq-item{border-bottom:1px solid var(--rule)}

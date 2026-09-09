@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./estilos.css?v=2">
+<link rel="stylesheet" href="./estilos.css?v=3">
 <noscript><style>
   .reveal{opacity:1 !important;transform:none !important;filter:none !important}
   h1.head .line{overflow:visible !important}
@@ -776,6 +776,7 @@
         </button>
         <div class="faq-a" hidden>
           <p>Los datos que nos deja en los formularios se usan <b>únicamente</b> para contactarlo sobre Shaddai Consultants, conforme a la Ley 1581 de 2012 de Habeas Data. Si quiere conocer, actualizar o suprimir su información, puede solicitarlo por los mismos canales de PQRS.</p>
+          <p><button type="button" class="faq-link" data-aviso>Leer el aviso de privacidad completo →</button></p>
         </div>
       </div>
 
@@ -855,6 +856,7 @@
   </div>
 </div>
 
+<script src="./aviso.js?v=1"></script>
 <script>
 (function(){
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1272,6 +1274,7 @@
 
     /* Manda la cotización por correo, igual que el formulario de contacto */
     document.getElementById('qzEnviar').addEventListener('click', function(){
+     ShaddaiAviso.pedir(function(){
       var n = cantidad(), t = TARIFAS[tramo(n)];
       var cuerpo = [
         'Solicitud de cotización — Batería de riesgo psicosocial',
@@ -1288,6 +1291,7 @@
       window.location.href = 'mailto:gerencia@shaddaiconsultants.com'
         + '?subject=' + encodeURIComponent('Cotización batería de riesgo psicosocial — ' + n + ' baterías')
         + '&body=' + encodeURIComponent(cuerpo);
+     });
     });
 
     var caja = crearModal(mdl);
@@ -1334,6 +1338,7 @@
 
     /* Radicar la PQRS por correo, igual que el cotizador */
     document.getElementById('pqrsEnviar').addEventListener('click', function(){
+     ShaddaiAviso.pedir(function(){
       var cuerpo = [
         'Radicación de PQRS — Shaddai Consultants',
         '',
@@ -1350,6 +1355,7 @@
         + '?cc=' + encodeURIComponent('gerencia@shaddaiconsultants.com')
         + '&subject=' + encodeURIComponent('PQRS — Shaddai Consultants')
         + '&body=' + encodeURIComponent(cuerpo);
+     });
     });
 
     /* Desde la pregunta de la batería se salta al cotizador */

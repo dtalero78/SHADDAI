@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./estilos.css?v=2">
+<link rel="stylesheet" href="./estilos.css?v=3">
 <style>
   /* Sólo lo propio de esta página: el resto lo hereda de estilos.css */
   .pag-consulta{padding:56px 0 88px}
@@ -147,7 +147,7 @@
             Enviar y agendar consulta
             <svg class="arrow" viewBox="0 0 20 20" fill="none"><path d="M3 10h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.6"/></svg>
           </button>
-          <p class="legal">Sus datos se usan únicamente para contactarlo sobre Shaddai Consultants. Habeas Data · Ley 1581 de 2012 · <a href="#">Política de tratamiento de datos</a>.</p>
+          <p class="legal">Sus datos se usan únicamente para contactarlo sobre Shaddai Consultants. Habeas Data · Ley 1581 de 2012 · <a href="#" data-aviso>Aviso de privacidad y política de tratamiento de datos</a>.</p>
         </form>
       </div>
 
@@ -165,6 +165,7 @@
   </div>
 </footer>
 
+<script src="./aviso.js?v=1"></script>
 <script>
 (function(){
   /* Formulario — abre el correo con los datos ya redactados */
@@ -173,6 +174,7 @@
 
   form.addEventListener('submit', function(ev){
     ev.preventDefault();
+   ShaddaiAviso.pedir(function(){
     var v = function(id){ var el = form.querySelector('#'+id); return el ? el.value.trim() : ''; };
     var asunto = 'Consulta gratuita — ' + (v('empresa') || 'Nueva empresa');
     var cuerpo = [
@@ -194,6 +196,7 @@
     setTimeout(function(){
       btn.innerHTML = 'Enviar y agendar consulta <svg class="arrow" viewBox="0 0 20 20" fill="none"><path d="M3 10h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.6"/></svg>';
     }, 4000);
+   });
   });
 
   /* El servicio de interés puede llegar preseleccionado: consulta.html?servicio=... */
