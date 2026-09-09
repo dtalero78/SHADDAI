@@ -70,6 +70,9 @@
   @media(max-width:900px){
     .nav-links a:not(.cta-pill){display:none}
     .nav-links .cta-pill{display:none}
+    /* El contenedor del desplegable seguía ocupando sitio: su tarjeta de 296px
+       sobresalía del viewport y provocaba scroll horizontal en todo el sitio */
+    .nav-links .nav-item{display:none}
     .nav-phone{
       display:inline-flex;align-items:center;gap:8px;
       font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.06em;
@@ -1029,6 +1032,50 @@
   .mdl-def b{color:var(--ink);font-weight:500}
 
   .mdl-sep{margin:26px 0 22px;border:0;border-top:1px solid var(--rule-strong)}
+
+  /* ——— PQRS · acordeón de preguntas frecuentes ——— */
+  .faq{border-top:1px solid var(--rule)}
+  .faq-item{border-bottom:1px solid var(--rule)}
+  .faq-q{
+    width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;
+    background:none;border:none;cursor:pointer;text-align:left;padding:15px 0;
+    font-family:"Poppins",sans-serif;font-size:15.5px;font-weight:500;letter-spacing:-0.015em;
+    color:var(--ink);transition:color .2s ease;
+  }
+  .faq-q:hover{color:var(--indigo)}
+  .faq-q:focus-visible{outline:2px solid var(--indigo);outline-offset:3px;border-radius:3px}
+  /* El icono es un signo + que rota a x al abrir */
+  .faq-ico{position:relative;flex:0 0 16px;width:16px;height:16px}
+  .faq-ico::before,.faq-ico::after{
+    content:"";position:absolute;left:50%;top:50%;background:var(--indigo);
+    transition:transform .28s cubic-bezier(.2,.7,.2,1);
+  }
+  .faq-ico::before{width:14px;height:1.6px;transform:translate(-50%,-50%)}
+  .faq-ico::after{width:1.6px;height:14px;transform:translate(-50%,-50%)}
+  .faq-q[aria-expanded="true"] .faq-ico::before{transform:translate(-50%,-50%) rotate(180deg)}
+  .faq-q[aria-expanded="true"] .faq-ico::after{transform:translate(-50%,-50%) rotate(90deg)}
+  .faq-a{padding:0 0 18px;animation:faq-in .3s cubic-bezier(.2,.7,.2,1)}
+  .faq-a[hidden]{display:none}
+  @keyframes faq-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.faq-a{animation:none}}
+  .faq-a p{font-size:14.5px;line-height:1.6;color:var(--ink-soft);max-width:62ch}
+  .faq-a p + p{margin-top:10px}
+  .faq-a b{color:var(--ink);font-weight:500}
+  .faq-a a{color:var(--indigo);border-bottom:1px solid rgba(19,52,241,.35)}
+  .faq-a a:hover{border-bottom-color:var(--indigo)}
+  .faq-link{
+    background:none;border:none;padding:0;cursor:pointer;font-family:inherit;font-size:14.5px;
+    color:var(--indigo);border-bottom:1px solid rgba(19,52,241,.35);
+  }
+  .faq-link:hover{border-bottom-color:var(--indigo)}
+  @media(max-width:560px){.faq-q{font-size:14.5px;padding:13px 0}}
+
+  /* Enlace del footer con forma de botón */
+  .colofon .lnk{
+    background:none;border:none;padding:0;cursor:pointer;text-align:left;
+    font-family:inherit;font-size:14px;color:var(--ink);
+  }
+  .colofon .lnk:hover{color:var(--indigo)}
 
   .qz-head{
     display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px;

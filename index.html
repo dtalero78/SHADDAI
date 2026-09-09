@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./estilos.css">
+<link rel="stylesheet" href="./estilos.css?v=2">
 <noscript><style>
   .reveal{opacity:1 !important;transform:none !important;filter:none !important}
   h1.head .line{overflow:visible !important}
@@ -586,6 +586,7 @@
           <li><a href="#servicios">Programas de capacitación</a></li>
           <li><a href="#servicios">Tipos de auditoría</a></li>
           <li><a href="./consulta.html" target="_blank" rel="noopener">Consulta gratuita</a></li>
+          <li><button type="button" class="lnk" data-abrir-pqrs>PQRS y preguntas frecuentes</button></li>
         </ul>
       </div>
       <div>
@@ -664,6 +665,125 @@
     <div class="qz-actions">
       <button type="button" class="go" id="lineaCotizar" hidden>
         Cotizar la batería psicosocial
+        <svg class="arrow" viewBox="0 0 20 20" fill="none"><path d="M3 10h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.6"/></svg>
+      </button>
+      <a class="alt" href="./consulta.html" target="_blank" rel="noopener" data-cerrar>Hablar con un asesor</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL · PQRS Y PREGUNTAS FRECUENTES ═══ -->
+<div class="mdl" id="mdlPqrs" hidden role="dialog" aria-modal="true" aria-labelledby="mdlPqrsTitulo">
+  <div class="mdl-back" data-cerrar></div>
+  <div class="mdl-card" role="document">
+    <button type="button" class="mdl-close" data-cerrar aria-label="Cerrar">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+
+    <div class="mdl-kicker"><span class="pin"></span><span>PQRS · Atención al usuario</span></div>
+    <h3 class="display" id="mdlPqrsTitulo">Peticiones, quejas,<br>reclamos y <em>sugerencias</em></h3>
+    <p class="mdl-def">Aquí resolvemos las dudas más frecuentes sobre nuestros servicios. Si su caso no aparece o quiere radicar una petición, queja, reclamo o sugerencia, puede escribirnos desde el botón del final.</p>
+
+    <hr class="mdl-sep">
+
+    <div class="faq" id="faqLista">
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          <span>¿Cómo radico una PQRS?</span>
+          <span class="faq-ico" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" hidden>
+          <p>Escríbanos a <a href="mailto:administrativo@shaddaiconsultants.com">administrativo@shaddaiconsultants.com</a> o a <a href="mailto:gerencia@shaddaiconsultants.com">gerencia@shaddaiconsultants.com</a> indicando su nombre, la empresa, un teléfono de contacto y el detalle del caso. También puede llamarnos al <a href="tel:+573167415056">316 741 5056</a> o al <a href="tel:+573108601486">310 860 1486</a>. Le responderemos por el mismo canal por el que nos escriba.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          <span>¿Qué servicios presta Shaddai?</span>
+          <span class="faq-ico" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" hidden>
+          <p>Trabajamos ocho líneas de servicio: SG-SST, Psicosocial, Biomecánico, Seguridad Vial, Ambiental, Promoción y Prevención, Auditorías y Certificaciones, y Emergencias. En la sección <b>Servicios</b> puede abrir cada línea y ver en detalle qué incluye.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          <span>¿En qué ciudades trabajan?</span>
+          <span class="faq-ico" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" hidden>
+          <p>Tenemos asesores en <b>Bogotá, Cali, Medellín, Barranquilla, Tunja y Casanare</b>. Nuestra sede principal está en Bogotá, en la Cra 47A № 96-41, piso 4, oficina 407. Puede verlo en el mapa de la sección <b>Nuestra red</b>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          <span>¿La primera consulta tiene costo?</span>
+          <span class="faq-ico" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" hidden>
+          <p>No. La primera consulta es <b>gratuita y sin compromiso</b>: es un diagnóstico inicial para entender dónde está su empresa y qué necesita. Puede solicitarla desde el botón <b>Consulta gratuita</b> del menú.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          <span>¿Cómo es el proceso de trabajo?</span>
+          <span class="faq-ico" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" hidden>
+          <p>Son cinco momentos: <b>escuchamos</b> su necesidad, <b>coordinamos</b> el equipo y los profesionales que corresponden, <b>acompañamos</b> el desarrollo de las actividades, <b>hacemos seguimiento</b> a compromisos y pendientes, y <b>damos continuidad</b> más allá de la actividad puntual. Está explicado paso a paso en la sección <b>Proceso</b>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          <span>¿Qué es la batería de riesgo psicosocial y quién puede aplicarla?</span>
+          <span class="faq-ico" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" hidden>
+          <p>Es el conjunto de instrumentos con los que se evalúan las condiciones intralaborales, extralaborales y los efectos del estrés sobre las personas de una organización. <b>Su aplicación es obligatoria en Colombia</b> y debe realizarla un <b>psicólogo especialista en seguridad y salud en el trabajo con licencia vigente</b>, que entrega el informe con los resultados y el plan de intervención.</p>
+          <p><button type="button" class="faq-link" data-ir-bateria>Cotizar la batería en línea →</button></p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          <span>¿Cuánto cuesta la batería psicosocial?</span>
+          <span class="faq-ico" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" hidden>
+          <p>El valor por batería depende del volumen: <b>$50.000</b> de 1 a 19 baterías, <b>$40.000</b> de 20 a 30, y <b>$35.000</b> a partir de 31. Son valores de referencia: la cotización final se confirma según la ciudad, el número de sedes y la modalidad de aplicación.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          <span>¿Dictan capacitaciones?</span>
+          <span class="faq-ico" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" hidden>
+          <p>Sí. Tenemos <b>14 programas</b> diseñados por área y nivel del equipo, entre ellos primeros auxilios, emergencias, ergonomía, higiene postural, riesgos laborales, modelos de liderazgo y actualización contable. La lista completa está en <b>Servicios</b>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          <span>¿Qué hacen con mis datos personales?</span>
+          <span class="faq-ico" aria-hidden="true"></span>
+        </button>
+        <div class="faq-a" hidden>
+          <p>Los datos que nos deja en los formularios se usan <b>únicamente</b> para contactarlo sobre Shaddai Consultants, conforme a la Ley 1581 de 2012 de Habeas Data. Si quiere conocer, actualizar o suprimir su información, puede solicitarlo por los mismos canales de PQRS.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="qz-actions">
+      <button type="button" class="go" id="pqrsEnviar">
+        Radicar una PQRS
         <svg class="arrow" viewBox="0 0 20 20" fill="none"><path d="M3 10h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.6"/></svg>
       </button>
       <a class="alt" href="./consulta.html" target="_blank" rel="noopener" data-cerrar>Hablar con un asesor</a>
@@ -1184,6 +1304,68 @@
     });
 
     calcular();
+  })();
+
+  /* PQRS — modal con preguntas frecuentes en acordeón */
+  (function(){
+    var mdl = document.getElementById('mdlPqrs');
+    if(!mdl) return;
+
+    var caja = crearModal(mdl);
+    var preguntas = [].slice.call(mdl.querySelectorAll('.faq-q'));
+
+    function cerrarTodas(menos){
+      preguntas.forEach(function(q){
+        if(q === menos) return;
+        q.setAttribute('aria-expanded', 'false');
+        q.parentNode.querySelector('.faq-a').hidden = true;
+      });
+    }
+
+    preguntas.forEach(function(q){
+      var resp = q.parentNode.querySelector('.faq-a');
+      q.addEventListener('click', function(){
+        var abierta = q.getAttribute('aria-expanded') === 'true';
+        cerrarTodas(q);                       /* solo una abierta a la vez */
+        q.setAttribute('aria-expanded', abierta ? 'false' : 'true');
+        resp.hidden = abierta;
+      });
+    });
+
+    /* Radicar la PQRS por correo, igual que el cotizador */
+    document.getElementById('pqrsEnviar').addEventListener('click', function(){
+      var cuerpo = [
+        'Radicación de PQRS — Shaddai Consultants',
+        '',
+        'Tipo (petición, queja, reclamo o sugerencia): ',
+        'Nombre: ',
+        'Empresa: ',
+        'Teléfono de contacto: ',
+        'Correo: ',
+        '',
+        'Detalle del caso:',
+        ''
+      ].join('\n');
+      window.location.href = 'mailto:administrativo@shaddaiconsultants.com'
+        + '?cc=' + encodeURIComponent('gerencia@shaddaiconsultants.com')
+        + '&subject=' + encodeURIComponent('PQRS — Shaddai Consultants')
+        + '&body=' + encodeURIComponent(cuerpo);
+    });
+
+    /* Desde la pregunta de la batería se salta al cotizador */
+    var aBateria = mdl.querySelector('[data-ir-bateria]');
+    if(aBateria) aBateria.addEventListener('click', function(){
+      caja.cerrar();
+      if(abrirCotizador) abrirCotizador();
+    });
+
+    [].slice.call(document.querySelectorAll('[data-abrir-pqrs]')).forEach(function(b){
+      b.addEventListener('click', function(ev){
+        ev.preventDefault();
+        cerrarTodas(null);
+        caja.abrir();
+      });
+    });
   })();
 
   /* Líneas de servicio — un modal con la descripción de cada línea */
