@@ -4,6 +4,7 @@
    Se usa desde index.html (cotizador y PQRS) y consulta.html (agendamiento).
 
    Uso:  ShaddaiAviso.pedir(function(){ ...enviar... });   pide autorización
+         ShaddaiAviso.exigir(siAcepta, siRechaza);         puerta obligatoria
          ShaddaiAviso.ver();                               solo mostrar el texto
 
    Es autónomo a propósito: consulta.html no carga el resto del JS del sitio.
@@ -24,7 +25,7 @@
     'información podrán consultarse o gestionarse a través del correo: ' +
     '<a href="mailto:' + CORREO + '">' + CORREO + '</a>.';
 
-  var el = null, pendiente = null, ultimoFoco = null;
+  var el = null, pendiente = null, rechazo = null, ultimoFoco = null, obligatorio = false;
 
   /* sessionStorage falla en ventanas privadas y con cookies bloqueadas */
   function leido(){
@@ -65,6 +66,7 @@
             '<svg class="arrow" viewBox="0 0 20 20" fill="none"><path d="M3 10h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.6"/></svg>' +
           '</button>' +
           '<button type="button" class="alt" data-aviso-cerrar>Cancelar</button>' +
+          '<button type="button" class="alt" id="avisoNo" hidden>No acepto</button>' +
         '</div>' +
       '</div>';
     document.body.appendChild(el);
@@ -75,17 +77,24 @@
     el.querySelector('#avisoSeguir').addEventListener('click', function(){
       var cb = pendiente;
       guardar();
+      obligatorio = false;
       cerrar();
       if(cb) cb();
     });
     [].slice.call(el.querySelectorAll('[data-aviso-cerrar]')).forEach(function(b){
-      b.addEventListener('click', cerrar);
+      b.addEventListener('click', function(){ if(!obligatorio) cerrar(); });
+    });
+    el.querySelector('#avisoNo').addEventListener('click', function(){
+      var no = rechazo;
+      obligatorio = false;
+      cerrar();
+      if(no) no();
     });
     return el;
   }
 
   function teclado(ev){
-    if(ev.key === 'Escape'){ ev.preventDefault(); cerrar(); return; }
+    if(ev.key === 'Escape'){ ev.preventDefault(); if(!obligatorio) cerrar(); return; }
     if(ev.key !== 'Tab') return;
     var f = [].slice.call(el.querySelectorAll('button, a[href], input')).filter(function(x){
       return !x.disabled && x.offsetParent !== null;
@@ -96,12 +105,20 @@
     else if(!ev.shiftKey && document.activeElement === ult){ ev.preventDefault(); pri.focus(); }
   }
 
-  function abrir(cb){
+  function abrir(cb, opciones){
     construir();
+    opciones = opciones || {};
+    obligatorio = !!opciones.obligatorio;
+    rechazo = opciones.alRechazar || null;
     pendiente = cb || null;
     /* Sin acción pendiente el aviso es solo de lectura */
     el.querySelector('.aviso-ok').hidden = !cb;
     el.querySelector('#avisoSeguir').hidden = !cb;
+    el.querySelector('#avisoSeguir').textContent = obligatorio ? 'Acepto' : 'Continuar';
+    /* Obligatorio: sin X, sin cancelar; la única salida es aceptar o rechazar */
+    el.querySelector('.mdl-close').hidden = obligatorio;
+    el.querySelector('[data-aviso-cerrar].alt').hidden = obligatorio;
+    el.querySelector('#avisoNo').hidden = !obligatorio;
     el.querySelector('[data-aviso-cerrar].alt').textContent = cb ? 'Cancelar' : 'Cerrar';
     var chk = el.querySelector('#avisoAcepto');
     chk.checked = false;
@@ -113,7 +130,7 @@
     document.body.classList.add('mdl-abierto');
     el.querySelector('.mdl-card').scrollTop = 0;
     document.addEventListener('keydown', teclado);
-    el.querySelector('.mdl-close').focus();
+    (obligatorio ? chk : el.querySelector('.mdl-close')).focus();
   }
 
   /* El aviso se abre encima de otros modales: soltar el scroll aquí los
@@ -128,6 +145,8 @@
     if(!el) return;
     el.hidden = true;
     pendiente = null;
+    rechazo = null;
+    obligatorio = false;
     if(!otroModalAbierto()){
       document.body.style.overflow = '';
       document.body.classList.remove('mdl-abierto');
@@ -140,6 +159,10 @@
     pedir: function(cb){
       if(leido()){ cb(); return; }   /* una autorización por sesión */
       abrir(cb);
+    },
+    /* Puerta obligatoria: se entra al formulario solo si acepta */
+    exigir: function(siAcepta, siRechaza){
+      abrir(siAcepta || function(){}, {obligatorio:true, alRechazar:siRechaza});
     },
     ver: function(){ abrir(null); }
   };

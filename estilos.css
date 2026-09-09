@@ -1015,6 +1015,9 @@
     border:1px solid var(--rule-strong);background:#fff;color:var(--ink);cursor:pointer;
     display:inline-flex;align-items:center;justify-content:center;transition:background .2s ease,color .2s ease,border-color .2s ease;
   }
+  /* display:inline-flex de .mdl-close gana sobre el [hidden] del navegador,
+     y en el aviso obligatorio la X debe desaparecer de verdad */
+  .mdl-close[hidden]{display:none}
   .mdl-close:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
   .mdl-close svg{width:15px;height:15px}
 
@@ -1046,6 +1049,14 @@
   /* El botón queda inerte hasta que se marca la casilla */
   #avisoSeguir[disabled]{opacity:.4;cursor:not-allowed}
   #avisoSeguir[disabled]:hover{background:var(--ink)}
+
+  /* El formulario no se puede tocar hasta autorizar el tratamiento de datos */
+  #contactForm.bloqueado{
+    pointer-events:none;user-select:none;
+    filter:blur(2.5px);opacity:.55;
+    transition:filter .4s ease,opacity .4s ease;
+  }
+  @media(prefers-reduced-motion:reduce){#contactForm.bloqueado{transition:none}}
 
   /* ——— PQRS · acordeón de preguntas frecuentes ——— */
   .faq{border-top:1px solid var(--rule)}

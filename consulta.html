@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./estilos.css?v=3">
+<link rel="stylesheet" href="./estilos.css?v=4">
 <style>
   /* Sólo lo propio de esta página: el resto lo hereda de estilos.css */
   .pag-consulta{padding:56px 0 88px}
@@ -104,7 +104,7 @@
           </div>
         </div>
 
-        <form id="contactForm">
+        <form id="contactForm" class="bloqueado">
           <div class="field">
             <label for="empresa">Empresa</label>
             <input id="empresa" name="empresa" required placeholder="Razón social">
@@ -165,12 +165,24 @@
   </div>
 </footer>
 
-<script src="./aviso.js?v=1"></script>
+<script src="./aviso.js?v=2"></script>
 <script>
 (function(){
   /* Formulario — abre el correo con los datos ya redactados */
   var form = document.getElementById('contactForm');
   if(!form) return;
+
+  /* Puerta obligatoria: el aviso se muestra al entrar y el formulario queda
+     bloqueado hasta que se autorice el tratamiento de datos */
+  function desbloquear(){
+    form.classList.remove('bloqueado');
+    var primero = form.querySelector('input, select, textarea');
+    if(primero) primero.focus();
+  }
+  function volverAlInicio(){
+    location.href = './index.html';
+  }
+  ShaddaiAviso.exigir(desbloquear, volverAlInicio);
 
   form.addEventListener('submit', function(ev){
     ev.preventDefault();
