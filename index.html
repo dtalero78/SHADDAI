@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./estilos.css?v=5">
+<link rel="stylesheet" href="./estilos.css?v=6">
 <noscript><style>
   .reveal{opacity:1 !important;transform:none !important;filter:none !important}
   h1.head .line{overflow:visible !important}
@@ -28,7 +28,7 @@
 <header class="nav">
   <div class="wrap nav-row">
     <a href="#" aria-label="Shaddai Consultants"><img src="./assets/logo-azul.png" alt="Shaddai Consultants" class="logo"></a>
-    <nav class="nav-links" aria-label="Principal">
+    <nav class="nav-links" id="navPrincipal" aria-label="Principal">
       <a href="#inicio">Inicio</a>
       <div class="nav-item">
         <a href="#servicios">Servicios
@@ -54,6 +54,9 @@
     <a href="tel:+573108601486" class="nav-phone" aria-label="Llamar a Shaddai Consultants">
       <span class="pulse"></span>310 860 1486
     </a>
+    <button type="button" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navPrincipal">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
@@ -546,9 +549,8 @@
             <dd>
               <a href="tel:+573108601486"><em>310</em> 860 1486</a>
             </dd>
-            <dt>Correos</dt>
+            <dt>Correo</dt>
             <dd>
-              <a href="mailto:gerencia@shaddaiconsultants.com" style="font-size:16px">gerencia@shaddaiconsultants.com</a><br>
               <a href="mailto:administrativo@shaddaiconsultants.com" style="font-size:16px">administrativo@shaddaiconsultants.com</a>
             </dd>
             <dt>Sitio</dt>
@@ -604,7 +606,6 @@
           <li>Cra 47A № 96-41, piso 4</li>
           <li>Oficina 407 · Bogotá D.C.</li>
           <li><a href="tel:+573108601486">+57 310 860 1486</a></li>
-          <li><a href="mailto:gerencia@shaddaiconsultants.com">gerencia@shaddaiconsultants.com</a></li>
           <li><a href="mailto:administrativo@shaddaiconsultants.com">administrativo@shaddaiconsultants.com</a></li>
           <li><a href="https://www.shaddaiconsultants.com">shaddaiconsultants.com</a></li>
         </ul>
@@ -702,7 +703,7 @@
           <span class="faq-ico" aria-hidden="true"></span>
         </button>
         <div class="faq-a" hidden>
-          <p>Escríbanos a <a href="mailto:administrativo@shaddaiconsultants.com">administrativo@shaddaiconsultants.com</a> o a <a href="mailto:gerencia@shaddaiconsultants.com">gerencia@shaddaiconsultants.com</a> indicando su nombre, la empresa, un teléfono de contacto y el detalle del caso. También puede llamarnos al <a href="tel:+573108601486">310 860 1486</a>. Le responderemos por el mismo canal por el que nos escriba.</p>
+          <p>Escríbanos a <a href="mailto:administrativo@shaddaiconsultants.com">administrativo@shaddaiconsultants.com</a> indicando su nombre, la empresa, un teléfono de contacto y el detalle del caso. También puede llamarnos al <a href="tel:+573108601486">310 860 1486</a>. Le responderemos por el mismo canal por el que nos escriba.</p>
         </div>
       </div>
 
@@ -880,6 +881,20 @@
     }
     upd(); setInterval(upd, 60000);
     var y=document.getElementById('anio'); if(y) y.textContent=new Date().getFullYear();
+  })();
+
+  /* Menú móvil: el botón despliega los enlaces bajo el header */
+  (function(){
+    var hdr=document.querySelector('header.nav'), btn=hdr && hdr.querySelector('.nav-toggle');
+    if(!btn) return;
+    function cerrar(){ hdr.classList.remove('nav-open'); btn.setAttribute('aria-expanded','false'); btn.setAttribute('aria-label','Abrir menú'); }
+    btn.addEventListener('click',function(){
+      var abierto=hdr.classList.toggle('nav-open');
+      btn.setAttribute('aria-expanded',abierto?'true':'false');
+      btn.setAttribute('aria-label',abierto?'Cerrar menú':'Abrir menú');
+    });
+    hdr.querySelectorAll('.nav-links a').forEach(function(a){ a.addEventListener('click',cerrar); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') cerrar(); });
   })();
 
   /* Reveal al hacer scroll */
@@ -1296,7 +1311,7 @@
         'Ciudad y número de sedes: ',
         'Teléfono de contacto: '
       ].join('\n');
-      window.location.href = 'mailto:gerencia@shaddaiconsultants.com'
+      window.location.href = 'mailto:administrativo@shaddaiconsultants.com'
         + '?subject=' + encodeURIComponent('Cotización batería de riesgo psicosocial — ' + n + ' baterías')
         + '&body=' + encodeURIComponent(cuerpo);
      });
@@ -1360,8 +1375,7 @@
         ''
       ].join('\n');
       window.location.href = 'mailto:administrativo@shaddaiconsultants.com'
-        + '?cc=' + encodeURIComponent('gerencia@shaddaiconsultants.com')
-        + '&subject=' + encodeURIComponent('PQRS — Shaddai Consultants')
+        + '?subject=' + encodeURIComponent('PQRS — Shaddai Consultants')
         + '&body=' + encodeURIComponent(cuerpo);
      });
     });

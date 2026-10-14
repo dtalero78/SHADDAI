@@ -67,18 +67,45 @@
   .cta-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--polvo);box-shadow:0 0 0 0 var(--polvo);animation:pulse-polvo 1.8s infinite}
 
   .nav-phone{display:none}
+  .nav-toggle{display:none}
   @media(max-width:900px){
-    .nav-links a:not(.cta-pill){display:none}
-    .nav-links .cta-pill{display:none}
-    /* El contenedor del desplegable seguía ocupando sitio: su tarjeta de 296px
-       sobresalía del viewport y provocaba scroll horizontal en todo el sitio */
-    .nav-links .nav-item{display:none}
+    /* Móvil: los enlaces viven en un panel que abre el botón de menú */
+    .nav-links{
+      display:none;position:absolute;top:100%;left:0;right:0;
+      flex-direction:column;align-items:stretch;gap:0;
+      background:var(--paper);border-bottom:1px solid var(--rule-strong);
+      padding:6px 20px 20px;box-shadow:0 18px 30px -18px rgba(5,15,40,.35);
+    }
+    header.nav.nav-open .nav-links{display:flex}
+    .nav-links a{font-size:16px;color:var(--ink);padding:14px 0;border-bottom:1px solid var(--rule)}
+    /* La tarjeta del desplegable (296px) no cabe aquí; la cotización sigue en Servicios */
+    .nav-links .nav-item{display:block}
+    .nav-links .nav-item > a{display:flex}
+    .nav-links .nav-item .caret,.nav-links .nav-drop{display:none}
+    .nav-links .cta-pill{margin-top:18px;justify-content:center;padding:14px 22px;font-size:15px;border-bottom:none}
+    .nav-row{gap:10px}
+    .nav-phone{margin-left:auto}
+    .nav-toggle{
+      display:inline-flex;flex-direction:column;justify-content:center;gap:4px;
+      width:42px;height:42px;padding:0 11px;border:1px solid var(--rule-strong);border-radius:50%;
+      background:transparent;cursor:pointer;flex:0 0 42px;
+    }
+    .nav-toggle span{display:block;height:1.6px;background:var(--ink);border-radius:2px;transition:transform .2s ease,opacity .2s ease}
+    header.nav.nav-open .nav-toggle span:nth-child(1){transform:translateY(5.6px) rotate(45deg)}
+    header.nav.nav-open .nav-toggle span:nth-child(2){opacity:0}
+    header.nav.nav-open .nav-toggle span:nth-child(3){transform:translateY(-5.6px) rotate(-45deg)}
     .nav-phone{
       display:inline-flex;align-items:center;gap:8px;
       font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.06em;
       color:var(--ink);padding:9px 13px;border:1px solid var(--rule-strong);border-radius:999px;
     }
     .nav-phone .pulse{width:7px;height:7px;border-radius:50%;background:var(--indigo);box-shadow:0 0 0 0 var(--indigo);animation:pulse 1.8s infinite}
+  }
+  @media(max-width:400px){
+    /* A 320px la píldora partía el número en dos líneas y desbordaba la página;
+       la barra fija de abajo ya tiene el botón de llamar */
+    .nav-phone{display:none}
+    .nav-toggle{margin-left:auto}
   }
 
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(19,52,241,.5)}70%{box-shadow:0 0 0 9px rgba(19,52,241,0)}100%{box-shadow:0 0 0 0 rgba(19,52,241,0)}}
@@ -567,7 +594,8 @@
   .co-pin:hover .co-halo,.co-pin.active .co-halo{opacity:.32}
 
   /* ——— Nosotros: equipo e identidad ——— */
-  .quotes{display:grid;grid-template-columns:1fr;gap:72px}
+  /* minmax(0,1fr): con 1fr la columna crecía al ancho del correo y desbordaba a 320px */
+  .quotes{display:grid;grid-template-columns:minmax(0,1fr);gap:72px}
 
   .team-kicker{
     padding-bottom:16px;margin-bottom:32px;border-bottom:1px solid var(--ink);
@@ -651,6 +679,7 @@
 
   /* Contáctanos, ya dentro de Sobre nosotros */
   .about-contact{border-top:1px solid var(--ink);padding-top:40px}
+  .about-contact a[href^="mailto:"]{overflow-wrap:anywhere}
   .about-contact .contact-info h3{font-size:clamp(24px,2.6vw,32px)}
 
   /* ——— Contacto ——— */
@@ -735,12 +764,13 @@
 
   /* ——— Consulta gratuita ——— */
   .consulta-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start}
-  @media(max-width:880px){.consulta-grid{grid-template-columns:1fr;gap:38px}}
+  @media(max-width:880px){.consulta-grid{grid-template-columns:minmax(0,1fr);gap:38px}}
 
   /* ——— Footer ——— */
   footer{padding:64px 0 0;border-top:1px solid var(--rule-strong);background:var(--paper)}
   .colofon{display:grid;grid-template-columns:1.5fr 1fr 1.2fr;gap:44px;padding-bottom:48px}
   @media(max-width:880px){.colofon{grid-template-columns:1fr 1fr;gap:28px}}
+  @media(max-width:560px){.colofon{grid-template-columns:1fr;gap:36px}}
   .colofon h5{
     font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);
     padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid var(--rule);
@@ -836,19 +866,21 @@
   /* ═══════ MOBILE ═══════ */
   @media(max-width:780px){
     section{padding:64px 0}
-    section#servicios{padding:72px 0 80px;margin-top:-72px;padding-top:calc(72px + 72px);
+    /* Festón más bajo y hero con aire debajo: el borde de 72px sobre un hero de
+       26px de fondo tapaba la última fila de la banda de cifras */
+    section#servicios{padding:72px 0 80px;margin-top:-40px;padding-top:calc(72px + 40px);
       -webkit-mask:
-        radial-gradient(ellipse 50% 100% at 50% 0,transparent 99%,#000 100%) 0 0/20% 72px repeat-x,
-        linear-gradient(#000 0%,#000 100%) 0 72px/100% calc(100% - 72px) no-repeat;
+        radial-gradient(ellipse 50% 100% at 50% 0,transparent 99%,#000 100%) 0 0/20% 40px repeat-x,
+        linear-gradient(#000 0%,#000 100%) 0 40px/100% calc(100% - 40px) no-repeat;
       mask:
-        radial-gradient(ellipse 50% 100% at 50% 0,transparent 99%,#000 100%) 0 0/20% 72px repeat-x,
-        linear-gradient(#000 0%,#000 100%) 0 72px/100% calc(100% - 72px) no-repeat;
+        radial-gradient(ellipse 50% 100% at 50% 0,transparent 99%,#000 100%) 0 0/20% 40px repeat-x,
+        linear-gradient(#000 0%,#000 100%) 0 40px/100% calc(100% - 40px) no-repeat;
     }
     section#proceso{padding:64px 0 72px}
     section#nosotros{padding-top:52px}
     section#red{padding-bottom:56px}
 
-    .hero{padding:36px 0 26px}
+    .hero{padding:36px 0 72px}
     .eyebrow{margin-bottom:18px}
     .hero-lead{font-size:18px;margin-bottom:16px}
     .hero-copy p{font-size:15.5px}
@@ -921,17 +953,17 @@
 
   @media(max-width:480px){
     section{padding:52px 0}
-    section#servicios{padding:60px 0 68px;padding-top:calc(60px + 64px);margin-top:-64px;
+    section#servicios{padding:60px 0 68px;padding-top:calc(60px + 36px);margin-top:-36px;
       -webkit-mask:
-        radial-gradient(ellipse 50% 100% at 50% 0,transparent 99%,#000 100%) 0 0/20% 64px repeat-x,
-        linear-gradient(#000 0%,#000 100%) 0 64px/100% calc(100% - 64px) no-repeat;
+        radial-gradient(ellipse 50% 100% at 50% 0,transparent 99%,#000 100%) 0 0/20% 36px repeat-x,
+        linear-gradient(#000 0%,#000 100%) 0 36px/100% calc(100% - 36px) no-repeat;
       mask:
-        radial-gradient(ellipse 50% 100% at 50% 0,transparent 99%,#000 100%) 0 0/20% 64px repeat-x,
-        linear-gradient(#000 0%,#000 100%) 0 64px/100% calc(100% - 64px) no-repeat;
+        radial-gradient(ellipse 50% 100% at 50% 0,transparent 99%,#000 100%) 0 0/20% 36px repeat-x,
+        linear-gradient(#000 0%,#000 100%) 0 36px/100% calc(100% - 36px) no-repeat;
     }
     section#proceso{padding:52px 0 60px}
     section#red{padding-bottom:40px}
-    .hero{padding:26px 0 18px}
+    .hero{padding:26px 0 64px}
     .hero-lead{font-size:17.5px}
     .sec-head{margin-bottom:22px}
     .svc h3{font-size:25px}
