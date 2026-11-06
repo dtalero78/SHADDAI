@@ -1140,6 +1140,8 @@
   }
   .colofon .lnk:hover{color:var(--indigo)}
 
+  .mdl-video{display:block;width:100%;height:auto;aspect-ratio:16/9;margin:18px 0 16px;border-radius:14px;background:var(--night);object-fit:cover}
+  .mdl-card:focus{outline:none}
   .qz-head{
     display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px;
     font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);

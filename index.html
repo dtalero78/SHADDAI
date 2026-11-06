@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./estilos.css?v=6">
+<link rel="stylesheet" href="./estilos.css?v=7">
 <noscript><style>
   .reveal{opacity:1 !important;transform:none !important;filter:none !important}
   h1.head .line{overflow:visible !important}
@@ -811,6 +811,9 @@
 
     <div class="mdl-kicker"><span class="pin"></span><span>Línea psicosocial</span></div>
     <h3 class="display" id="mdlBateriaTitulo">Batería de <em>riesgo psicosocial</em></h3>
+    <!-- Arranca al abrir el modal (ver abrirCotizador); preload="none" para no bajar 4 MB con la página -->
+    <video class="mdl-video" id="qzVideo" src="./assets/video/bateria-psicosocial.mp4" poster="./assets/video/bateria-psicosocial.jpg"
+           controls playsinline preload="none" width="1920" height="1080" aria-label="Video: servicio psicosocial de Shaddai Consultants"></video>
     <p class="mdl-def">La batería de riesgo psicosocial es el conjunto de instrumentos con los que se evalúan las <b>condiciones intralaborales, extralaborales y los efectos del estrés</b> sobre las personas de una organización. Su aplicación es obligatoria en Colombia y debe realizarla un <b>psicólogo especialista en seguridad y salud en el trabajo con licencia vigente</b>, que entrega el informe con los resultados y el plan de intervención.</p>
 
     <hr class="mdl-sep">
@@ -1193,7 +1196,7 @@
   /* Modales — Escape, foco atrapado y scroll bloqueado; lo comparten todos los modales */
   var abrirCotizador = null;   /* lo publica el bloque de la batería para el enlace cruzado */
 
-  function crearModal(el){
+  function crearModal(el, alCerrar){
     var ultimoFoco = null;
 
     function enfocables(){
@@ -1208,6 +1211,8 @@
       var f = enfocables();
       if(!f.length) return;
       var primero = f[0], ultimo = f[f.length - 1];
+      /* El foco puede estar en la tarjeta (modal de la batería): que Tab no se escape */
+      if(f.indexOf(document.activeElement) === -1){ ev.preventDefault(); (ev.shiftKey ? ultimo : primero).focus(); return; }
       if(ev.shiftKey && document.activeElement === primero){ ev.preventDefault(); ultimo.focus(); }
       else if(!ev.shiftKey && document.activeElement === ultimo){ ev.preventDefault(); primero.focus(); }
     }
@@ -1226,6 +1231,7 @@
       document.body.style.overflow = '';
       document.body.classList.remove('mdl-abierto');
       document.removeEventListener('keydown', teclado);
+      if(alCerrar) alCerrar();
       if(ultimoFoco && ultimoFoco.focus) ultimoFoco.focus();
     }
 
@@ -1317,13 +1323,31 @@
      });
     });
 
-    var caja = crearModal(mdl);
+    var video = document.getElementById('qzVideo');
+    var caja = crearModal(mdl, function(){ if(video) video.pause(); });
 
     abrirCotizador = function(){
       caja.abrir();
       calcular();
-      campo.focus();
-      campo.select();
+      if(video){
+        /* Se llama dentro del clic, así que el navegador deja sonar el audio;
+           si aun así lo bloquea, arranca en silencio y el usuario lo activa */
+        video.muted = false;
+        video.currentTime = 0;
+        var p = video.play();
+        /* Solo si el navegador bloqueó el sonido y el modal sigue abierto: si lo
+           cerraron antes de arrancar, play() falla con AbortError y no hay que reintentar */
+        if(p && p.catch) p.catch(function(e){
+          if(e && e.name === 'NotAllowedError' && !mdl.hidden){ video.muted = true; video.play().catch(function(){}); }
+        });
+        /* Foco en la tarjeta y no en el campo: en celular el teclado tapaba el video */
+        var tarjeta = mdl.querySelector('.mdl-card');
+        tarjeta.setAttribute('tabindex', '-1');
+        tarjeta.focus({preventScroll: true});
+      } else {
+        campo.focus();
+        campo.select();
+      }
     };
 
     [].slice.call(document.querySelectorAll('[data-abrir-bateria]')).forEach(function(b){
